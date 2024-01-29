@@ -1,2 +1,3 @@
 
 # FIRST CHANGES #
+arr = []
