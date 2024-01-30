@@ -3,27 +3,26 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.gis.db.models import PointField
 
-
 # Create your models here.
 
 
 
 RATINGS = (
-    ('5'),
-    ('4'),
-    ('3'),
-    ('2'),
-    ('1'),
-    ('0'),
+    ('5', 'Execellent'),
+    ('4', 'Very good'),
+    ('3', 'Ok'),
+    ('2', 'Bad'),
+    ('1', 'Very bad'),
 )
 
 # User Model
 class User(models.Model):
     name = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254)
+    address = models.CharField(max_length=250)
+    email = models.EmailField(max_length=250)
+    avatar = models.URLField(max_length=200)
     # not sure about location
-    location = models.PointField(geography=True, spatial_index=True)
+    location = models.PointField()
 
 
 # Category Model
