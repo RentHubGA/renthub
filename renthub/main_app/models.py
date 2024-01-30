@@ -1,10 +1,11 @@
 from django.db import models
+# from django.contrib.gis.db import models
 from django.urls import reverse
-from datetime import date
-from django.contrib.gis.db.models import PointField
+# from django.contrib.auth.models import User
+# from datetime import date
+# from django.contrib.gis.db.models import PointField
 
 # Create your models here.
-
 
 
 RATINGS = (
@@ -16,13 +17,13 @@ RATINGS = (
 )
 
 # User Model
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=250)
-    email = models.EmailField(max_length=250)
-    avatar = models.URLField(max_length=200)
-    # not sure about location
-    location = models.PointField()
+# class User(models.Model):
+#     name = models.CharField(max_length=50)
+#     address = models.CharField(max_length=250)
+#     email = models.EmailField(max_length=250)
+#     avatar = models.URLField(max_length=200)
+#     # not sure about location
+#     location = models.PointField()
 
 
 # Category Model
@@ -45,7 +46,7 @@ class Product(models.Model):
     # many to many Category
     category = models.ManyToManyField(Category)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.name} ({self.id})'
     
@@ -69,19 +70,19 @@ class Review(models.Model):
     description = models.TextField(max_length=255)
     rating = models.CharField(
         max_length=1,
-        choice=RATINGS,
-        required=True
+        choices=RATINGS,
+        default=RATINGS[0][0]
     )
     # one to many Product
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'{self.user} review: {self.product} {self.rating}'
+    # def __str__(self):
+    #     return f'{self.user} review: {self.product} {self.rating}'
     
-    class Meta:
-        ordering = ['-date']
+    # class Meta:
+    #     ordering = ['-date']
 
 
 # Renting Model
@@ -92,13 +93,13 @@ class Renting(models.Model):
     # one to many Product
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return  f'{self.user} {self.product} ({self.date_rent}) - ({self.date_return}), Total Price: {self.total_price}'
+    # def __str__(self):
+    #     return  f'{self.user} {self.product} ({self.date_rent}) - ({self.date_return}), Total Price: {self.total_price}'
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'renting_id': self.id})
     
-    class Meta:
-        ordering = ['-date']
+    # class Meta:
+    #     ordering = ['-date']
