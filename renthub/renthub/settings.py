@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # add django.contrib.gis
+    # 'django.contrib.gis',
 ]
+
+# defining the AUTH_USER_MODEL property. for
+# from django.contrib.auth.models import AbstractUser in models.py
+AUTH_USER_MODEL = 'main_app.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,7 +83,7 @@ WSGI_APPLICATION = 'renthub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'renthub'
+        'NAME': 'catcollector',
     }
 }
 
