@@ -3,7 +3,7 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.gis.db.models import PointField
 
-# Create your models here.
+# Create your models here...
 
 
 
