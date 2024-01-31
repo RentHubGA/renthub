@@ -1,12 +1,10 @@
 from django.db import models
-# from django.contrib.gis.db import models
 from django.urls import reverse
-from django.contrib.auth.models import AbstractUser
-# from django.contrib.auth.models import User
 from datetime import date
-# from django.contrib.gis.db.models import PointField
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+# Create your models here...
+
 
 
 RATINGS = (
