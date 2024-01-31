@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # add django.contrib.gis
-    'django.contrib.gis',
+    # 'django.contrib.gis',
 ]
 
 # defining the AUTH_USER_MODEL property. for
@@ -82,10 +82,8 @@ WSGI_APPLICATION = 'renthub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'renthub',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'catcollector',
     }
 }
 
