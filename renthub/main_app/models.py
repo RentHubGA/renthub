@@ -1,10 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
-from django.contrib.auth.models import AbstractUser
-
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth import get_user_model
 # Create your models here...
-
+# User = get_user_model()
 
 
 RATINGS = (
@@ -16,28 +16,54 @@ RATINGS = (
 )
 
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, username, password=None, **extra_fields):
+        # Create normal user Email Require
+        if not email:
+            raise ValueError('The Email field must be set')
+        # else:
+        email = self.normalize_email(email)
+
+        user = self.model(email=email, username=username, **extra_fields)
+        user.set_password(password)
+
+        user.save(using=self._db)
+        return user
+    
+        # Create superuser user, password, email
+    def create_superuser(self, email, username, password=None, **extra_fields):
+        
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, username, password, **extra_fields)
+    
+
 # User Model
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     name = models.CharField(max_length=50)
     avatar = models.URLField(max_length=200)
     address = models.CharField(
-        verbose_name='Address',max_length=150, null=True, blank=False
+        verbose_name='Address',max_length=150, null=True, blank=True
         )
     town = models.CharField(
-        verbose_name='Town/City',max_length=150, null=True, blank=False
+        verbose_name='Town/City',max_length=150, null=True, blank=True
         )
     county = models.CharField(
-        verbose_name='County',max_length=150, null=True, blank=False
+        verbose_name='County',max_length=150, null=True, blank=True
         )
     post_code = models.CharField(
-        verbose_name='Post Code',max_length=150, null=True, blank=False
+        verbose_name='Post Code',max_length=150, null=True, blank=True
         )
     country = models.CharField(
-        verbose_name='Country',max_length=150, null=True, blank=False
+        verbose_name='Country',max_length=150, null=True, blank=True
         )
+    # >>>>> add user fixing admin user error <<<<<
+    user = models.CharField(max_length=255)
     #
     # location = models.PointField(null=True, blank=True)
     #
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.user
@@ -62,7 +88,7 @@ class Product(models.Model):
     # many to many Category
     category = models.ManyToManyField(Category)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.product_name} ({self.id})'
@@ -97,7 +123,7 @@ class Review(models.Model):
     # one to many Product
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.user} review: {self.product} {self.rating}'
@@ -114,7 +140,7 @@ class Renting(models.Model):
     # one to many Product
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     # one to many User
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return  f'{self.user.name} {self.product} ({self.date_rent}) - ({self.date_return}), Total Price: {self.total_price}'
