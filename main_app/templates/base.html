@@ -4,7 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}RentHub{% endblock %}</title>
+    <title>
+      {% block title %}
+      RentHub
+      {% endblock %}
+    </title>
     <!-- >>>>>>>>>>>>>>>>>>>>>>>> Just render sample CSS <<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
     <link rel="stylesheet" href="{% static './css/dummy.css' %}" />
     <link
@@ -31,14 +35,13 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
                         <form method="post" action="{% url 'logout' %}">
                           {% csrf_token %}
-                          <button type="submit" class="submit-link">Log Out</button>
+                          <button type="submit" class="btn btn-dark">Log Out</button>
                         </form>
                     </li>
                   {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
                   {% endif %}
                 </ul>
