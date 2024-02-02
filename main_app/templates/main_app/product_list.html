@@ -1,16 +1,16 @@
-{% extends '../base.html' %}
-
-{% block title %} Products {% endblock %}
+{% extends '../base.html' %} {% block title %} Products {% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1 class="my-4">Products</h1>
+  <h2 class="my-4">Products</h2>
   <div class="row gy-4">
     {% for product in product_list %}
     <div class="col-md-4">
       <div class="card">
+        <h5 class="card-header">{{ product.product_name }}</h5>
         <div class="card-body">
-          <h5>{{ product.product_name }}</h5>
+          <p>Price: <span>{{ product.price }}</span></p>
+        <p>Description: <span> {{ product.description|slice:":30" }}...</span></p>
         </div>
       </div>
     </div>

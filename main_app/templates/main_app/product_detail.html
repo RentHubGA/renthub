@@ -1,0 +1,17 @@
+{% extends '../base.html' %}
+
+{% block title %} {{ product.product_name}} | RentHub {% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="my-4">{{ product.product_name }}</h2>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5>{{ product.product_name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
