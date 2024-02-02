@@ -8,10 +8,10 @@ admin.site.register(Product)
 admin.site.register(Image)
 admin.site.register(Review)
 admin.site.register(Renting)
+admin.site.register(CustomUser, UserAdmin)
 
 # class CustomUserAdmin(admin.ModelAdmin):
 #     list_display = ('username', 'email', 'user')  # Make sure 'user' is the correct attribute name
 
 # admin.site.register(CustomUser, CustomUserAdmin)
-# admin.site.register(CustomUser, UserAdmin)
 # admin.site.register(UserAdmin)
