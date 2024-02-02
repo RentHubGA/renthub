@@ -6,7 +6,10 @@ from .forms import CustomUserCreationForm, ReviewForm
 from django.contrib.auth import login
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, Image
+import os
+import boto3
+import uuid
 
     # path('about', views.about, name='about'),
     # path('products', views.product_index, name='index'),
@@ -23,6 +26,7 @@ def reviewform(request):
     return render(request, 'review_form.html', {
         'review_form': review_form
     })
+
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
@@ -47,6 +51,26 @@ def register(request):
         'error_message': error_message  
     }  
     return render(request, 'registration/signup.html', context)  
+
+def add_image(request, product_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+  
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            
+            Image.objects.create(url=url, product_id=product_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('product_detail', product_id=product_id)
+
+   
 
 # def register(request):
 #     error_message = ''
@@ -83,3 +107,4 @@ class ProductList(ListView):
     
 class ProductDetail(DetailView):
     model = Product
+    

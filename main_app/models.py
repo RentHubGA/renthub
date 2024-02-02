@@ -59,7 +59,7 @@ class CustomUser(AbstractUser):
         verbose_name='Country',max_length=150, null=True, blank=True
         )
     # >>>>> add user fixing admin user error <<<<<
-    user = models.CharField(max_length=255)
+    user = models.CharField(max_length=255, null=False)
     #
     # location = models.PointField(null=True, blank=True)
     #

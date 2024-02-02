@@ -26,6 +26,23 @@
             <h4>{{ product.product_name }}</h4>
         <p>Price: ${{ product.price }}</p>
         <p>Description: {{ product.description }}</p>
+
+<!-- ADD PHOTO  ----------------------------------------------------------------------------->
+
+        {% for photo in product.image_set.all %}
+        <img src="{{photo.url}}">
+        {% empty %}
+        <div>No Photos Uploaded</div>
+        {% endfor %}
+        
+        <form action="{% url 'add_image' product.id %}" enctype="multipart/form-data" method="POST" >
+            {% csrf_token %}
+            <input type="file" name="photo-file">
+            <br><br>
+            <button type="submit">Upload Photo</button>
+        </form>
+
+<!-- -------------------------------------------------------------------------------------->
         </div>
     </div>
 </div>
