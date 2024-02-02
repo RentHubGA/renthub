@@ -34,7 +34,7 @@ def register(request):
         if form.is_valid():  
             form.save()
             # if user successful redirect to home page
-            return redirect('home')
+            return redirect('login')
         else:
             # if not show error message or read error in terminal >> print(form.errors)
             print(form.errors)
