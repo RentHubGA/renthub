@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 # import forms.py
 from .forms import CustomUserCreationForm, ReviewForm
 from django.contrib.auth import login
+from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from .models import Product
 
@@ -16,13 +17,6 @@ def home(request):
 
 def about(request):
     return render(request, 'about.html' )
-
-# @login_required
-def products_index(request):
-    products = Product.objects.all()
-    return render(request, 'products/index.html', {
-        'products': products
-    })
 
 def reviewform(request):
     review_form = ReviewForm
@@ -74,3 +68,15 @@ def register(request):
 #         'error_message': error_message
 #     }
 #     return render(request, 'registration/signup.html', context)
+
+### Products Views ###
+# Function Based
+# def product_list(request):
+# 	products = Product.objects.all()
+# 	return render(request, 'products/product_list.html', {
+#         'products': products
+# 	})
+
+# Class Based
+class ProductList(ListView):
+    model = Product
