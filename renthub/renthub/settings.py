@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import environ
+import os
+
+environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tw^6!tw19gw*9uwtejey*zgj%7zuezlbfd3g2&g7j^_+c^vrn6'
+
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +50,7 @@ INSTALLED_APPS = [
 
 # defining the AUTH_USER_MODEL property. for
 # from django.contrib.auth.models import AbstractUser in models.py
-AUTH_USER_MODEL = 'main_app.User'
+AUTH_USER_MODEL = 'main_app.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,7 +89,7 @@ WSGI_APPLICATION = 'renthub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'catcollector',
+        'NAME': 'renthub',
     }
 }
 
