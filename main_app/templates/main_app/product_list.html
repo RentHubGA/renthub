@@ -11,6 +11,7 @@
         <div class="card-body">
           <p>Price: <span>{{ product.price }}</span></p>
         <p>Description: <span> {{ product.description|slice:":30" }}...</span></p>
+        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a>
         </div>
       </div>
     </div>
