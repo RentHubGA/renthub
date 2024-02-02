@@ -84,7 +84,6 @@ class Product(models.Model):
     product_name = models.CharField(max_length=50)
     description = models.TextField(max_length=255)
     price = models.PositiveIntegerField()
-    available = models.BooleanField()
     # many to many Category
     category = models.ManyToManyField(Category)
     # one to many User
