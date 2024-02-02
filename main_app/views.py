@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 # import forms.py
 from .forms import CustomUserCreationForm, ReviewForm
 from django.contrib.auth import login
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from .models import Product
 
@@ -79,4 +79,7 @@ def register(request):
 
 # Class Based
 class ProductList(ListView):
+    model = Product
+    
+class ProductDetail(DetailView):
     model = Product
