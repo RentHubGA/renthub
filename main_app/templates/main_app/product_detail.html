@@ -26,7 +26,16 @@
             <h4>{{ product.product_name }}</h4>
         <p>Price: ${{ product.price }}</p>
         <p>Description: {{ product.description }}</p>
+        {% if product.user.town %}
+            <p>Location: {{ product.user.town }}</p>
+        {% else %}
+            <p>No location specified</p>
+        {% endif %}
         </div>
     </div>
 </div>
+<div class="container">
+    <h4 class="my-4">Reviews</h4>
+</div>
+
 {% endblock %}

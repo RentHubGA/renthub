@@ -1,4 +1,6 @@
-{% extends '../base.html' %} {% block title %} Products {% endblock %}
+{% extends '../base.html' %}
+
+{% block title %} Products {% endblock %}
 
 {% block content %}
 <h2 class="my-4">Products</h2>
@@ -39,8 +41,8 @@
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p>Price: <span>${{ product.price }}</span></p>
                                 <p>Description: <span> {{ product.description|slice:":50" }}...</span></p>
+                                <div class="sticky-bottom p-3"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                             </div>
-                            <div class="sticky-bottom p-3"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                         </div>
                     </div> 
                 </div>
