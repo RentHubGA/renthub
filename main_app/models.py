@@ -41,7 +41,7 @@ class CustomUserManager(BaseUserManager):
 
 # User Model
 class CustomUser(AbstractUser):
-    name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
     avatar = models.URLField(max_length=200)
     address = models.CharField(
         verbose_name='Address',max_length=150, null=True, blank=True
@@ -66,7 +66,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.user
+        return self.username
 
 # Category Model
 class Category(models.Model):
