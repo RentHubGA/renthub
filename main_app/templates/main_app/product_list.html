@@ -41,8 +41,8 @@
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p>Price: <span>${{ product.price }}</span></p>
                                 <p>Description: <span> {{ product.description|slice:":50" }}...</span></p>
+                                <div class="sticky-bottom p-3"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                             </div>
-                            <div class="sticky-bottom p-3"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                         </div>
                     </div> 
                 </div>
