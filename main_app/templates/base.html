@@ -26,11 +26,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav ms-auto">
+                  {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <form method="post" action="{% url 'logout' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="submit-link">Log Out</button>
+                        </form>
+                    </li>
+                  {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+                  {% endif %}
                 </ul>
             </div>
         </div>
