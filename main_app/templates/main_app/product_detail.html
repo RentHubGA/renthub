@@ -36,6 +36,19 @@
 </div>
 <div class="container">
     <h4 class="my-4">Reviews</h4>
+    <p>Average Rating: {{ product.get_average }}</p>
+    {% if reviews %}
+    {% for review in reviews %}
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{{ review.user }}: {{ review.rating }}</h6>
+                <p>{{ review.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+    <h5>No reviews</h5>
+    {% endif %}
 </div>
 
 {% endblock %}
