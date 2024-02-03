@@ -10,8 +10,17 @@ admin.site.register(Review)
 admin.site.register(Renting)
 admin.site.register(CustomUser, UserAdmin)
 
-# class CustomUserAdmin(admin.ModelAdmin):
-#     list_display = ('username', 'email', 'user')  # Make sure 'user' is the correct attribute name
+# fieldsets = (
+#     (None, {'fields': ('username', 'email', 'password')}),
+#     ('Personal Info', {'fields': ('first_name', 'last_name', 'avatar', 'address', 'town', 'county', 'post_code', 'country')}),
+#     ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+#     ('Important dates', {'fields': ('last_login', 'date_joined')}),
+# )
+# add_fieldsets = (
+#     (None, {
+#         'classes': ('wide',),
+#         'fields': ('username', 'email', 'password1', 'password2'),
+#     }),
+# )
 
 # admin.site.register(CustomUser, CustomUserAdmin)
-# admin.site.register(UserAdmin)
