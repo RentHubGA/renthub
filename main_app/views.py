@@ -4,12 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image
+from .models import Product, Image, Renting
 import os
 import boto3
 import uuid
@@ -144,14 +144,6 @@ def add_image(request, product_id):
 #     return render(request, 'registration/signup.html', context)
 
 ### Products Views ###
-# Function Based
-# def product_list(request):
-# 	products = Product.objects.all()
-# 	return render(request, 'products/product_list.html', {
-#         'products': products
-# 	})
-
-# Class Based
 class ProductList(ListView):
     model = Product
     
@@ -162,9 +154,15 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        # Determines whether the user is the owner of the product
+        product = get_object_or_404(Product, id=self.kwargs['pk'])
+        is_owner = None
+        if self.request.user == product.user:
+            is_owner = product.user
         context['reviews'] = self.object.review_set.all()
         context['images'] = self.object.image_set.all()
+        context['form'] = RentingForm()
+        context['is_owner'] = is_owner
         return context
 
 
@@ -191,3 +189,7 @@ class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
 
+
+### Rentings Views ###
+class RentProduct(FormView):
+    pass

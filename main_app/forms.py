@@ -5,7 +5,11 @@
 # from django.forms.fields import EmailField  
 # from django.forms.forms import Form  
 from django.forms import ModelForm
-from .models import Review
+from .models import Review, Renting
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 
 # from .models import Review, CustomUser
 
@@ -17,6 +21,10 @@ class ReviewForm(ModelForm):
         model = Review
         fields = ['date', 'rating', 'description']
 
+class RentingForm(forms.ModelForm):
+    class Meta:
+        model = Renting
+        fields = ['date_rent', 'date_return']
 
 # class CustomUserCreationForm(UserCreationForm):
 #     username = forms.CharField(label='username', min_length=5, max_length=150)  
@@ -53,11 +61,6 @@ class ReviewForm(ModelForm):
 #             self.cleaned_data['password1']  
 #         )  
 #         return user   
-
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
