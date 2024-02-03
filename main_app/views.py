@@ -13,7 +13,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Image, Renting
 
 from main_app.templatetags.user_dashboard import user_products, user_rent
-from django.contrib import messages
 from django.utils import timezone
 
 import os
@@ -82,6 +81,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     # https://docs.djangoproject.com/en/5.0/ref/urlresolvers/#reverse-lazy
     def get_success_url(self):
         return reverse_lazy('profile_detail', kwargs={'username': self.object.username})
+
     
 # Profile Dashboard (LoginRequiredMixin)
 class ProfileDashboard(LoginRequiredMixin, TemplateView):
@@ -110,6 +110,7 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
 
             }
         return render(request, self.template_name, context)
+
 
 
 # @transaction.atomic block unSucceeds create user to database
