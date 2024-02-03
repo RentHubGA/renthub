@@ -15,7 +15,7 @@ urlpatterns = [
     path('products/<int:pk>/rent_product/', views.rent_product, name='rent_product'),
     ## accounts Root
     path('accounts/profile/<str:username>/', views.ProfileDetailView.as_view(), name='profile_detail'),
-    # path('accounts/profile/<str:username>/dashboard/', ),
+    path('accounts/profile/<str:username>/dashboard/', views.ProfileDashboard.as_view(), name='profile_dashboard' ),
     path('accounts/profile/<str:username>/update/', views.ProfileUpdate.as_view(), name='profile_update'),
     path('accounts/register/', views.register, name='register'),
 ]
