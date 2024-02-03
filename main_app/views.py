@@ -14,12 +14,10 @@ import os
 import boto3
 import uuid
 
-
 User = get_user_model()
 
-
-    # path('about', views.about, name='about'),
-    # path('products', views.product_index, name='index'),
+# path('about', views.about, name='about'),
+# path('products', views.product_index, name='index'),
 # Create your views here.
 
 def home(request):
@@ -76,10 +74,6 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     # https://docs.djangoproject.com/en/5.0/ref/urlresolvers/#reverse-lazy
     def get_success_url(self):
         return reverse_lazy('profile_detail', kwargs={'pk': self.object.pk})
-
-
-
-
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
@@ -163,6 +157,8 @@ class ProductDetail(DetailView):
         context['images'] = self.object.image_set.all()
         context['form'] = RentingForm()
         context['is_owner'] = is_owner
+        # TODO: render message for booking requests e.g. 'Success!' or 'Dates not available'
+        # context['message'] = message
         return context
 
 
@@ -191,5 +187,18 @@ class ProductDelete(DeleteView):
 
 
 ### Rentings Views ###
-def rent_product(request):
-    pass
+# TODO: Not complete - returning invalid data. Add booking logic to renting model and create error/success messages
+@transaction.atomic
+def rent_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    form = RentingForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data
+        date_rent = data['date_rent']
+        date_return = data['date_return']
+        print(f'Form data: {data}')
+        if product.is_available(date_rent, date_return):
+            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return)
+    else:
+        print(f'It does not work')
+    return redirect('product_detail', pk=pk)

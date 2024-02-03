@@ -50,29 +50,33 @@
 				{% else %}
 				<div class="my-2">
 					<h5>Rent</h5>
-					{% csrf_token %}
-					<table>
-						{% load crispy_forms_tags %}
-						{% crispy form form.helper %}
-					</table>
+					{% if message %}
+							{{ message }}
+					{% endif %}
+					<form method="post" action="{% url 'rent_product' pk=product.id %}">
+						<table>
+							{% load crispy_forms_tags %}
+							{% crispy form form.helper %}
+						</table>
+					</form>
 			</div>
 		{% endif %}
 	</div>
 </div>
 
 <div class="container">
-		<h4 class="my-4">Reviews</h4>
-		{% if reviews %}
-		<h5>Average Rating: {{ product.get_average }}/5.0</h5>
-		{% for review in reviews %}
-				<div class="container">
-						<h6>{{ review.user }}: {{ review.rating }}</h6>
-						<p>{{ review.description }}</p>
-				</div>
-		{% endfor %}
-		{% else %}
-		<h5>No reviews</h5>
-		{% endif %}
+	<h4 class="my-4">Reviews</h4>
+	{% if reviews %}
+	<h5>Average Rating: {{ product.get_average }}/5.0</h5>
+	{% for review in reviews %}
+			<div class="container">
+					<h6>{{ review.user }}: {{ review.rating }}.0/5.0</h6>
+					<p>{{ review.description }}</p>
+			</div>
+	{% endfor %}
+	{% else %}
+	<h5>No reviews</h5>
+	{% endif %}
 </div>
 
 {% endblock %}

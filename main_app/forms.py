@@ -18,13 +18,11 @@ class ReviewForm(ModelForm):
 
 # Using crispy forms to add date picker and change layout styling
 class RentingForm(forms.Form):
-    product_id = forms.IntegerField(widget=forms.HiddenInput())
     date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Pickup Date:')
     date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Return Date:')
 
     helper = FormHelper()
     helper.form_method = 'POST'
-    helper.form_action = 'rent_product'
     helper.form_class = 'form-horizontal'
     helper.label_class = 'col-md-3'
     helper.field_class = 'col-md-6'
