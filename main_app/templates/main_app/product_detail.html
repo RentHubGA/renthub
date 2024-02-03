@@ -12,8 +12,7 @@
     <div class="row align-items-start">
         <div class="col-md-1">
             <!-- TODO: Render thumbnails of images for each product and make clickable. Temporarily hard coded. -->
-            <img src="https://www.mitre10.com.au/media/catalog/product/6/1/6146328-0_5.jpg" class="img-thumbnail my-1"
-                alt="{{ product.product_name }}" style="height: auto; width: 100%;">
+            <img src=" {{ product.url }}">
             <img src="https://www.mitre10.com.au/media/catalog/product/6/1/6146328-0_5.jpg" class="img-thumbnail my-1"
                 alt="{{ product.product_name }}" style="height: auto; width: 100%;">
             <img src="https://www.mitre10.com.au/media/catalog/product/6/1/6146328-0_5.jpg" class="img-thumbnail my-1"
@@ -33,7 +32,8 @@
         {% endif %}
         </div>
     </div>
-</div>
+ </div>
+
 <div class="container">
     <h4 class="my-4">Reviews</h4>
 </div>

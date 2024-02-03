@@ -17,6 +17,7 @@ class ReviewForm(ModelForm):
         model = Review
         fields = ['date', 'rating', 'description']
 
+
 # class CustomUserCreationForm(UserCreationForm):
 #     username = forms.CharField(label='username', min_length=5, max_length=150)  
 #     email = forms.EmailField(label='email')  
