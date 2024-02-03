@@ -2,11 +2,21 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
-from .forms import CustomUserCreationForm, ReviewForm
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import login
+
+
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse_lazy
+from .forms import CustomUserCreationForm, ReviewForm
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
 from .models import Product
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
     # path('about', views.about, name='about'),
     # path('products', views.product_index, name='index'),
@@ -23,6 +33,53 @@ def reviewform(request):
     return render(request, 'review_form.html', {
         'review_form': review_form
     })
+
+# Profile Detail (LoginRequiredMixin)
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'profile/profile_detail.html'
+    context_object_name = 'profile'
+
+    # # Prevent other users from accessing profiles that do not belong to them.
+    def get_object(self, queryset=None):
+        # Get the requested profile or raise a 404 error if not found
+        profile = get_object_or_404(User, pk=self.kwargs['pk'])
+        print('User: ', User)
+        # Check if the authenticated user is owner  profile
+        # profile.user != self.request.user
+        print(self.request.user)
+        if profile != self.request.user:
+            print('profile: ', profile)
+            print('self.request.user: ', self.request.user)
+            # return PermissionDenied("permission Denied to views profile.")
+            raise PermissionDenied("permission Denied to views profile.")
+        print('Profile: ', profile)
+
+        return profile
+    
+# Profile Edit (LoginRequiredMixin)
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'profile/profile_form.html'
+    fields = ['first_name', 'last_name', 'avatar', 'address', 'town', 'county', 'post_code', 'country']
+    success_url = reverse_lazy('profile_detail')
+
+    # Prevent other users from accessing profiles that do not belong to them.
+    def get_object(self, queryset=None):
+        user = super().get_object(queryset=queryset)
+        print('user: ', user)
+        if user != self.request.user:
+            raise PermissionDenied("permission Denied to update profile.")
+        return user
+    
+    # Redirect to detail page
+    # https://docs.djangoproject.com/en/5.0/ref/urlresolvers/#reverse-lazy
+    def get_success_url(self):
+        return reverse_lazy('profile_detail', kwargs={'pk': self.object.pk})
+
+
+
+
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
