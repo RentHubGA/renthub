@@ -22,6 +22,8 @@
         </div>
         <div class="card-footer">
             <div class="card-action">
+
+                <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
                 <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
                 <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
             </div>
