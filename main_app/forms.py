@@ -16,7 +16,7 @@ from crispy_forms.bootstrap import FormActions
 class ImageUploadForm(ModelForm):
     class Meta:
         model = Image
-        fields = ['image']
+        fields = ['url']
 
 # from .models import Review, CustomUser
 

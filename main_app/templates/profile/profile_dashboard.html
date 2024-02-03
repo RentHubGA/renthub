@@ -1,0 +1,48 @@
+{% extends '../base.html' %}
+{% load user_dashboard %}
+
+{% block title %} {{ user.username }} Dashboard {% endblock %}
+
+{% block content %}
+
+<h1>{{ user.username }} Dashboard</h1><br>
+
+<h2>{{ user.username }} Products </h2>
+<ul>
+    {% user_products user as products %}
+    {% for product in products %}
+    <li>
+        {{ product.product_name }}
+        {% if product.id in rented_product_ids %}
+        <span>Renting</span>
+        {% else %}
+        <span>Available</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Renting History</h2>
+<ul>
+    {% user_rent user as rentings %}
+    {% for renting in rentings %}
+    <li>
+        {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
+        {% if now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+            <span>Returned</span>
+        {% else %}
+            <span>Ongoing</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+<div class="card-footer">
+    <div class="card-action">
+        <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
+        <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
+        <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
+    </div>
+</div>
+
+
+{% endblock %}
