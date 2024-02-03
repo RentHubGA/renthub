@@ -191,5 +191,5 @@ class ProductDelete(DeleteView):
 
 
 ### Rentings Views ###
-class RentProduct(FormView):
+def rent_product(request):
     pass

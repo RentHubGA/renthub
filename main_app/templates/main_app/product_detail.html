@@ -20,42 +20,43 @@
 						</div>
 					{% endfor %}
 					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#product-images" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#product-images" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			{% else %}
-				<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images" class="d-block w-100 object-fit-cover">
-			{% endif %}
-			</div>
-			<div class="col-md-6">
-				<h4>{{ product.product_name }}</h4>
-				<p>Price: ${{ product.price }}</p>
-				<p>Description: {{ product.description }}</p>
-				{% if product.user.town %}
-					<p>Location: {{ product.user.town }}</p>
+						<button class="carousel-control-prev" type="button" data-bs-target="#product-images" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#product-images" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
 				{% else %}
-					<p>No location specified.</p>
+					<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images" class="d-block w-100 object-fit-cover">
 				{% endif %}
-			{% if is_owner %}
-			<div>
-				<a href="{% url 'product_update' product.id %}" class="btn btn-primary">Edit</a>
-				<a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>
+				</div>
+				<div class="col-md-6">
+					<h4>{{ product.product_name }}</h4>
+					<p>Price: ${{ product.price }}</p>
+					<p>Description: {{ product.description }}</p>
+					{% if product.user.town %}
+						<p>Location: {{ product.user.town }}</p>
+					{% else %}
+						<p>No location specified.</p>
+					{% endif %}
+				{% if is_owner %}
+				<div>
+					<a href="{% url 'product_update' product.id %}" class="btn btn-primary">Edit</a>
+					<a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>
+				</div>
+				{% else %}
+				<div class="my-2">
+					<h5>Rent</h5>
+					{% csrf_token %}
+					<table>
+						{% load crispy_forms_tags %}
+						{% crispy form form.helper %}
+					</table>
 			</div>
-			{% else %}
-			<div class="my-2">
-				<h5>Rent</h5>
-				{% csrf_token %}
-				<table>
-					{{ form.as_table }}
-				</table>
-			</div>
-			{% endif %}
+		{% endif %}
 	</div>
 </div>
 

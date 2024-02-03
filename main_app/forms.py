@@ -1,7 +1,4 @@
-# from django import forms  
-# # from django.contrib.auth.models import User  
-# from django.contrib.auth.forms import UserCreationForm  
-# from django.core.exceptions import ValidationError  
+# from django.contrib.auth.models import User  
 # from django.forms.fields import EmailField  
 # from django.forms.forms import Form  
 from django.forms import ModelForm
@@ -10,21 +7,34 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-
-# from .models import Review, CustomUser
-
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.bootstrap import FormActions
 
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['date', 'rating', 'description']
 
-class RentingForm(forms.ModelForm):
-    class Meta:
-        model = Renting
-        fields = ['date_rent', 'date_return']
+# Using crispy forms to add date picker and change layout styling
+class RentingForm(forms.Form):
+    product_id = forms.IntegerField(widget=forms.HiddenInput())
+    date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Pickup Date:')
+    date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Return Date:')
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.form_action = 'rent_product'
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-md-3'
+    helper.field_class = 'col-md-6'
+    helper.layout = Layout(
+        Field('date_rent'),
+        Field('date_return'),
+        FormActions(
+            Submit('submit', 'Submit', css_class="btn btn-primary"),
+        )
+    )
 
 # class CustomUserCreationForm(UserCreationForm):
 #     username = forms.CharField(label='username', min_length=5, max_length=150)  
