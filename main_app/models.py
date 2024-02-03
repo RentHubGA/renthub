@@ -98,7 +98,7 @@ class Product(models.Model):
     # get average rating to show on product
     def get_average(self):
         reviews = self.review_set.all()
-        average_rating = sum([review.rating for review in reviews]) / self.review_set.count()
+        average_rating = sum([float(review.rating) for review in reviews]) / self.review_set.count()
         return round(average_rating, 2)
 
 # Image Model
