@@ -142,7 +142,7 @@ class Renting(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return  f'{self.user.name} {self.product} ({self.date_rent}) - ({self.date_return}), Total Price: {self.total_price}'
+        return  f'{self.user.username} {self.product} ({self.date_rent}) - ({self.date_return}), Total Price: {self.total_price}'
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'renting_id': self.id})
