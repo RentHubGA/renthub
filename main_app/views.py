@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
 from .forms import CustomUserCreationForm, ReviewForm
@@ -83,3 +83,12 @@ class ProductList(ListView):
     
 class ProductDetail(DetailView):
     model = Product
+    template_name = 'main_app/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['reviews'] = self.object.review_set.all()
+        context['images'] = self.object.image_set.all()
+        return context
