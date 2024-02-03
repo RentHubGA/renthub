@@ -93,7 +93,7 @@ class Product(models.Model):
         return f'{self.product_name} ({self.id})'
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'product_id': self.id})
+        return reverse('product_detail', kwargs={'product_id': self.id})
     
     # get average rating to show on product
     def get_average(self):

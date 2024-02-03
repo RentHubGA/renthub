@@ -21,18 +21,24 @@
         <div class="col-md-4">
             <img src="https://www.mitre10.com.au/media/catalog/product/6/1/6146328-0_5.jpg" class="img-fluid rounded-start my-2" alt="{{ product.product_name }}" style="height: auto; width: 100%;">
         </div>
-        <div class="col-md-7">
+        <div class="col-md-5">
             <h4>{{ product.product_name }}</h4>
-        <p>Price: ${{ product.price }}</p>
-        <p>Description: {{ product.description }}</p>
-        {% if product.user.town %}
+            <p>Price: ${{ product.price }}</p>
+            <p>Description: {{ product.description }}</p>
+            {% if product.user.town %}
             <p>Location: {{ product.user.town }}</p>
-        {% else %}
+            {% else %}
             <p>No location specified</p>
         {% endif %}
         </div>
+        <div class="col-md-7">
+            <a href="{% url 'product_update' product.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>
+        </div>
     </div>
  </div>
+
+
 
 <div class="container">
     <h4 class="my-4">Reviews</h4>

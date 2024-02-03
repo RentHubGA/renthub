@@ -1,10 +1,11 @@
 from django.db import transaction
 from django.shortcuts import render, redirect
+from django.urls import reverse
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
 from .forms import CustomUserCreationForm, ReviewForm
 from django.contrib.auth import login
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from .models import Product, Image
 import os
@@ -114,3 +115,14 @@ class ProductCreate(CreateView):
         form.instance.user = self.request.user  
         # Let the CreateView do its job as usual
         return super().form_valid(form)
+    
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['product_name', 'description', 'price', 'category']
+    
+    def get_success_url(self):
+        return reverse('product_detail', kwargs={'pk': self.object.id})
+
+class ProductDelete(DeleteView):
+    model = Product
+    success_url = '/products'
