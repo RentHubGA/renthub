@@ -104,6 +104,9 @@ class Product(models.Model):
         reviews = self.review_set.all()
         average_rating = sum([float(review.rating) for review in reviews]) / self.review_set.count()
         return round(average_rating, 2)
+    
+    def is_available(self):
+        return not self.is_rented
 
 # Image Model
 class Image(models.Model):

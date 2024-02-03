@@ -7,10 +7,15 @@ from .forms import ImageUploadForm
 from django.contrib.auth import login, get_user_model
 from .forms import CustomUserCreationForm, ReviewForm, RentingForm
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Image, Renting
+
+from main_app.templatetags.user_dashboard import user_products, user_rent
+from django.contrib import messages
+from django.utils import timezone
+
 import os
 import boto3
 import uuid
@@ -77,6 +82,35 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     # https://docs.djangoproject.com/en/5.0/ref/urlresolvers/#reverse-lazy
     def get_success_url(self):
         return reverse_lazy('profile_detail', kwargs={'username': self.object.username})
+    
+# Profile Dashboard (LoginRequiredMixin)
+class ProfileDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/profile_dashboard.html'
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        products = user_products(user)
+        rent = user_rent(user)
+        now = timezone.now()
+        product_ids = products.values_list('id', flat=True)
+        # rented_product_ids = Renting.objects.filter(product_id=product_ids)
+        # print(user)
+        rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
+        # print(products)
+        # print(rent)
+        # print(now)
+        print(product_ids)
+        print(rented_product_ids)
+        context = {
+            'user': user,
+            'products': products,
+            'rent': rent,
+            'now': now,
+            'rented_product_ids': rented_product_ids,
+
+            }
+        return render(request, self.template_name, context)
+
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
