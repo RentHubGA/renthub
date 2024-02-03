@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
 from django.shortcuts import get_object_or_404
@@ -10,10 +10,13 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, ReviewForm
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, Image
 from django.contrib.auth.mixins import LoginRequiredMixin
+import os
+import boto3
+import uuid
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -105,6 +108,23 @@ def register(request):
     }  
     return render(request, 'registration/signup.html', context)  
 
+
+def add_image(request, product_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Image.objects.create(url=url, product_id=product_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('product_detail', product_id=product_id)
+
+
 # def register(request):
 #     error_message = ''
 
@@ -140,3 +160,23 @@ class ProductList(ListView):
     
 class ProductDetail(DetailView):
     model = Product
+    template_name = 'main_app/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['reviews'] = self.object.review_set.all()
+        context['images'] = self.object.image_set.all()
+        return context
+
+class ProductCreate(CreateView):
+    model = Product
+    fields = ['product_name', 'description', 'price', 'category']
+    success_url = '/products'
+
+    def form_valid(self, form):
+        # Assign the logged in user (self.request.user)
+        form.instance.user = self.request.user  
+        # Let the CreateView do its job as usual
+        return super().form_valid(form)

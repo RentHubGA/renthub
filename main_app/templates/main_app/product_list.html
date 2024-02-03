@@ -34,14 +34,17 @@
                 <div class="card">
                     <div class="row g-0">
                         <div class="col-4">
-                            <img src="https://www.mitre10.com.au/media/catalog/product/6/1/6146328-0_5.jpg" class="img-fluid rounded-start my-2" alt="{{ product.product_name }}" style="height: auto; width: 100%;">
+                            {% if product.image_set.first %}
+                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 object-object-fit-contain" alt="{{ product.product_name }}">
+                            {% else %}
+                                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
+                            {% endif %}
                         </div>
                         <div class="col-8">
-                            <div class="card-body">
+                            <div class="card-body mx-2">
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p>Price: <span>${{ product.price }}</span></p>
-                                <p>Description: <span> {{ product.description|slice:":50" }}...</span></p>
-                                <div class="sticky-bottom p-3"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
+                                <div class="sticky-bottom"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                             </div>
                         </div>
                     </div> 
