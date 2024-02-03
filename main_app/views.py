@@ -3,23 +3,22 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
+from .forms import ImageUploadForm
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image
+from .models import Product, Image, Renting
 import os
 import boto3
 import uuid
 
-
 User = get_user_model()
 
-
-    # path('about', views.about, name='about'),
-    # path('products', views.product_index, name='index'),
+# path('about', views.about, name='about'),
+# path('products', views.product_index, name='index'),
 # Create your views here.
 
 def home(request):
@@ -79,10 +78,6 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('profile_detail', kwargs={'username': self.object.username})
 
-
-
-
-
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
 def register(request):
@@ -124,36 +119,6 @@ def add_image(request, product_id):
     return redirect('product_detail', product_id=product_id)
 
 
-# def register(request):
-#     error_message = ''
-
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)  # Log in the user after registration
-#             return redirect('home')
-#         else:
-#             # print(form.errors)
-#             error_message = 'Invalid sign up - try again'
-#     else:
-#         form = CustomUserCreationForm()
-
-#     context = {
-#         'form': form,
-#         'error_message': error_message
-#     }
-#     return render(request, 'registration/signup.html', context)
-
-### Products Views ###
-# Function Based
-# def product_list(request):
-# 	products = Product.objects.all()
-# 	return render(request, 'products/product_list.html', {
-#         'products': products
-# 	})
-
-# Class Based
 class ProductList(ListView):
     model = Product
     
@@ -164,9 +129,17 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        # Determines whether the user is the owner of the product
+        product = get_object_or_404(Product, id=self.kwargs['pk'])
+        is_owner = None
+        if self.request.user == product.user:
+            is_owner = product.user
         context['reviews'] = self.object.review_set.all()
         context['images'] = self.object.image_set.all()
+        context['form'] = RentingForm()
+        context['is_owner'] = is_owner
+        # TODO: render message for booking requests e.g. 'Success!' or 'Dates not available'
+        # context['message'] = message
         return context
 
 
@@ -175,11 +148,26 @@ class ProductCreate(CreateView):
     fields = ['product_name', 'description', 'price', 'category']
     success_url = '/products'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['image_form'] = ImageUploadForm()
+        return context
+    
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user  
+
+        response = super().form_valid(form)
+
+        image_form = ImageUploadForm(self.request.POST, self.request.FILES)
+
+        if image_form.is_valid():
+            image = image_form.save(commit=False)
+            image.product = self.object  # Link the image to the created product
+            image.save()
+
         # Let the CreateView do its job as usual
-        return super().form_valid(form)
+        return response
 
     
 class ProductUpdate(UpdateView):
@@ -192,3 +180,18 @@ class ProductUpdate(UpdateView):
 class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
+
+@transaction.atomic
+def rent_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    form = RentingForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data
+        date_rent = data['date_rent']
+        date_return = data['date_return']
+        print(f'Form data: {data}')
+        if product.is_available(date_rent, date_return):
+            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return)
+    else:
+        print(f'It does not work')
+    return redirect('product_detail', pk=pk)

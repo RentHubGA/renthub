@@ -12,6 +12,7 @@ urlpatterns = [
     path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='product_delete'),
     path('reviewform/', views.reviewform, name='reviewform'),
     path('products/<int:pk>/add_image', views.add_image, name='add_image'),
+    path('products/<int:pk>/rent_product/', views.rent_product, name='rent_product'),
     ## accounts Root
     path('accounts/profile/<str:username>/', views.ProfileDetailView.as_view(), name='profile_detail'),
     # path('accounts/profile/<str:username>/dashboard/', ),
