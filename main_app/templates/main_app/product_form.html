@@ -16,20 +16,26 @@
     <input type="submit" value="Add" class="btn btn-dark">
 </form>
 
-<!-- -------------------------------------------------------------------------------------->
-<!-- ADD PHOTO ----------------------------------------------------------------------------->
+<div>
+    <h1> Upload Picture </h1>
+    {% for photo in product.image_set.all %}
+    <img src="{{photo.url}}">
+    {% empty %}
+    <div>No Photos Uploaded</div>
+    <br>
+    {% endfor %}
 
-<h1> Upload Picture </h1>
-{% for photo in product.image_set.all %}
-<img src="{{photo.url}}">
-{% empty %}
-<div>No Photos Uploaded</div>
-<br>
-{% endfor %}
+    <!-- FORM GOES HERE -->
 
-<!-- FORM GOES HERE -->
+    <form action="{% url 'add_image' product.id %}" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <button type="submit" class="btn btn-dark">Upload</button>
+    </form>
 
 
-<!-- -------------------------------------------------------------------------------------->
+</div>
+<!------------------------------------------------------------------------->
 
 {% endblock %}

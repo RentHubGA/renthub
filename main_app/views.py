@@ -3,6 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
+from .forms import ImageUploadForm
 from django.contrib.auth import login, get_user_model
 from .forms import CustomUserCreationForm, ReviewForm
 from django.core.exceptions import PermissionDenied
@@ -122,35 +123,6 @@ def add_image(request, product_id):
     return redirect('product_detail', product_id=product_id)
 
 
-# def register(request):
-#     error_message = ''
-
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)  # Log in the user after registration
-#             return redirect('home')
-#         else:
-#             # print(form.errors)
-#             error_message = 'Invalid sign up - try again'
-#     else:
-#         form = CustomUserCreationForm()
-
-#     context = {
-#         'form': form,
-#         'error_message': error_message
-#     }
-#     return render(request, 'registration/signup.html', context)
-
-### Products Views ###
-# Function Based
-# def product_list(request):
-# 	products = Product.objects.all()
-# 	return render(request, 'products/product_list.html', {
-#         'products': products
-# 	})
-
 # Class Based
 class ProductList(ListView):
     model = Product
@@ -173,11 +145,26 @@ class ProductCreate(CreateView):
     fields = ['product_name', 'description', 'price', 'category']
     success_url = '/products'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['image_form'] = ImageUploadForm()
+        return context
+    
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user  
+
+        response = super().form_valid(form)
+
+        image_form = ImageUploadForm(self.request.POST, self.request.FILES)
+
+        if image_form.is_valid():
+            image = image_form.save(commit=False)
+            image.product = self.object  # Link the image to the created product
+            image.save()
+
         # Let the CreateView do its job as usual
-        return super().form_valid(form)
+        return response
 
     
 class ProductUpdate(UpdateView):
@@ -190,4 +177,3 @@ class ProductUpdate(UpdateView):
 class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
-
