@@ -42,7 +42,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     # # Prevent other users from accessing profiles that do not belong to them.
     def get_object(self, queryset=None):
         # Get the requested profile or raise a 404 error if not found
-        profile = get_object_or_404(User, pk=self.kwargs['pk'])
+        profile = get_object_or_404(User, username=self.kwargs['username'])
         print('User: ', User)
         # Check if the authenticated user is owner  profile
         # profile.user != self.request.user
@@ -65,8 +65,10 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     # Prevent other users from accessing profiles that do not belong to them.
     def get_object(self, queryset=None):
-        user = super().get_object(queryset=queryset)
+        username = self.kwargs['username']
+        user = get_object_or_404(User, username=username)
         print('user: ', user)
+        print('username: ', username)
         if user != self.request.user:
             raise PermissionDenied("permission Denied to update profile.")
         return user
@@ -74,7 +76,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     # Redirect to detail page
     # https://docs.djangoproject.com/en/5.0/ref/urlresolvers/#reverse-lazy
     def get_success_url(self):
-        return reverse_lazy('profile_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('profile_detail', kwargs={'username': self.object.username})
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
@@ -193,4 +195,3 @@ def rent_product(request, pk):
     else:
         print(f'It does not work')
     return redirect('product_detail', pk=pk)
-
