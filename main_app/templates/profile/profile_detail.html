@@ -1,0 +1,26 @@
+{% extends '../base.html' %}
+
+{% block title %} {{ profile.username }} Profile {% endblock %}
+
+{% block content %}
+
+<h1>{{ profile.username }} Profile</h1>
+
+<div>
+    <strong>Username:</strong> {{ profile.username }}<br>
+    <strong>Email:</strong> {{ profile.email }}<br>
+    <strong>Avatar:</strong> <img src="{{ profile.avatar }}" alt="Avatar"><br>
+    <strong>Address:</strong> {{ profile.address }}<br>
+    <strong>Town/City:</strong> {{ profile.town }}<br>
+    <strong>County:</strong> {{ profile.county }}<br>
+    <strong>Post Code:</strong> {{ profile.post_code }}<br>
+    <strong>Country:</strong> {{ profile.country }}<br>
+    <strong>Bio:</strong><br>
+
+    <div class="card-action">
+        <a href="{% url 'profile_update' pk=user.pk %}">Update</a>
+        <a href="{% url 'product_list' %}">Back to Products</a>
+    </div>
+</div>
+
+{% endblock %}
