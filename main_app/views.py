@@ -1,25 +1,22 @@
 from django.db import transaction
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.forms import UserCreationForm
 # import forms.py
-from django.shortcuts import get_object_or_404
-from django.contrib.auth import login
-
-
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy
+from django.contrib.auth import login, get_user_model
 from .forms import CustomUserCreationForm, ReviewForm
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView, CreateView
+from django.core.exceptions import PermissionDenied
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
-from .models import Product, Image
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Product, Image
 import os
 import boto3
 import uuid
-from django.contrib.auth import get_user_model
+
 
 User = get_user_model()
+
 
     # path('about', views.about, name='about'),
     # path('products', views.product_index, name='index'),
@@ -170,6 +167,7 @@ class ProductDetail(DetailView):
         context['images'] = self.object.image_set.all()
         return context
 
+
 class ProductCreate(CreateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
@@ -180,3 +178,16 @@ class ProductCreate(CreateView):
         form.instance.user = self.request.user  
         # Let the CreateView do its job as usual
         return super().form_valid(form)
+
+    
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['product_name', 'description', 'price', 'category']
+    
+    def get_success_url(self):
+        return reverse('product_detail', kwargs={'pk': self.object.id})
+
+class ProductDelete(DeleteView):
+    model = Product
+    success_url = '/products'
+
