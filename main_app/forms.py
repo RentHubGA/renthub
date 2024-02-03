@@ -3,6 +3,8 @@
 # from django.forms.forms import Form  
 from django.forms import ModelForm
 from .models import Review, Renting
+from .models import Image
+from .models import Review
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -11,10 +13,22 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
 from crispy_forms.bootstrap import FormActions
 
+class ImageUploadForm(ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image']
+
+# from .models import Review, CustomUser
+
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+
+
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['date', 'rating', 'description']
+
 
 # Using crispy forms to add date picker and change layout styling
 class RentingForm(forms.Form):
@@ -34,6 +48,7 @@ class RentingForm(forms.Form):
         )
     )
     
+
 User = get_user_model()
 
 class CustomUserCreationForm(UserCreationForm):

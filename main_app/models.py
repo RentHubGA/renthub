@@ -3,6 +3,7 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth import get_user_model
+
 # Create your models here...
 # User = get_user_model()
 
