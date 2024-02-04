@@ -5,11 +5,17 @@
 
 {% block content %}
 
-<h1>{{ user.username }} Dashboard</h1><br>
+<div class="card-action">
+    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
+    <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
+    <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
+    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
+</div>
 
+<h1>{{ user.username }} Dashboard</h1><br>
 <div class="container d-flex">
     <div class="container col-9">
-        <h2 class="my-4">{{ user.username }} Products </h2>
+        <h2 class="my-4">My Products </h2>
         <div class="row gy-4">
         {% user_products user as products %}
         {% for product in products %}
@@ -29,9 +35,9 @@
                                 <p>Price: <span>${{ product.price }}</span></p>
                                 <div class="sticky-bottom"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
                                 {% if product.id in rented_product_ids %}
-                                    <span class="badge bg-warning">Renting</span>
+                                    <span class="badge" style="background-color: #FFC107; color: #ffffff;">Renting</span>
                                 {% else %}
-                                    <span class="badge bg-success">Available</span>
+                                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
                                 {% endif %}
                             </div>
                         </div>
@@ -47,9 +53,9 @@
             <li class="list-group-item">
                 {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
                 {% if now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
-                    <span class="badge bg-secondary">Returned</span>
+                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Returned</span>
                 {% else %}
-                    <span class="badge bg-info">Ongoing</span>
+                    <span class="badge" style="background-color: #d2158a; color: #ffffff;">Ongoing</span>
                 {% endif %}
             </li>
             {% endfor %}
