@@ -1,7 +1,68 @@
 /**** Command for running Sass compiler: sass --watch ./static/css/custom.scss ./css/custom.css ****/
+// Default variable overrides
+$theme-colors: (
+    'primary': #6d6ffe,
+    'secondary': #f7b832,
+    'success': #9cd4ec,
+    'danger': #f76d32,
+    'dark': #2c2c2c,
+);
 
-// Include any default variable overrides here (though functions won't be available)
+$body-bg: #f7f6f2;
+$body-secondary-bg: #eeede8;
 
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@each $color, $value in $theme-colors {
+    .#{$color} {
+        @if $color == 'primary' {
+            color: #ffffff;
+        } @else if $color == 'dark' {
+            color: #f7b832;
+        } @else {
+            color: #2c2c2c;
+        }
+        background-color: $value;
+    }
+}
 
-// Then add additional custom code here
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+// Custom code
+.btn-primary {
+    background-color: map-get($theme-colors, 'primary');
+    color: #ffffff;
+    border-color: map-get($theme-colors, 'primary');
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+}
+
+a.nav-link {
+    color: #7e7e7e;
+}
+
+.navbar-nav a:hover,
+.navbar-nav a:focus {
+    color: #000000;
+    text-decoration: none;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+    color: #000000;
+    font-weight: 500;
+}
+
+.navbar-brand {
+    color: #6d6ffe;
+}
+
+a {
+    text-decoration: none;
+}
+
+.form-check-input,
+.input-group-text {
+    background-color: #ffffff;
+}
