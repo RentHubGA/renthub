@@ -33,14 +33,14 @@
             <div class="col-12 col-md-6">
                 <div class="card">
                     <div class="row g-0">
-                        <div class="col-4">
+                        <div class="col-6">
                             {% if product.image_set.first %}
-                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 object-object-fit-contain" alt="{{ product.product_name }}">
+                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 w-auto object-fit-cover" alt="{{ product.product_name }}">
                             {% else %}
                                 <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
                             {% endif %}
                         </div>
-                        <div class="col-8">
+                        <div class="col-6">
                             <div class="card-body mx-2">
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p>Price: <span>${{ product.price }}</span></p>
