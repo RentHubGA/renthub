@@ -24,6 +24,11 @@ a:hover {
     display: none;
 }
 
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+
 .renthub-bogo-navbar {
     height: 30px;
 }
