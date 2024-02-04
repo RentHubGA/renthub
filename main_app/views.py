@@ -224,4 +224,9 @@ def rent_product(request, pk):
         total_price = product.total_price(date_rent, date_return)
         if product.is_available(date_rent, date_return):
             Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
+            messages.success(request, 'Your booking was successful!')
+        else:
+            messages.error(request, 'Those dates are unavailable. Please try again.')
+    else:
+        messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
