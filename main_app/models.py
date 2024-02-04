@@ -1,9 +1,8 @@
 from django.db import models
 from django.urls import reverse
-from datetime import date
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth import get_user_model
-
+from datetime import datetime
 # Create your models here...
 # User = get_user_model()
 
@@ -70,7 +69,7 @@ class CustomUser(AbstractUser):
         return self.username
     
     def get_absolute_url(self):
-        return reverse('profile-detail', kwargs={'username': self.username})
+        return reverse('profile-detail', kwargs={'pk': self.id})
 
 # Category Model
 class Category(models.Model):
@@ -105,8 +104,18 @@ class Product(models.Model):
         average_rating = sum([float(review.rating) for review in reviews]) / self.review_set.count()
         return round(average_rating, 2)
     
-    def is_available(self):
-        return not self.is_rented
+    def is_available(self, date_rent, date_return):
+        all_rentings = Renting.objects.filter(product=self)
+        for renting in all_rentings:
+            if renting.date_rent <= date_return and renting.date_return >= date_rent:
+                return False
+        return True
+    
+    def total_price(self, date_rent, date_return):
+        delta = date_return - date_rent
+        total_days = delta.days
+        total_price = round(total_days * self.price, 2)
+        return total_price
 
 # Image Model
 class Image(models.Model):

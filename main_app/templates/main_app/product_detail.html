@@ -50,10 +50,12 @@
 				{% else %}
 				<div class="my-2">
 					<h5>Rent</h5>
-					{% if message %}
-							{{ message }}
+					{% if messages %}
+						{% for message in messages %}
+							<p>{{ message }}</p>
+						{% endfor %}
 					{% endif %}
-					<form method="post" action="{% url 'rent_product' pk=product.id %}">
+					<form method="post" action="{% url 'rent_product' product.id %}">
 						<table>
 							{% load crispy_forms_tags %}
 							{% crispy form form.helper %}

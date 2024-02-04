@@ -1,17 +1,14 @@
 from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib.auth.forms import UserCreationForm
-# import forms.py
-from .forms import ImageUploadForm
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm, RentingForm
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Image, Renting
-
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 
@@ -224,9 +221,12 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
-        print(f'Form data: {data}')
+        total_price = product.total_price(date_rent, date_return)
         if product.is_available(date_rent, date_return):
-            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return)
+            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
+            messages.success(request, 'Your booking was successful!')
+        else:
+            messages.error(request, 'Those dates are unavailable. Please try again.')
     else:
-        print(f'It does not work')
+        messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
