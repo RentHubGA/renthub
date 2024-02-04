@@ -34,7 +34,7 @@
                                         <form method="post" action="{% url 'logout' %}">
                                             <form method="post" action="{% url 'logout' %}">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-dark">Log Out</button>
+                                                <button type="submit" class="btn btn-dark rounded-pill" style="opacity: 50%;">Log Out</button>
                                             </form>
                                     </li>
                                     <li class="nav-item">
@@ -56,7 +56,13 @@
                 {% block content %}
                 {% endblock %}
             </div>
+        
         </main>
+
+            <!-- BACKGROUND  -->
+                <div style="background-color: #EEEDE8; width:1800px; height: 1900px;"></div>
+            <!-- BACKGROUND  -->
+
 
         <footer class="fixed-bottom bg-primary text-light p-md-3">
             <div class="container row row-md-cols-5 py-3" style="margin: 0 auto;">

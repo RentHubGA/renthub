@@ -5,16 +5,101 @@ Home | RentHub
 {% endblock %}
 
 {% block content %}
+<!-- FIRST PART -->
+
     <div class="container px-1 pb-1">
         <div class="row gx-5 align-items-start">
-            <div class="col-xxl-6" style="margin-top: 5em;">
+            <div class="col-xxl-6" style="margin-top: 7em;">
                 <h1>Consume less,<br> experience more.</h1>
-                <div style="max-width: 400px; font-size: small; letter-spacing: 1px; opacity: 65%;">
-                    <p>Say goodbye to unnecessary clutter and hello to a world of possibilities. Our platform allows you to easily rent a wide
-                    range of items – from tools to toys, promoting a sustainable lifestyle by reducing waste and unnecessary consumption.
-                    Join the renter's community, save money, and contribute to a greener future.</p>
-                </div>
+                    <div style="max-width: 400px;opacity: 85%; padding-top: 1em;">
+
+                        <p>Say goodbye to unnecessary clutter and hello to a world of possibilities. Our platform allows you to easily rent a wide
+                        range of items – from tools to toys, promoting a sustainable lifestyle by reducing waste and unnecessary consumption.
+                        Join the renter's community, save money, and contribute to a greener future.</p>
+
+                    </div>
+                    <div style="display: flex; align-items: center;">
+
+                        <!-- JOIN THE RENTVOLUTION -->
+
+                        <a class="btn btn-primary rounded-pill" href="{% url 'register' %}" role="button" style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">Join the rent-volution!</a>
+
+                        <!-- BROWSE ITEMS -->
+
+                        <a class='text-dark' href="{% url 'product_list' %}" role="button"
+                            style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; padding-left: 2em; ">Browse items</a>
+                            
+                    </div>
             </div>
         </div>
-   
+    </div>
+    
+<!-- FIRST PART -->
+<!-- SECOND PART -->
+    
+            <div style="margin-top: 12em; margin-bottom: 5em;">
+                <h1 class="text-center">Most popular categories</h1>
+                    <div style="opacity: 85%; padding-top: 1em;">
+                        <p class="text-center">From power tools and cleaning machines to event chairs and handcrafted treasures, our top rentals cover all your needs.
+                        Musical instruments, electric equipment, and more</p>
+                    </div>
+                </div>
+     
+            <div class="container">
+                <div class="row gy-4">
+                    <!-- IMAGE 1 -->
+                    <div class="container col-3">
+                        <div class="row gy-4">
+                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover">
+                        </div>
+                    </div>
+                    <!-- IMAGE 2 -->
+                    <div class="container col-3">
+                        <div class="row gy-4">
+                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                                class="img-fluid rounded-start h-100 object-fit-cover">
+                        </div>
+                    </div>
+                    <!-- IMAGE 3 -->
+                    <div class="container col-3">
+                        <div class="row gy-4">
+                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                                class="img-fluid rounded-start h-100 object-fit-cover">
+                        </div>
+                    </div>
+                    <!-- IMAGE 4 -->
+                    <div class="container col-3">
+                        <div class="row gy-4">
+                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                                class="img-fluid rounded-start h-100 object-fit-cover">
+                        </div>
+                    </div>
+            </div>
+
+<!-- SECOND PART -->
+
+<!-- THIRD PART -->
+
+<div class="container px-1 pb-1" style="margin-top: 8em;">
+    <div class="row gx-5 align-items-start">
+        <div class="col-xxl-6" style="margin-top: 7em;">
+            <h1 style="letter-spacing: 0.3px;  margin-bottom: 1em;">Turn your unused<br>
+            items into cash <br>
+            effortlessly with 
+            <div style="color: #6d6ffe;">RentHub</div>
+            </h1>
+          
+            <div style="display: flex; align-items: center;">
+
+                <!-- JOIN THE RENTVOLUTION -->
+
+                <a class="btn btn-secondary rounded-pill" href="{% url 'product_create' %}" role="button"
+                    style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">  List an item  </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
