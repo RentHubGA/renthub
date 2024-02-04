@@ -41,3 +41,7 @@ a:hover {
 .x-small {
     font-size: 0.75rem;
 }
+
+footer {
+    padding-bottom: 300px;
+}
