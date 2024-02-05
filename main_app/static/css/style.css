@@ -4,6 +4,7 @@
     --success: #9cd4ec;
     --danger: #f76d32;
     --dark: #2c2c2c;
+    --light-subtle: #eeede8;
 }
 
 main {
@@ -22,6 +23,10 @@ a:hover {
 
 .asteriskField {
     display: none;
+}
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
 .renthub-logo-navbar {
