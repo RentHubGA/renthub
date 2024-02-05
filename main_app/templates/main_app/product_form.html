@@ -5,35 +5,28 @@
 {% block content %}
 
 <!-- FORM ----------------------------------------------------------------------------->
-<h1>Add a Product</h1>
-<form action="" method="POST">
-    <!-- Django requires the following for security purposes -->
-    {% csrf_token %}
-    <table>
-        <!-- Render the inputs inside of <tr>s & <td>s -->
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Add" class="btn btn-dark">
-</form>
 
 <div>
-    <h1> Upload Picture </h1>
-    {% for photo in product.image_set.all %}
-    <img src="{{photo.url}}">
-    {% empty %}
-    <div>No Photos Uploaded</div>
-    <br>
-    {% endfor %}
-
-    <!-- FORM GOES HERE -->
-
-    <form action="{% url 'add_image' product.id %}" enctype="multipart/form-data" method="POST">
+    <h1> Add Product </h1>
+    <form id="add-thingie-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="photo-file">
-        <br><br>
-        <button type="submit" class="btn btn-dark">Upload</button>
-    </form>
+        {{ form.as_p }}
 
+        {{ image_form.management_form }}
+
+        {% for formset in image_form %}
+
+        <div class="image-formset">
+            {{ formset }}
+        </div>
+        {% endfor %}
+
+        <p>
+            <button type="button" id="add-image">Add another image</button>
+        </p>
+        <input type="submit" value="Add Product" />
+        </form>
+    
 
 </div>
 <!------------------------------------------------------------------------->
