@@ -25,7 +25,7 @@
                         <div class="navbar-toggler-icon"></div>
                         </button>
                         <div class="collapse navbar-collapse" id="nav">
-                            <ul class="navbar-nav ms-auto">
+                            <!-- <ul class="navbar-nav ms-auto"> -->
                                 {% if user.is_authenticated %}
                                     <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
                                     <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
@@ -55,7 +55,7 @@
             </div>
         </main>
 
-        <footer class="fixed-bottom bg-primary text-light p-md-3">
+        <!-- <footer class="fixed-bottom bg-primary text-light p-md-3">
             <div class="container row row-md-cols-5 py-3" style="margin: 0 auto;">
                 <div class="col d-md-block d-none">
                     <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo-white.png'%}" class="renthub-bogo-footer"></a>
@@ -88,7 +88,7 @@
                 <div class="my-3 page-divider"></div>
                 <div class="right text-success x-small">&copy; 2024 RentHub. All Rights Reserved.</div>
             </div>
-        </footer>
+        </footer> -->
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {

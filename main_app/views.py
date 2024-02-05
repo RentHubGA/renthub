@@ -91,13 +91,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         now = timezone.now()
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
-        # print(user)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
-        # print(products)
-        # print(rent)
-        # print(now)
-        print(product_ids)
-        print(rented_product_ids)
+        for product in products:
+            print(product.renting_set.all())
         context = {
             'user': user,
             'products': products,
