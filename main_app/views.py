@@ -178,8 +178,6 @@ class ProductDetail(DetailView):
         context['images'] = self.object.image_set.all()
         context['form'] = RentingForm()
         context['is_owner'] = is_owner
-        # TODO: render message for booking requests e.g. 'Success!' or 'Dates not available'
-        # context['message'] = message
         return context
 
 

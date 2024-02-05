@@ -10,6 +10,7 @@ $theme-colors: (
 
 $body-bg: #f7f6f2;
 $body-secondary-bg: #eeede8;
+$primary-bg-subtle: #e4e5ff;
 
 @each $color, $value in $theme-colors {
     .#{$color} {
@@ -35,6 +36,12 @@ $body-secondary-bg: #eeede8;
 
 .btn-primary:hover {
     color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-secondary:hover,
+.btn-danger:hover {
+    text-decoration: none;
 }
 
 a.nav-link {
@@ -63,7 +70,7 @@ a {
 }
 
 .form-check-input,
-.input-group-text {
+.form-control {
     background-color: #ffffff;
 }
 

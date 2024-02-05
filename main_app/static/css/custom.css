@@ -25,11 +25,6 @@
   background-color: #2c2c2c;
 }
 
-.light-subtle {
-  color: #eeede8;
-  background-color: #2c2c2c;
-}
-
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -78,7 +73,7 @@
   --bs-danger-text-emphasis: #58151c;
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
-  --bs-primary-bg-subtle: #cfe2ff;
+  --bs-primary-bg-subtle: #e4e5ff;
   --bs-secondary-bg-subtle: #e2e3e5;
   --bs-success-bg-subtle: #d1e7dd;
   --bs-info-bg-subtle: #cff4fc;
@@ -11612,6 +11607,12 @@ textarea.form-control-lg {
 
 .btn-primary:hover {
   color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-secondary:hover,
+.btn-danger:hover {
+  text-decoration: none;
 }
 
 a.nav-link {
@@ -11640,7 +11641,7 @@ a {
 }
 
 .form-check-input,
-.input-group-text {
+.form-control {
   background-color: #ffffff;
 }
 
