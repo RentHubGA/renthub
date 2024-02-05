@@ -33,26 +33,52 @@
                             <div class="card-body mx-2">
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p>Price: <span>${{ product.price }}</span></p>
-                                <div class="sticky-bottom"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
-                                {% if product.id in rented_product_ids %}
+                                <div class="btn btn-primary"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
+                            {% if product.id in rented_product_ids %}
+                                {% if now|date:"Y-m-d" < product.renting_set.last.date_return|date:"Y-m-d" and now|date:"Y-m-d" < product.renting_set.last.date_rent|date:"Y-m-d" %} 
+                                    <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Booking</span>
+                                {% elif now|date:"Y-m-d" <= product.renting_set.first.date_return|date:"Y-m-d" %} 
                                     <span class="badge" style="background-color: #FFC107; color: #ffffff;">Renting</span>
-                                {% else %}
+                                {% elif now|date:"Y-m-d" > product.renting_set.last.date_return|date:"Y-m-d" %}
                                     <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
                                 {% endif %}
+                            {% else %}
+                                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
+                            {% endif %}
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+                <div class="col-12 mt-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Rent History</h3>
+                            <ul>
+                                {% for renting in product.renting_set.all %}
+                                <li>
+                                    <h5>{{ renting.user }}</h5>
+                                    <p>Date: {{ renting.date_rent }} - {{ renting.date_return }}</p>
+                                    <p>Total Price: {{ renting.total_price }}</p>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
-        <h2>Renting History</h2>
+        
+        <h2>{{ user.username }} Rent History</h2>
         <ul class="list-group">
             {% user_rent user as rentings %}
             {% for renting in rentings %}
             <li class="list-group-item">
                 {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
-                {% if now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+                {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
+                    <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Reserve</span>
+                {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
                     <span class="badge" style="background-color: #15d22e; color: #ffffff;">Returned</span>
                 {% else %}
                     <span class="badge" style="background-color: #d2158a; color: #ffffff;">Ongoing</span>
@@ -60,13 +86,6 @@
             </li>
             {% endfor %}
         </ul>
-        <div class="card-footer mt-3">
-            <div class="card-action">
-                <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
-                <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
-                <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
-            </div>
-        </div>
     </div>
 </div>
 
