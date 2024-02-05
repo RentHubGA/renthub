@@ -9,6 +9,8 @@
         <h4>Filter By</h4>
         <form method="get" action="{% url 'product_list' %}">
             <!-- TODO: add functionality to filter and render categories, price etc -->
+           
+            <!-- categories 1   -->
             
             <h6 class="mt-3">Categories: </h6>
             
@@ -20,7 +22,7 @@
                                     {{ product.category.name }}
                     </label>
             </div>
-            <!-- ------------------------ -->
+
             {% endfor %}
 
             <h6 class="mt-3">Price:</h6>
