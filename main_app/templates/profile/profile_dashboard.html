@@ -5,35 +5,38 @@
 
 {% block content %}
 
-<div class="card-action">
-    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
-    <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
-    <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
-    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
-</div>
-
-<h1>{{ user.username }} Dashboard</h1><br>
-<div class="container d-flex">
-    <div class="container col-9">
-        <h2 class="my-4">My Products </h2>
-        <div class="row gy-4">
-        {% user_products user as products %}
-        {% for product in products %}
-            <div class="col-12 col-md-6">
-                <div class="card">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            {% if product.image_set.first %}
-                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 object-object-fit-contain" alt="{{ product.product_name }}">
-                            {% else %}
-                                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
-                            {% endif %}
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body mx-2">
-                                <h5 class="card-title">{{ product.product_name }}</h5>
-                                <p>Price: <span>${{ product.price }}</span></p>
-                                <div class="btn btn-primary"><a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a></div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Test Navigation</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{% url 'profile_detail' username=request.user.username %}">Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_dashboard' username=request.user.username %}">Dashboard</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_update' username=request.user.username %}">Update Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_list' %}">Back to Products</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_create' %}">Add Product</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h1 class="mb-4">{{ user.username }} Dashboard</h1>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% user_products user as products %}
+                {% for product in products %}
+                <div class="col">
+                    <div class="card">
+                        {% if product.image_set.first %}
+                        <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 w-auto object-fit-cover" alt="{{ product.product_name }}">
+                        {% else %}
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                            <p class="card-text">Price: <span>${{ product.price }}</span></p>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a>
                             {% if product.id in rented_product_ids %}
                                 {% if now|date:"Y-m-d" < product.renting_set.last.date_return|date:"Y-m-d" and now|date:"Y-m-d" < product.renting_set.last.date_rent|date:"Y-m-d" %} 
                                     <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Booking</span>
@@ -43,22 +46,17 @@
                                     <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
                                 {% endif %}
                             {% else %}
-                                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
+                                <span class="badge bg-success">Available</span>
                             {% endif %}
-
-                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-                <div class="col-12 mt-3">
-                    <div class="card">
+                    <div class="card mt-4">
                         <div class="card-body">
                             <h3>Rent History</h3>
-                            <ul>
+                            <ul class="list-group">
                                 {% for renting in product.renting_set.all %}
-                                <li>
-                                    <h5>{{ renting.user }}</h5>
+                                <li class="list-group-item">
+                                    <h5><a href="{% url 'profile_dashboard' username=renting.user %}">{{ renting.user }}</a></h5>
                                     <p>Date: {{ renting.date_rent }} - {{ renting.date_return }}</p>
                                     <p>Total Price: {{ renting.total_price }}</p>
                                 </li>
@@ -67,25 +65,29 @@
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3>Rent History</h3>
+                    <ul class="list-group">
+                        {% user_rent user as rentings %}
+                        {% for renting in rentings %}
+                        <li class="list-group-item">
+                            {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
+                            {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
+                                <span class="badge bg-primary">Reserve</span>
+                            {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+                                <span class="badge bg-success">Returned</span>
+                            {% else %}
+                                <span class="badge bg-danger">Ongoing</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
-        
-        <h2>{{ user.username }} Rent History</h2>
-        <ul class="list-group">
-            {% user_rent user as rentings %}
-            {% for renting in rentings %}
-            <li class="list-group-item">
-                {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
-                {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
-                    <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Reserve</span>
-                {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
-                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Returned</span>
-                {% else %}
-                    <span class="badge" style="background-color: #d2158a; color: #ffffff;">Ongoing</span>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
     </div>
 </div>
 

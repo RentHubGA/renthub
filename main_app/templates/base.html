@@ -11,6 +11,7 @@
         </title>
         <link rel="stylesheet" href="{% static './css/style.css' %}">
         <link rel="stylesheet" href="{% static './css/custom.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script defer src="{% static './js/bootstrap.bundle.min.js' %}"></script>
 
     </head>
@@ -27,7 +28,7 @@
                             <div class="navbar-toggler-icon"></div>
                             </button>
                             <div class="collapse navbar-collapse" id="nav">
-                                <ul class="navbar-nav ms-auto gap-5">
+                                <ul class="navbar-nav ms-auto gap-md-3">
                                     {% if user.is_authenticated %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
@@ -56,9 +57,6 @@
                 {% endblock %}
             </div>
         </main>
-            <!-- BACKGROUND  -->
-                <div style="background-color: #EEEDE8; width:1800px; height: 1900px;"></div>
-            <!-- BACKGROUND  -->
         </div>
         <footer class="bg-primary text-light p-md-3">
             <div class="container row row-md-cols-5 py-3" style="margin: 0 auto;">

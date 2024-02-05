@@ -4,54 +4,67 @@
 
 {% block content %}
 
-<div class="card-action">
-    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
-    <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
-    <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
-    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
-</div>
-<div class="container mt-5">
-    
-    <h1>Update Your Profile</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Test Navigation</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{% url 'profile_detail' username=request.user.username %}">Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_dashboard' username=request.user.username %}">Dashboard</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_update' username=request.user.username %}">Update Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_list' %}">Back to Products</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_create' %}">Add Product</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="container mt-5">
+                <h1>Update Your Profile</h1>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
-            {{ form.first_name }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
-            {{ form.last_name }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar</label>
-            {{ form.avatar }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
-            {{ form.address }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.town.id_for_label }}" class="form-label">Town/City</label>
-            {{ form.town }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.county.id_for_label }}" class="form-label">County</label>
-            {{ form.county }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.post_code.id_for_label }}" class="form-label">Post Code</label>
-            {{ form.post_code }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
-            {{ form.country }}
-        </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar</label>
+                        {{ form.avatar }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.town.id_for_label }}" class="form-label">Town/City</label>
+                        {{ form.town }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.county.id_for_label }}" class="form-label">County</label>
+                        {{ form.county }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.post_code.id_for_label }}" class="form-label">Post Code</label>
+                        {{ form.post_code }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                        {{ form.country }}
+                    </div>
 
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-    </form>
-    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-secondary mt-3">Back</a>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+                <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-secondary mt-3">Back</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
