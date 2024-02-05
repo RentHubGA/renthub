@@ -11,12 +11,13 @@
 <div class="container">
 	<div class="row align-items-start">
 		<div class="col-md-6">
+			
 			{% if images %}
 				<div id="product-images" data-bs-interval="false" class="carousel slide">
 					<div class="carousel-inner">
 					{% for image in images %}
 						<div class="carousel-item {% if forloop.first %}active{% endif %}">
-							<img src="{{ image.url }}" class="d-block w-100 object-fit-cover">
+							<img src="{{ image.url }}" class="d-block object-fit-cover carousel-img">
 						</div>
 					{% endfor %}
 					</div>
@@ -37,6 +38,14 @@
 					<h4>{{ product.product_name }}</h4>
 					<p>Price: ${{ product.price }}</p>
 					<p>Description: {{ product.description }}</p>
+
+					<!-- QUERY CATEGORY -->
+
+					{% for category in product.category.all %}
+					<p>Category: {{ category.name }} </p>
+					{% endfor %}
+					
+<!-- ------------------------------------------------------------------- -->
 					{% if product.user.town %}
 						<p>Location: {{ product.user.town }}</p>
 					{% else %}

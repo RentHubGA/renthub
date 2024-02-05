@@ -33,11 +33,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'main_app',
+    'storages',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',
@@ -69,7 +69,7 @@ ROOT_URLCONF = 'renthub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join((BASE_DIR), 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,6 +92,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'renthub',
+    }
+}
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.s3.S3Storage'
+    },
+    'staticfiles': {
+      'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
     }
 }
 
@@ -131,6 +140,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'main_app/static')
+    ]
+
 # login redirect
 LOGIN_REDIRECT_URL = '/products/'
 # logout redirect

@@ -3,7 +3,14 @@
 {% block title %} {{ profile.username }} Profile {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+
+<div class="card-action">
+    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
+    <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
+    <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
+    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
+</div>
+
     <div class="card">
         <div class="card-header">
             <h1>{{ profile.username }} Profile</h1>
@@ -19,14 +26,6 @@
                 <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
                 <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
             </ul>
-        </div>
-        <div class="card-footer">
-            <div class="card-action">
-
-                <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
-                <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
-                <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
-            </div>
         </div>
     </div>
 </div>

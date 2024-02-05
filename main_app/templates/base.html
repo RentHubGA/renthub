@@ -9,64 +9,92 @@
             RentHub
             {% endblock %}
         </title>
-        <link rel="stylesheet" href="{% static './css/style.css' %}" />
-        <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous"/>
+        <link rel="stylesheet" href="{% static './css/style.css' %}">
+        <link rel="stylesheet" href="{% static './css/custom.css' %}">
+        <script defer src="{% static './js/bootstrap.bundle.min.js' %}"></script>
+
     </head>
 
     <body>
-        <header>
-            <nav>
-                <div class="navbar navbar-expand-md navbar-dark bg-secondary">
-                    <div class="container">
-                        <a href="{% url 'home' %}" class="navbar-brand">RentHub</a>
-                        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                        <div class="navbar-toggler-icon"></div>
-                        </button>
-                        <div class="collapse navbar-collapse" id="nav">
-                            <ul class="navbar-nav ms-auto">
-                                {% if user.is_authenticated %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                                    <li class="nav-item">
-                                        <a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
-                                    <li class="nav-item">
-                                        <form method="post" action="{% url 'logout' %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-dark">Log Out</button>
-                                        </form>
-                                    </li>
-                                {% else %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
-                                {% endif %}
-                            </ul>
+        <div class="page-container">
+            <div class="content-wrap">
+            <header>
+                <nav>
+                    <div class="navbar navbar-expand-md navbar-dark body-bg">
+                        <div class="container">
+                            <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo.png'%}" class="renthub-logo-navbar m-2" style="max-width: 100px; height: auto; "></a>
+                            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                            <div class="navbar-toggler-icon"></div>
+                            </button>
+                            <div class="collapse navbar-collapse" id="nav">
+                                <ul class="navbar-nav ms-auto gap-5">
+                                    {% if user.is_authenticated %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
+                                        <li class="nav-item">
+                                            <form method="post" action="{% url 'logout' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-dark rounded-pill" style="opacity: 50%;">Log Out</button>
+                                            </form>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </header>
+                </nav>
+            </header>
         <main class="pb-5 mb-5">
             <div class="container">
                 {% block content %}
                 {% endblock %}
             </div>
         </main>
-
-        <footer class="fixed-bottom bg-secondary text-light p-3" style="padding-bottom: 60px;">
-            <div class="right">All Rights Reserved &copy; 2024 RentHub &nbsp;</div>
+            <!-- BACKGROUND  -->
+                <div style="background-color: #EEEDE8; width:1800px; height: 1900px;"></div>
+            <!-- BACKGROUND  -->
+        </div>
+        <footer class="bg-primary text-light p-md-3">
+            <div class="container row row-md-cols-5 py-3" style="margin: 0 auto;">
+                <div class="col d-md-block d-none">
+                    <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo-white.png'%}" class="renthub-logo-footer"></a>
+                </div>
+                <div class="col d-md-block d-none"></div>
+                <div class="col">
+                    <h6 class="text-white">Products</h6>
+                    <ul class="navbar-nav">
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">How it works</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'product_list' %}">Categories</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">My products</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">Terms and conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h6 class="text-white">Rentals</h6>
+                    <ul class="navbar-nav">
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">My rentals</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">Invite a friend</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h6 class="text-white">About Us</h6>
+                    <ul class="navbar-nav">
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">Who we are</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-md-3 m-2">
+                <div class="my-3 page-divider"></div>
+                <div class="right text-success x-small">&copy; 2024 RentHub. All Rights Reserved.</div>
+            </div>
         </footer>
-
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"
-        ></script>
+    </div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {

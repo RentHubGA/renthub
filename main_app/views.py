@@ -2,15 +2,16 @@ from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image, Renting
+from .models import Product, Image, Renting, Category
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
+
 
 import os
 import boto3
@@ -91,13 +92,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         now = timezone.now()
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
-        # print(user)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
-        # print(products)
-        # print(rent)
-        # print(now)
-        print(product_ids)
-        print(rented_product_ids)
+        for product in products:
+            print(product.renting_set.all())
         context = {
             'user': user,
             'products': products,
@@ -153,6 +150,17 @@ def add_image(request, product_id):
 
 class ProductList(ListView):
     model = Product
+    model2 = Category
+    
+    # def filter_products(request):
+    #     product = Product.objects.all()
+    #     categories_filter = request.GET.get('categories-filter')
+    #     min_filter = request.get('min')
+    #     max_filter = request.get('max')
+
+    #     return render(request, "product_list", {
+    #         'product': product,
+    #     })
     
 class ProductDetail(DetailView):
     model = Product
@@ -182,24 +190,28 @@ class ProductCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['image_form'] = ImageUploadForm()
+        if self.request.POST:
+            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['image_form'] = ImageFormSet()
+
         return context
+     
     
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user  
 
-        response = super().form_valid(form)
+        context = self.get_context_data()
+        image_form = context['image_form']
 
-        image_form = ImageUploadForm(self.request.POST, self.request.FILES)
+        with transaction.atomic():
+            self.object = form.save()
+            if image_form.is_valid():
+                image_form.instance = self.object
+                image_form.save()
 
-        if image_form.is_valid():
-            image = image_form.save(commit=False)
-            image.product = self.object  # Link the image to the created product
-            image.save()
-
-        # Let the CreateView do its job as usual
-        return response
+        return super().form_valid(form)
 
     
 class ProductUpdate(UpdateView):
@@ -213,6 +225,7 @@ class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
 
+
 @transaction.atomic
 def rent_product(request, pk):
     product = get_object_or_404(Product, id=pk)
@@ -221,7 +234,9 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
+        # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
             Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
             messages.success(request, 'Your booking was successful!')

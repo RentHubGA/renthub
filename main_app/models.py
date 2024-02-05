@@ -79,7 +79,7 @@ class Category(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'category_id': self.id})
+        return reverse('category_detail', kwargs={'pk': self.id})
 
 
 # Product Model
@@ -88,7 +88,7 @@ class Product(models.Model):
     description = models.TextField(max_length=255)
     price = models.PositiveIntegerField()
     # many to many Category
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, default=True)
     # one to many User
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
