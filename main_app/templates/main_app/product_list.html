@@ -7,21 +7,28 @@
 <div class="container d-flex">
     <div class="container my-4 col-3 p-0">
         <h4>Filter By</h4>
-        <form action="#">
+        <form method="get" action="{% url 'product_list' %}">
             <!-- TODO: add functionality to filter and render categories, price etc -->
-            <h6 class="mt-3">Categories:</h6>
+            
+            <h6 class="mt-3">Categories: </h6>
+            
+            {% for product in product_list %}
+            <!-- categories 1   -->
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Sports Equipment....
-                </label>
+                <input class="form-check-input border rounded-xl" name= "categories-filter" type="checkbox" value="{{ categories_filter }}" id="flexCheckDefault">
+                    <label class="form-check-label" name= "categories-filter" for="flexCheckDefault">                   
+                                    {{ product.category.name }}
+                    </label>
             </div>
+            <!-- ------------------------ -->
+            {% endfor %}
+
             <h6 class="mt-3">Price:</h6>
             <div class="input-group mb-3">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" placeholder="Min">
+                <input type="text" class="form-control" placeholder="Min" name="min">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" placeholder="Max">
+                <input type="text" class="form-control" placeholder="Max" name="max">
             </div>
             <h6 class="mt-3">Dates</h6>
             <input type="submit" value="Apply" class="btn btn-primary my-2">
@@ -35,12 +42,12 @@
                     <div class="row g-0">
                         <div class="col-8">
                             {% if product.image_set.first %}
-                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 object-object-fit-contain" alt="{{ product.product_name }}">
+                                <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 w-auto object-fit-cover" alt="{{ product.product_name }}">
                             {% else %}
                                 <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
                             {% endif %}
                         </div>
-                        <div class="col-8">
+                        <div class="col-6">
                             <div class="card-body mx-2">
                                 <h5 class="card-title">{{ product.product_name }}</h5>
                                 <p class="align-top">Price: <span>${{ product.price }}</span></p>
