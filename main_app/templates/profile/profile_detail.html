@@ -1,32 +1,46 @@
 {% extends '../base.html' %}
+{% load user_dashboard %}
 
 {% block title %} {{ profile.username }} Profile {% endblock %}
 
 {% block content %}
 
-<div class="card-action">
-    <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-primary">Profile</a>
-    <a href="{% url 'profile_dashboard' username=user.username %}" class="btn btn-primary">Dashboard</a>
-    <a href="{% url 'profile_update' username=user.username %}" class="btn btn-primary">Update Profile</a>
-    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
-</div>
-
-    <div class="card">
-        <div class="card-header">
-            <h1>{{ profile.username }} Profile</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Test Navigation</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{% url 'profile_detail' username=request.user.username %}">Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_dashboard' username=request.user.username %}">Dashboard</a></li>
+                        <li class="list-group-item"><a href="{% url 'profile_update' username=request.user.username %}">Update Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_list' %}">Back to Products</a></li>
+                        <li class="list-group-item"><a href="{% url 'product_create' %}">Add Product</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <img src="{{ profile.avatar }}" alt="{{ profile.username }} Avatar" class="img-fluid mb-3">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Username:</strong> {{ profile.username }}</li>
-                <li class="list-group-item"><strong>Email:</strong> {{ profile.email }}</li>
-                <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
-                <li class="list-group-item"><strong>Town/City:</strong> {{ profile.town }}</li>
-                <li class="list-group-item"><strong>County:</strong> {{ profile.county }}</li>
-                <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
-                <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
-            </ul>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="mb-4">{{ profile.username }} Profile</h1>
+                </div>
+                <div class="card-body">
+                    <img src="{{ profile.avatar }}" alt="{{ profile.username }} Avatar" class="img-fluid mb-3">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Username:</strong> {{ profile.username }}</li>
+                        <li class="list-group-item"><strong>Email:</strong> {{ profile.email }}</li>
+                        <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
+                        <li class="list-group-item"><strong>Town/City:</strong> {{ profile.town }}</li>
+                        <li class="list-group-item"><strong>County:</strong> {{ profile.county }}</li>
+                        <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
+                        <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
