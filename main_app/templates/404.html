@@ -1,0 +1,15 @@
+{% extends './base.html' %}
+
+{% block title %}
+404 Error | RentHub
+{% endblock %}
+
+{% block content %}
+
+<h1 class="my-4">Uh oh!</h1>
+
+<h3 class="my-4">We can't find the page you're looking for</h3>
+
+<a href="{% url 'home' %}" class="btn btn-primary">Home</a>
+
+{% endblock %}

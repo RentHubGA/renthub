@@ -229,6 +229,7 @@ class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
 
+
 @transaction.atomic
 def rent_product(request, pk):
     product = get_object_or_404(Product, id=pk)
@@ -237,7 +238,9 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
+        # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
             Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
             messages.success(request, 'Your booking was successful!')
