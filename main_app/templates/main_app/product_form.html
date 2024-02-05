@@ -4,11 +4,15 @@
 
 {% block content %}
 
+{% load widget_tweaks %}
 <!-- FORM ----------------------------------------------------------------------------->
 
 <div>
     <h1> Add Product </h1>
-    <form id="add-thingie-form" method="POST" enctype="multipart/form-data">
+
+    <form id="add-product" method="POST" enctype="multipart/form-data">
+
+ 
         {% csrf_token %}
         {{ form.as_p }}
 
@@ -22,9 +26,11 @@
         {% endfor %}
 
         <p>
-            <button type="button" id="add-image">Add another image</button>
+
+        <button type="button" class="btn btn-primary rounded-pill" id="add-image">Add another image</button>
         </p>
-        <input type="submit" value="Add Product" />
+        <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
+
         </form>
     
 
