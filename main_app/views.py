@@ -222,6 +222,15 @@ class ProductUpdate(UpdateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['image_form'] = ImageFormSet()
+
+        return context
+
     def get_success_url(self):
         return reverse('product_detail', kwargs={'pk': self.object.id})
 
