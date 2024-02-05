@@ -1,10 +1,8 @@
 # from django.contrib.auth.models import User  
 # from django.forms.fields import EmailField  
 # from django.forms.forms import Form  
-from django.forms import ModelForm
-from .models import Review, Renting
-from .models import Image
-from .models import Review
+from django.forms import ModelForm, inlineformset_factory
+from .models import Review, Renting, Image, Review, Product
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -16,7 +14,16 @@ from crispy_forms.bootstrap import FormActions
 class ImageUploadForm(ModelForm):
     class Meta:
         model = Image
-        fields = ['url']
+        fields = '__all__'
+
+ImageFormSet = inlineformset_factory(
+    Product,
+    Image,
+    form=ImageUploadForm,
+    can_delete=False,
+    max_num=5, # Max number of formsets allowed
+    extra=1    # Number of formsets to render
+)
 
 # from .models import Review, CustomUser
 

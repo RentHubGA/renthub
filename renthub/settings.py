@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main_app',
+    'storages',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',
@@ -92,6 +93,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'renthub',
+    }
+}
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.s3.S3Storage'
+    },
+    'staticfiles': {
+      'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
     }
 }
 
