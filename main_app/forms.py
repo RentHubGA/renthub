@@ -54,6 +54,8 @@ class RentingForm(forms.Form):
             Submit('submit', 'Submit', css_class="btn btn-primary"),
         )
     )
+
+
     
 
 User = get_user_model()

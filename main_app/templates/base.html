@@ -16,58 +16,54 @@
     </head>
 
     <body>
-        <header>
-            <nav>
-                <div class="navbar navbar-expand-md navbar-dark body-bg">
-                    <div class="container">
-                        <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo.png'%}" class="renthub-bogo-navbar m-2" style="max-width: 100px; height: auto; "></a>
-                        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-                        <div class="navbar-toggler-icon"></div>
-                        </button>
-                        <div class="collapse navbar-collapse" id="nav">
-                            <ul class="navbar-nav ms-auto gap-5">
-                                {% if user.is_authenticated %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                                    <li class="nav-item">
-                                        <form method="post" action="{% url 'logout' %}">
+        <div class="page-container">
+            <div class="content-wrap">
+            <header>
+                <nav>
+                    <div class="navbar navbar-expand-md navbar-dark body-bg">
+                        <div class="container">
+                            <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo.png'%}" class="renthub-logo-navbar m-2" style="max-width: 100px; height: auto; "></a>
+                            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+                            <div class="navbar-toggler-icon"></div>
+                            </button>
+                            <div class="collapse navbar-collapse" id="nav">
+                                <ul class="navbar-nav ms-auto gap-5">
+                                    {% if user.is_authenticated %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
+                                        <li class="nav-item">
                                             <form method="post" action="{% url 'logout' %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-dark rounded-pill" style="opacity: 50%;">Log Out</button>
                                             </form>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a>
-                                    </li>
-                                    
-                                {% else %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
-                                {% endif %}
-                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </header>
+                </nav>
+            </header>
         <main class="pb-5 mb-5">
             <div class="container">
                 {% block content %}
                 {% endblock %}
             </div>
-        
         </main>
-
             <!-- BACKGROUND  -->
                 <div style="background-color: #EEEDE8; width:1800px; height: 1900px;"></div>
             <!-- BACKGROUND  -->
-
-
-        <footer class="fixed-bottom bg-primary text-light p-md-3">
+        </div>
+        <footer class="bg-primary text-light p-md-3">
             <div class="container row row-md-cols-5 py-3" style="margin: 0 auto;">
                 <div class="col d-md-block d-none">
-                    <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo-white.png'%}" class="renthub-bogo-footer"></a>
+                    <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo-white.png'%}" class="renthub-logo-footer"></a>
                 </div>
                 <div class="col d-md-block d-none"></div>
                 <div class="col">
@@ -98,6 +94,7 @@
                 <div class="right text-success x-small">&copy; 2024 RentHub. All Rights Reserved.</div>
             </div>
         </footer>
+    </div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {

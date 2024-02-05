@@ -92,13 +92,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         now = timezone.now()
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
-        # print(user)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
-        # print(products)
-        # print(rent)
-        # print(now)
-        print(product_ids)
-        print(rented_product_ids)
+        for product in products:
+            print(product.renting_set.all())
         context = {
             'user': user,
             'products': products,
@@ -238,6 +234,7 @@ class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
 
+
 @transaction.atomic
 def rent_product(request, pk):
     product = get_object_or_404(Product, id=pk)
@@ -246,7 +243,9 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
+        # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
             Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
             messages.success(request, 'Your booking was successful!')

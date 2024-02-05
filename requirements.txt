@@ -4,11 +4,18 @@ botocore==1.34.34
 crispy-bootstrap5==2023.10
 Django==5.0.1
 django-crispy-forms==2.1
+django-debug-toolbar==4.2.0
 django-environ==0.11.2
 django-location-field==2.7.3
+django-storages==1.14.2
+django-widget-tweaks==1.5.0
 jmespath==1.0.1
+numpy @ file:///private/tmp/numpy-20240108-5731-uciys2/numpy-1.26.3
+pillow==10.2.0
+protobuf==4.25.2
 psycopg-binary==3.1.17
 psycopg2==2.9.9
+psycopg2-binary==2.9.9
 python-dateutil==2.8.2
 s3transfer==0.10.0
 six==1.16.0
