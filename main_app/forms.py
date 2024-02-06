@@ -51,7 +51,7 @@ class RentingForm(forms.Form):
         Field('date_rent'),
         Field('date_return'),
         FormActions(
-            Submit('submit', 'Submit', css_class="btn btn-primary"),
+            Submit('submit', 'Submit', css_class="btn btn-primary rounded-pill"),
         )
     )
 
