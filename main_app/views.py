@@ -83,7 +83,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     
 # Profile Dashboard (LoginRequiredMixin)
-class ProfileDashboard(LoginRequiredMixin, TemplateView):
+class ProfileDashboard2(LoginRequiredMixin, TemplateView):
     template_name = 'profile/profile_dashboard.html'
 
     def get(self, request, username):
@@ -107,6 +107,36 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
+# Profile Dashboard (LoginRequiredMixin)
+class ProfileDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/profile_dashboard_detail.html'
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        products = user_products(user)
+        rent = user_rent(user)
+        now = timezone.now()
+        product_ids = products.values_list('id', flat=True)
+        # rented_product_ids = Renting.objects.filter(product_id=product_ids)
+        rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
+        # filter Renting by 
+        total_rentings = Renting.objects.filter(product__in=products).count()
+        latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+        # for product in products:
+        #     print(product.renting_set.all())
+        for product in products:
+            print(product)
+        # print(products)
+        context = {
+            'user': user,
+            'products': products,
+            'rent': rent,
+            'now': now,
+            'rented_product_ids': rented_product_ids,
+            'total_rentings': total_rentings,
+            'latest_renting': latest_renting
+            }
+        return render(request, self.template_name, context)
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic

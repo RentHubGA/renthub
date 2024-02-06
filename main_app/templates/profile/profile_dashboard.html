@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-9">
-            <h1 class="mb-4">{{ user.username }} Dashboard</h1>
+            <h1 class="mb-4">{{ user.username }} Products</h1>
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 {% user_products user as products %}
                 {% for product in products %}
@@ -50,7 +50,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="card mt-4">
+                    <!-- <div class="card mt-4">
                         <div class="card-body">
                             <h3>Rent History</h3>
                             <ul class="list-group">
@@ -63,7 +63,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 {% endfor %}
             </div>

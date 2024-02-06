@@ -15,7 +15,8 @@ urlpatterns = [
     path('products/<int:pk>/add_image', views.add_image, name='add_image'),
     ## accounts Root
     path('accounts/profile/<str:username>/', views.ProfileDetailView.as_view(), name='profile_detail'),
-    path('accounts/profile/<str:username>/dashboard/', views.ProfileDashboard.as_view(), name='profile_dashboard' ),
+    path('accounts/profile/<str:username>/dashboard/', views.ProfileDashboard2.as_view(), name='profile_dashboard_detail' ),
+    path('accounts/profile/<str:username>/dashboard-detail', views.ProfileDashboard.as_view(), name='profile_dashboard'),
     path('accounts/profile/<str:username>/update/', views.ProfileUpdate.as_view(), name='profile_update'),
     path('accounts/register/', views.register, name='register'),
 ]
