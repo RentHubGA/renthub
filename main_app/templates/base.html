@@ -33,9 +33,9 @@
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                                        <li class="nav-item"><a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
                                         <li class="nav-item">
-                                            <a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
-                                        <li class="nav-item">
+                                
                                             <form method="post" action="{% url 'logout' %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-dark rounded-pill" style="opacity: 50%;">Log Out</button>

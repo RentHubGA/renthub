@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
@@ -150,18 +151,16 @@ def add_image(request, product_id):
 
 class ProductList(ListView):
     model = Product
-    model2 = Category
-    
-    # def filter_products(request):
-    #     product = Product.objects.all()
-    #     categories_filter = request.GET.get('categories-filter')
-    #     min_filter = request.get('min')
-    #     max_filter = request.get('max')
 
-    #     return render(request, "product_list", {
-    #         'product': product,
-    #     })
+    def get_queryset(self):
+        name = self.kwargs.get('query', '')
+        object_list = self.model.objects.all()
+        if name:
+            object_list = object_list.filter(name__icontains=name)
+        return object_list
     
+
+
 class ProductDetail(DetailView):
     model = Product
     template_name = 'main_app/product_detail.html'
@@ -252,3 +251,8 @@ def rent_product(request, pk):
     else:
         messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
+
+def items(request):
+    items = Product.objects.filter()
+
+    return render(request, )
