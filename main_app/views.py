@@ -152,13 +152,14 @@ def add_image(request, product_id):
 class ProductList(ListView):
     model = Product
 
-    def get_queryset(self):
-        name = self.kwargs.get('query', '')
-        object_list = self.model.objects.all()
-        if name:
-            object_list = object_list.filter(name__icontains=name)
-        return object_list
-    
+    def get(self, request):
+        categories = Category.objects.all()
+        product_list = Product.objects.all()
+        return render(request, 'main_app/product_list.html', 
+                { 'categories': categories,
+                   'product_list': product_list,
+                   }
+                       )
 
 
 class ProductDetail(DetailView):

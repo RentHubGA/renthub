@@ -27,12 +27,12 @@
             
             <h6 class="mt-3">Categories: </h6>
             
-            {% for product in product_list %}
+            {% for category in categories %}
             <!-- categories 1   -->
             <div class="form-check">
                 <input class="form-check-input border rounded-xl" name= "categories-filter" type="checkbox" value="{{ categories_filter }}" id="flexCheckDefault">
                     <label class="form-check-label" name= "categories-filter" for="flexCheckDefault">                   
-                                    {{ product.category.name }}
+                                    {{ category }}
                     </label>
             </div>
 
