@@ -83,8 +83,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     
 # Profile Dashboard (LoginRequiredMixin)
-class ProfileDashboard2(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/profile_dashboard.html'
+class Profile(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/profile.html'
 
     def get(self, request, username):
         user = User.objects.get(username=username)
@@ -109,7 +109,7 @@ class ProfileDashboard2(LoginRequiredMixin, TemplateView):
 
 # Profile Dashboard (LoginRequiredMixin)
 class ProfileDashboard(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/profile_dashboard_detail.html'
+    template_name = 'profile/profile_dashboard.html'
 
     def get(self, request, username):
         user = User.objects.get(username=username)
