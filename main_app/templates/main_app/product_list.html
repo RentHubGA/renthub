@@ -3,6 +3,23 @@
 {% block title %} Products {% endblock %}
 
 {% block content %}
+
+ <!----------------------  SEARCH BAR  -------------------------------->
+
+<div class="container text-center" style="margin-top: 3.5em;">
+    <div class="pb-2 grid grid-cols-4 gap-4 bg-gray-100">
+        <div class="col-span-4">
+            <form method="get" action="{% url 'product_list' %}">
+                <input name="query" class="w-full py-2 px-6 border rounded-pill" type="text" value="{{ query }}" placeholder="&nbsp &nbsp Find products">
+
+                    <button class="btn btn-secondary rounded-pill">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!---------------------------------------------------------------------->
+
 <h2 class="my-4">Products</h2>
 
 <div class="container mb-3">
@@ -10,24 +27,33 @@
   <div class="accordion-item">
     <div class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+
+<!----------------------  FILTER BY  -------------------------------->
+
         <h4>Filter By:</h4>
       </button>
     </div>
     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filter">
       <div class="accordion-body">
+
         <form method="get" action="{% url 'product_list' %}">
-        <!-- TODO: add functionality to filter and render categories, price etc -->
-        <h6 class="mt-3">Categories: </h6>
-        {% for product in product_list %}
-        <!-- categories 1   -->
-        <div class="form-check">
-            <input class="form-check-input border rounded-xl" name= "categories-filter" type="checkbox" value="{{ categories_filter }}" id="flexCheckDefault">
-                <label class="form-check-label" name= "categories-filter" for="flexCheckDefault">                   
-                                {{ product.category.name }}
-                </label>
-        </div>
-        <!-- ------------------------ -->
-        {% endfor %}
+          
+            <!-- TODO: add functionality to filter and render categories, price etc -->
+           
+<!----------------------  CATEGORIES  -------------------------------->
+            
+            <h6 class="mt-3">Categories: </h6>
+            
+            {% for category in categories %}
+            <!-- categories 1   -->
+            <div class="form-check">
+                <input class="form-check-input border rounded-xl" name= "categories-filter" type="checkbox" value="{{ category }}" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">                   
+                                    {{ category }}
+                    </label>
+            </div>
+
+            {% endfor %}
 
         <h6 class="mt-3">Price:</h6>
         <div class="input-group mb-3">
@@ -36,7 +62,6 @@
             <span class="input-group-text">$</span>
             <input type="text" class="form-control" placeholder="Max" name="max">
         </div>
-        <h6 class="mt-3">Dates</h6>
         <input type="submit" value="Apply" class="btn btn-primary my-2">
     </form>
       </div>
@@ -53,7 +78,7 @@
             {% if product.image_set.first %}
                 <img src="{{ product.image_set.first.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
             {% else %}
-                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%%;">
+                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
             {% endif %}
                 <div class="card-img-overlay">
                     <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>

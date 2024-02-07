@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Image, Renting, Category
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
+from django.db.models import Q
 
 
 import os
@@ -82,8 +84,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     
 # Profile Dashboard (LoginRequiredMixin)
-class ProfileDashboard(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/profile_dashboard.html'
+class Profile(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/profile.html'
 
     def get(self, request, username):
         user = User.objects.get(username=username)
@@ -106,6 +108,36 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
+# Profile Dashboard (LoginRequiredMixin)
+class ProfileDashboard(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/profile_dashboard.html'
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        products = user_products(user)
+        rent = user_rent(user)
+        now = timezone.now()
+        product_ids = products.values_list('id', flat=True)
+        # rented_product_ids = Renting.objects.filter(product_id=product_ids)
+        rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
+        # filter Renting by 
+        total_rentings = Renting.objects.filter(product__in=products).count()
+        latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+        # for product in products:
+        #     print(product.renting_set.all())
+        for product in products:
+            print(product)
+        # print(products)
+        context = {
+            'user': user,
+            'products': products,
+            'rent': rent,
+            'now': now,
+            'rented_product_ids': rented_product_ids,
+            'total_rentings': total_rentings,
+            'latest_renting': latest_renting
+            }
+        return render(request, self.template_name, context)
 
 # @transaction.atomic block unSucceeds create user to database
 @transaction.atomic
@@ -150,18 +182,43 @@ def add_image(request, product_id):
 
 class ProductList(ListView):
     model = Product
-    model2 = Category
-    
-    # def filter_products(request):
-    #     product = Product.objects.all()
-    #     categories_filter = request.GET.get('categories-filter')
-    #     min_filter = request.get('min')
-    #     max_filter = request.get('max')
 
-    #     return render(request, "product_list", {
-    #         'product': product,
-    #     })
+    # to display the categories
+    def get(self, request):
+        categories = Category.objects.all()
+        product_list = Product.objects.all()
+        search = request.GET.get('min')
+        categories_filter = request.GET.getlist('categories-filter')
+        min_value = request.GET.get('min')
+        max_value = request.GET.get('max')
+        search = request.GET.get('query')
+
+# ------------- FILTER BY -------------------- #
+
+        if min_value == '' or min_value is None:
+            min_value = 0
+        if max_value == '' or max_value is None:
+            max_value = 100000
+   
+        if len(categories_filter) != 0:
+            product_list = product_list.filter(category__name__in=categories_filter)
+            if min_value != 0 or max_value != 100000:
+                product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+        elif min_value != 0 or max_value != 100000:
+            product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+            
+# ------------- SEARCH -------------------- #
+            
+        if search:
+            product_list = product_list.filter(product_name__icontains=search)
+
+        return render(request, 'main_app/product_list.html', 
+                { 'categories': categories,
+                   'product_list': product_list,
+                   }
+                       )
     
+
 class ProductDetail(DetailView):
     model = Product
     template_name = 'main_app/product_detail.html'
@@ -252,3 +309,8 @@ def rent_product(request, pk):
     else:
         messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
+
+def items(request):
+    items = Product.objects.filter()
+
+    return render(request, )
