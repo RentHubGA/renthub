@@ -53,13 +53,16 @@ $primary-bg-subtle: #e4e5ff;
     text-decoration: none;
 }
 
-a.nav-link {
-    color: #7e7e7e;
+.navbar-nav a:hover,
+.navbar-nav a:focus,
+.logout:hover {
+    color: #000000;
+    text-decoration: none;
 }
 
-.navbar-nav a:hover,
-.navbar-nav a:focus {
-    color: #000000;
+a.nav-link,
+.logout {
+    color: #7e7e7e;
     text-decoration: none;
 }
 
@@ -93,4 +96,8 @@ a {
     --bs-accordion-bg: white;
     --bs-accordion-btn-padding-x: 1.25rem;
     --bs-accordion-btn-padding-y: 0.5rem;
+}
+
+.nav {
+    --bs-nav-link-hover-color: #000000;
 }
