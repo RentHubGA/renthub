@@ -33,6 +33,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{% url 'profile_detail' username=request.user.username %}" class="nav-link" aria-current="page">
+                                <i data-feather="zoom-in"></i>
+                                <span class="ml-2">Profile Detail</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{% url 'product_list' %}" class="nav-link" aria-current="page">
                                 <i data-feather="shopping-cart"></i>
                                 <span class="ml-2">Products</span>
@@ -97,11 +103,17 @@
                 <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                     <!-- <<<<<<<<<<<<Do this>>>>>>>>>> -->
                     <div class="card">
-                        <h5 class="card-header">Income</h5>
+                        <h5 class="card-header">Total</h5>
                         <div class="card-body">
-                            <h5 class="card-title">256k</h5>
-                            <p class="card-text">Feb 1 - Apr 1, Spain</p>
-                            <p class="card-text text-danger">18.2% increase sicet mounth</p>
+                            <h5 class="card-title text-success">+${{ total_income }}</h5>
+                            <p class="card-text text-danger">-${{ total_outcome }}</p>
+                            {% if total > 0 %}
+                                <p class="card-text text-success">Balance: ${{ total }}</p>
+                            {% elif total == 0 %}
+                                <p class="card-text text">Balance: ${{ total }}</p>
+                            {% else %}
+                                <p class="card-text text-danger">Balance: ${{ total }}</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -112,7 +124,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><p>{{ total_rentings }}</p></h5>
                             <p class="card-text">Lastest Rented: {{ latest_renting.date_rent }}</p>
-                            <p class="card-text text-success">18.2% increase sicet mounth</p>
+                            <p class="card-text text-danger">{{ total }}</p>
                         </div>
                     </div>
                 </div>
