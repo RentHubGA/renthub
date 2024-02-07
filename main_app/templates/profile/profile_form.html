@@ -7,18 +7,52 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Test Navigation</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="{% url 'profile_detail' username=request.user.username %}">Profile</a></li>
-                        <li class="list-group-item"><a href="{% url 'profile_dashboard' username=request.user.username %}">Dashboard</a></li>
-                        <li class="list-group-item"><a href="{% url 'profile_update' username=request.user.username %}">Update Profile</a></li>
-                        <li class="list-group-item"><a href="{% url 'product_list' %}">Back to Products</a></li>
-                        <li class="list-group-item"><a href="{% url 'product_create' %}">Add Product</a></li>
-                    </ul>
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- ########################## -->
+                        <nav id="sidebar" class="col bg-light sidebar">
+                            <div class="position-sticky">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a href="{% url 'profile_dashboard' username=request.user.username %}"
+                                            class="nav-link active" aria-current="page">
+                                            <i data-feather="home"></i>
+                                            <span class="ml-2">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'profile' username=request.user.username %}" class="nav-link"
+                                            aria-current="page">
+                                            <i data-feather="user"></i>
+                                            <span class="ml-2">Profile</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'profile_update' username=request.user.username %}" class="nav-link"
+                                            aria-current="page">
+                                            <i data-feather="users"></i>
+                                            <span class="ml-2">Update Profile</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'product_list' %}" class="nav-link" aria-current="page">
+                                            <i data-feather="shopping-cart"></i>
+                                            <span class="ml-2">Products</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button class="btn btn-link p-0 nav-link"><div class="" style="padding: 8px 16px;"><i data-feather="log-out" class="logout"></i> Log Out</div></button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            </nav>
         </div>
         <div class="col-md-9">
             <div class="container mt-5">

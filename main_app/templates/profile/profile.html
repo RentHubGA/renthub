@@ -1,7 +1,7 @@
 {% extends '../base.html' %}
 {% load user_dashboard %}
 
-{% block title %} {{ profile.username }} Profile {% endblock %}
+{% block title %} {{ user.username }} Dashboard {% endblock %}
 
 {% block content %}
 
@@ -62,20 +62,54 @@
             </nav>
         </div>
         <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="mb-4">{{ profile.username }} Profile</h1>
+            <h1 class="mb-4">{{ user.username }} Products</h1>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% user_products user as products %}
+                {% for product in products %}
+                <div class="col">
+                    <div class="card">
+                        {% if product.image_set.first %}
+                        <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 w-auto object-fit-cover" alt="{{ product.product_name }}">
+                        {% else %}
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                            <p class="card-text">Price: <span>${{ product.price }}</span></p>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a>
+                            {% if product.id in rented_product_ids %}
+                                {% if now|date:"Y-m-d" < product.renting_set.last.date_return|date:"Y-m-d" and now|date:"Y-m-d" < product.renting_set.last.date_rent|date:"Y-m-d" %} 
+                                    <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Booking</span>
+                                {% elif now|date:"Y-m-d" <= product.renting_set.first.date_return|date:"Y-m-d" %} 
+                                    <span class="badge" style="background-color: #FFC107; color: #ffffff;">Renting</span>
+                                {% elif now|date:"Y-m-d" > product.renting_set.last.date_return|date:"Y-m-d" %}
+                                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge bg-success">Available</span>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+            </div>
+            <div class="card mt-4">
                 <div class="card-body">
-                    <img src="{{ profile.avatar }}" alt="{{ profile.username }} Avatar" class="img-fluid mb-3">
+                    <h3>Rent History</h3>
                     <ul class="list-group">
-                        <li class="list-group-item"><strong>Username:</strong> {{ profile.username }}</li>
-                        <li class="list-group-item"><strong>Email:</strong> {{ profile.email }}</li>
-                        <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
-                        <li class="list-group-item"><strong>Town/City:</strong> {{ profile.town }}</li>
-                        <li class="list-group-item"><strong>County:</strong> {{ profile.county }}</li>
-                        <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
-                        <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
+                        {% user_rent user as rentings %}
+                        {% for renting in rentings %}
+                        <li class="list-group-item">
+                            {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
+                            {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
+                                <span class="badge bg-primary">Reserve</span>
+                            {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+                                <span class="badge bg-success">Returned</span>
+                            {% else %}
+                                <span class="badge bg-danger">Ongoing</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

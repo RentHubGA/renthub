@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="{% static './css/custom.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script defer src="{% static './js/bootstrap.bundle.min.js' %}"></script>
-        <script defer src="{% static './js/main.js' %}"></script>
+        <script defer src="{% static './js/main.js' %}"></script>>
+        <script src="https://unpkg.com/feather-icons"></script>
+
     </head>
 
     <body>
@@ -23,27 +25,26 @@
                 <nav>
                     <div class="navbar navbar-expand-md navbar-dark body-bg">
                         <div class="container">
-                            <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo.png'%}" class="renthub-logo-navbar m-2" style="max-width: 100px; height: auto; "></a>
+                            <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static './assets/renthub-logo.png'%}" class="renthub-logo-navbar my-2" style="max-width: 100px; height: auto; "></a>
                             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
                             <div class="navbar-toggler-icon"></div>
                             </button>
                             <div class="collapse navbar-collapse" id="nav">
-                                <ul class="navbar-nav ms-auto gap-md-3">
+                                <ul class="navbar-nav ms-auto gap-md-3 d-flex align-items-center">
                                     {% if user.is_authenticated %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Add a Product</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                                        <li class="nav-item"><a href="{% url 'profile_detail' username=user.username %}" class="nav-link">Profile</a></li>
-                                        <li class="nav-item">
-                                
-                                            <form method="post" action="{% url 'logout' %}">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-dark rounded-pill" style="opacity: 50%;">Log Out</button>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                                        <li class="nav-item d-none d-md-block ">
+                                            <form method="get" action="{% url 'product_list' %}">
+                                                <input name="query" class="p-2 border rounded-pill" type="text" value="{{ query }}" placeholder="Unicycle, clown costume.... " style="width: 300px">
+                                                <button class="btn btn-link p-0"><i data-feather="search" class="search"></i></button>
                                             </form>
                                         </li>
+                                        <li class="nav-item"><a href="{% url 'profile' username=user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary ">Profile</button></a></li>
+                                        <li class="nav-item">
                                     {% else %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><button class="rounded-pill btn btn-primary">Sign Up</button></a></li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -109,7 +110,9 @@
                 });
             });
         </script>
-
+        <script>
+            feather.replace();
+        </script>
     </body>
 
 </html>
