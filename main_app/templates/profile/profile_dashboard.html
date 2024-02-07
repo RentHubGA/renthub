@@ -44,6 +44,12 @@
                                 <span class="ml-2">Add Products</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button class="btn btn-link p-0 nav-link"><div class="" style="padding: 8px 16px;"><i data-feather="log-out" class="logout"></i> Log Out</div></button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </nav>
