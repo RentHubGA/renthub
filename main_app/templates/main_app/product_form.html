@@ -12,6 +12,8 @@
     <form id="add-product" method="POST" enctype="multipart/form-data">
         
         <div class="form-row align-top">
+        
+        <div class="form-row align-top">
         {% csrf_token %}
         
     {% for field in form %}
@@ -47,6 +49,8 @@
     {% endfor %}
 
     </div>
+
+    </div>
         {{ image_form.management_form }}
 
         {% for formset in image_form %}
@@ -61,11 +65,13 @@
                 
             </div>
         </div>
+        
         {% endfor %}
 
 
         <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
 
+    </form>
     </form>
     
 
