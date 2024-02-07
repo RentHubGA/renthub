@@ -5,33 +5,68 @@
 {% block content %}
 
 {% load widget_tweaks %}
-<!-- FORM ----------------------------------------------------------------------------->
 
 <div>
-    <h1> Add Product </h1>
+    <h1 style="margin-top: 1.5em;"> Add Product </h1>
 
     <form id="add-product" method="POST" enctype="multipart/form-data">
-
- 
+        
+        <div class="form-row align-top">
         {% csrf_token %}
-        {{ form.as_p }}
+        
+    {% for field in form %}
 
+            {% if field.name == 'product_name' %}
+                <div class="col-md-5">
+                    <h5 class="my-4 my-md-2">Product</h5>
+                    <p> {{ field }} </p>
+                </div>
+            {% endif %}
+
+            {% if field.name == 'description' %}
+                <div class="col-md-5">
+                    <h5 class="my-4 my-md-2">Description</h5>
+                    <p> {{ field }} </p>
+                </div>
+            {% endif %}
+
+            {% if field.name == 'price' %}
+                <div class="col-md-5">
+                    <h5 class="my-4 my-md-2">Price</h5>
+                    <p> {{ field }} </p>
+                </div>
+            {% endif %}
+
+            {% if field.name == 'category' %}
+            <div class="col-md-5">
+                <h5 class="my-4 my-md-2">Category</h5>
+                    <p> {{ field }} </p>
+            </div>
+            {% endif %}
+
+    {% endfor %}
+
+    </div>
         {{ image_form.management_form }}
 
         {% for formset in image_form %}
 
-        <div class="image-formset">
-            {{ formset }}
+        
+
+        <div class="image-formset" style="margin-top: 5em; margin-bottom: 5em;">
+            <div class="form-row ">
+                <div type="text" class="form-control" placeholder="field" name="field">
+                    {{ formset }}
+                </div>
+                
+            </div>
         </div>
         {% endfor %}
 
-        <p>
 
-        <button type="button" class="btn btn-primary rounded-pill" id="add-image">Add another image</button>
-        </p>
         <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
 
-        </form>
+    </form>
     
 
 </div>

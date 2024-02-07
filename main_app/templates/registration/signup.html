@@ -1,17 +1,19 @@
 {% extends '../base.html' %}
 
 {% block title %}
-Sign Up
+Sign Up | RentHub
 {% endblock %}
 
 {% block content %}
-    <h1>Sign Up</h1>
-    
-    <p class="red-text">{{ error_message }}</p>
-    
-    <form action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn">Sign Up</button>
-    </form>
+
+<h2 class="my-4">Sign Up</h2>
+
+<p class="red-text">{{ error_message }}</p>
+
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+	{% crispy form form.helper %}
+    <button type="submit" class="btn btn-success rounded-pill">Sign Up</button>
+</form>
 {% endblock %}
