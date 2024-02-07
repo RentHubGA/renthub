@@ -3,7 +3,7 @@ from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet, ProductForm
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from django.contrib import messages
