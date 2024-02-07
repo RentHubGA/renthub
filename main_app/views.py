@@ -13,7 +13,7 @@ from .models import Product, Image, Renting, Category
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
-from django.http import Http404
+from django.db.models import Sum
 
 
 import os
@@ -131,6 +131,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
 
         total_outcome = sum(product.price for product in products)
+        total_income = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))['total_income'] or 0
+        total = total_income - total_outcome
+
         
         # for product in products:
         #     print(product.renting_set.all())
@@ -145,7 +148,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
             'rented_product_ids': rented_product_ids,
             'total_rentings': total_rentings,
             'latest_renting': latest_renting,
+            'total_income': total_income,
             'total_outcome': total_outcome,
+            'total': total
             }
         return render(request, self.template_name, context)
 
