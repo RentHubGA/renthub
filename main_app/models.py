@@ -120,7 +120,7 @@ class Product(models.Model):
 
 # Image Model
 class Image(models.Model):
-    url = models.ImageField(max_length=200)
+    url = models.URLField(max_length=200)
     # one to many Product
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
