@@ -37,7 +37,7 @@ class ReviewForm(ModelForm):
         fields = ['date', 'rating', 'description']
 
 
-# Using crispy forms to add date picker and change layout styling
+# Using crispy forms to change styling
 class RentingForm(forms.Form):
     date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Pickup Date:')
     date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Return Date:')
@@ -55,15 +55,23 @@ class RentingForm(forms.Form):
         )
     )
 
-
-    
-
 User = get_user_model()
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.label_class = 'col-lg-2'
+    helper.field_class = 'col-lg-8'
+    helper.layout = Layout(
+        Field('username'),
+        Field('email'),
+        Field('password1'),
+        Field('password2'),
+    )
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()

@@ -103,3 +103,8 @@ a {
 .nav {
     --bs-nav-link-hover-color: #000000;
 }
+
+.form-control,
+.form-control:focus {
+    background-color: #ffffff;
+}
