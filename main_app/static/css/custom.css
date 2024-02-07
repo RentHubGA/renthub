@@ -11752,8 +11752,7 @@ textarea.form-control-lg {
   text-decoration: none;
 }
 
-a.nav-link,
-.logout {
+a.nav-link {
   color: #7e7e7e;
   text-decoration: none;
 }

@@ -86,3 +86,15 @@ footer {
 .primary-text {
     color: var(--primary);
 }
+
+.logout,
+.search {
+    color: #7e7e7e;
+    text-decoration: none;
+}
+
+.logout:hover,
+.search:hover {
+    color: #000000;
+    text-decoration: none;
+}
