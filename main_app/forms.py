@@ -16,6 +16,7 @@ class ImageUploadForm(ModelForm):
         model = Image
         fields = '__all__'
 
+
 ImageFormSet = inlineformset_factory(
     Product,
     Image,
