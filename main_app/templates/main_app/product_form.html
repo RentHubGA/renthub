@@ -5,12 +5,13 @@
 {% block content %}
 
 {% load widget_tweaks %}
-<!-- FORM ----------------------------------------------------------------------------->
 
 <div>
     <h1 style="margin-top: 1.5em;"> Add Product </h1>
 
     <form id="add-product" method="POST" enctype="multipart/form-data">
+        
+        <div class="form-row align-top">
         
         <div class="form-row align-top">
         {% csrf_token %}
@@ -48,11 +49,14 @@
     {% endfor %}
 
     </div>
+
+    </div>
         {{ image_form.management_form }}
 
         {% for formset in image_form %}
 
         
+
         <div class="image-formset" style="margin-top: 5em; margin-bottom: 5em;">
             <div class="form-row ">
                 <div type="text" class="form-control" placeholder="field" name="field">
@@ -61,11 +65,13 @@
                 
             </div>
         </div>
+        
         {% endfor %}
 
 
         <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
 
+    </form>
     </form>
     
 
