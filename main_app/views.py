@@ -129,6 +129,9 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         # filter Renting by 
         total_rentings = Renting.objects.filter(product__in=products).count()
         latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+
+        total_outcome = sum(product.price for product in products)
+        
         # for product in products:
         #     print(product.renting_set.all())
         for product in products:
@@ -141,7 +144,8 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
             'now': now,
             'rented_product_ids': rented_product_ids,
             'total_rentings': total_rentings,
-            'latest_renting': latest_renting
+            'latest_renting': latest_renting,
+            'total_outcome': total_outcome,
             }
         return render(request, self.template_name, context)
 
