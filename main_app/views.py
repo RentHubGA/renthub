@@ -13,6 +13,7 @@ from .models import Product, Image, Renting, Category, CustomUser
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
+from django.db.models import Sum
 
 
 import os
@@ -30,6 +31,9 @@ def home(request):
 
 def about(request):
     return render(request, 'about.html' )
+
+def terms(request):
+    return render(request, 'terms.html')
 
 def reviewform(request):
     review_form = ReviewForm
@@ -110,6 +114,11 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'profile/profile_dashboard.html'
 
     def get(self, request, username):
+        
+        print(username)
+        if username != request.user.username:
+            raise PermissionDenied("Permission to access this page.")
+
         user = User.objects.get(username=username)
         products = user_products(user)
         rent = user_rent(user)
@@ -120,6 +129,12 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         # filter Renting by 
         total_rentings = Renting.objects.filter(product__in=products).count()
         latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+
+        total_outcome = sum(product.price for product in products)
+        total_income = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))['total_income'] or 0
+        total = total_income - total_outcome
+
+        
         # for product in products:
         #     print(product.renting_set.all())
         for product in products:
@@ -132,7 +147,10 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
             'now': now,
             'rented_product_ids': rented_product_ids,
             'total_rentings': total_rentings,
-            'latest_renting': latest_renting
+            'latest_renting': latest_renting,
+            'total_income': total_income,
+            'total_outcome': total_outcome,
+            'total': total
             }
         return render(request, self.template_name, context)
 

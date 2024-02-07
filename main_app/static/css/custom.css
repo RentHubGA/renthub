@@ -11799,4 +11799,8 @@ a {
 .form-control,
 .form-control:focus {
   background-color: #ffffff;
+}
+
+.card {
+  --bs-card-bg: #ffffff;
 }/*# sourceMappingURL=custom.css.map */
