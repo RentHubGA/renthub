@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Image, Renting, Category
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
+from django.db.models import Q
 
 
 import os
@@ -152,14 +153,41 @@ def add_image(request, product_id):
 class ProductList(ListView):
     model = Product
 
-    def get_queryset(self):
-        name = self.kwargs.get('query', '')
-        object_list = self.model.objects.all()
-        if name:
-            object_list = object_list.filter(name__icontains=name)
-        return object_list
-    
+    # to display the categories
+    def get(self, request):
+        categories = Category.objects.all()
+        product_list = Product.objects.all()
+        search = request.GET.get('min')
+        categories_filter = request.GET.getlist('categories-filter')
+        min_value = request.GET.get('min')
+        max_value = request.GET.get('max')
+        search = request.GET.get('query')
 
+# ------------- FILTER BY -------------------- #
+
+        if min_value == '' or min_value is None:
+            min_value = 0
+        if max_value == '' or max_value is None:
+            max_value = 100000
+   
+        if len(categories_filter) != 0:
+            product_list = product_list.filter(category__name__in=categories_filter)
+            if min_value != 0 or max_value != 100000:
+                product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+        elif min_value != 0 or max_value != 100000:
+            product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+            
+# ------------- SEARCH -------------------- #
+            
+        if search:
+            product_list = product_list.filter(product_name__icontains=search)
+
+        return render(request, 'main_app/product_list.html', 
+                { 'categories': categories,
+                   'product_list': product_list,
+                   }
+                       )
+    
 
 class ProductDetail(DetailView):
     model = Product
