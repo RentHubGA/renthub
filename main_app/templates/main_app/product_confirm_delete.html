@@ -1,17 +1,17 @@
 {% extends '../base.html' %}
 
-{% block title %} {{ product.product_name }} | RentHub {% endblock %}
+{% block title %} Confirm Delete | RentHub {% endblock %}
 
 {% block content %}
- 
-<h1>Delete Product</h1>
 
-<h5>Are you sure you want to delete {{ product.product_name }}?</h4>
+<h2 class="my-4">Delete Product</h2>
+
+<h6>Are you sure you want to delete {{ product.product_name }}?</h6>
 
 <form action="" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="Yes" class="btn btn-danger">
-  <a href="{% url 'product_detail' product.id %}" class="btn btn-light">Cancel</a>
+    {% csrf_token %}
+    <input type="submit" value="Yes" class="btn btn-primary rounded-pill">
+    <a href="{% url 'product_detail' product.id %}" class="btn btn-danger rounded-pill">Cancel</a>
 </form>
 
 {% endblock %}
