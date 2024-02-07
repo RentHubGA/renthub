@@ -13,6 +13,7 @@ from .models import Product, Image, Renting, Category
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
+from django.http import Http404
 
 
 import os
@@ -113,6 +114,11 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'profile/profile_dashboard.html'
 
     def get(self, request, username):
+        
+        print(username)
+        if username != request.user.username:
+            raise PermissionDenied("Permission to access this page.")
+
         user = User.objects.get(username=username)
         products = user_products(user)
         rent = user_rent(user)

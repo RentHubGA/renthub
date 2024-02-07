@@ -33,6 +33,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{% url 'profile_detail' username=request.user.username %}" class="nav-link" aria-current="page">
+                                <i data-feather="zoom-in"></i>
+                                <span class="ml-2">Profile Detail</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{% url 'product_list' %}" class="nav-link" aria-current="page">
                                 <i data-feather="shopping-cart"></i>
                                 <span class="ml-2">Products</span>

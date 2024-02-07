@@ -1,5 +1,7 @@
 {% extends '../base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %} Update {{ user.username }} Profile {% endblock %}
 
 {% block content %}
@@ -36,9 +38,21 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{% url 'profile_detail' username=request.user.username %}" class="nav-link" aria-current="page">
+                                            <i data-feather="zoom-in"></i>
+                                            <span class="ml-2">Profile Detail</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{% url 'product_list' %}" class="nav-link" aria-current="page">
                                             <i data-feather="shopping-cart"></i>
                                             <span class="ml-2">Products</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'product_create' %}" class="nav-link" aria-current="page">
+                                            <i data-feather="plus-square"></i>
+                                            <span class="ml-2">Add Product</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -59,39 +73,10 @@
                 <h1>Update Your Profile</h1>
 
                 <form method="post" enctype="multipart/form-data">
+
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
-                        {{ form.last_name }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar</label>
-                        {{ form.avatar }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
-                        {{ form.address }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.town.id_for_label }}" class="form-label">Town/City</label>
-                        {{ form.town }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.county.id_for_label }}" class="form-label">County</label>
-                        {{ form.county }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.post_code.id_for_label }}" class="form-label">Post Code</label>
-                        {{ form.post_code }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
-                        {{ form.country }}
-                    </div>
+
+                    {{ form|crispy }}
 
                     <button type="submit" class="btn btn-primary">Update Profile</button>
                 </form>
