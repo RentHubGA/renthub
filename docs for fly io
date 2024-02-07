@@ -1,6 +1,0 @@
-fly secrets set ALLOWED_HOST=renthub.fly.dev
-fly secrets set CSRF_TRUSTED_ORIGINS=https://renthub.fly.dev
-fly secrets set AWS_ACCESS_KEY_ID=AKIAW3MEE73M6AW5D3EP
-fly secrets set AWS_SECRET_ACCESS_KEY_ID=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
-fly secrets set S3_BUCKET=renthub-bucket
-fly secrets set S3_BASE_URL=https://s3.ap-southeast-2.amazonaws.com/
