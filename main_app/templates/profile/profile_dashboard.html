@@ -41,13 +41,13 @@
                         <li class="nav-item">
                             <a href="{% url 'product_create' %}" class="nav-link" aria-current="page">
                                 <i data-feather="plus-square"></i>
-                                <span class="ml-2">Add Product</span>
+                                <span class="ml-2">Add Products</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <span class="ml-2 d-inline-block logout nav-link"><i data-feather="log-out" class="logout"></i> Log Out</span>
+                                <button class="btn btn-link p-0 nav-link"><div class="" style="padding: 8px 16px;"><i data-feather="log-out" class="logout"></i> Log Out</div></button>
                             </form>
                         </li>
                     </ul>

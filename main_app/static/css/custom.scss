@@ -60,7 +60,10 @@ $primary-bg-subtle: #e4e5ff;
     text-decoration: none;
 }
 
-a.nav-link {
+a.nav-link,
+.logout,
+.search,
+button.nav-link {
     color: #7e7e7e;
     text-decoration: none;
 }
