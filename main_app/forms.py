@@ -98,6 +98,9 @@ class CustomUserCreationForm(UserCreationForm):
         Field('email'),
         Field('password1'),
         Field('password2'),
+        FormActions(
+            Submit('submit', 'Sign Up', css_class="btn btn-primary rounded-pill"),
+        )
     )
 
     def clean_username(self):
