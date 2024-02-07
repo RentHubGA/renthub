@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.layout import Layout, Submit, Field, BaseInput, Div
 from crispy_forms.bootstrap import FormActions
 
 class UpdateProfileForm(forms.ModelForm):
@@ -32,10 +32,18 @@ class UpdateProfileForm(forms.ModelForm):
             Field('post_code'),
             Field('country'),
             FormActions(
-                Submit('submit', 'Save Changes', css_class="btn btn-primary rounded-pill"),
-                Submit('cancel', 'Cancel', css_class="btn btn-danger rounded-pill"),
+                Div(
+                    Submit('submit', 'Save Changes', css_class="btn btn-primary rounded-pill mr-2"),
+                    CustomCancel('cancel', 'Cancel', css_class="btn btn-danger rounded-pill"),
+                    css_class="d-inline"
+                )
+            )
         )
-        )
+
+# Custom cancel button
+class CustomCancel(BaseInput):
+    input_type = 'submit'
+    field_classes = "d-inline btn btn-danger rounded-pill"
 
 class ImageUploadForm(ModelForm):
     class Meta:
