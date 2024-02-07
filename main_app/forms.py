@@ -2,7 +2,7 @@
 # from django.forms.fields import EmailField  
 # from django.forms.forms import Form  
 from django.forms import ModelForm, inlineformset_factory
-from .models import Review, Renting, Image, Review, Product
+from .models import Review, Renting, Image, Review, Product, CustomUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -10,6 +10,32 @@ from django.contrib.auth import get_user_model
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
 from crispy_forms.bootstrap import FormActions
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'avatar', 'address', 'town', 'county', 'post_code', 'country']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+            Field('first_name'),
+            Field('last_name'),
+            Field('avatar'),
+            Field('address'),
+            Field('town'),
+            Field('county'),
+            Field('post_code'),
+            Field('country'),
+            FormActions(
+                Submit('submit', 'Save Changes', css_class="btn btn-primary rounded-pill"),
+                Submit('cancel', 'Cancel', css_class="btn btn-danger rounded-pill"),
+        )
+        )
 
 class ImageUploadForm(ModelForm):
     class Meta:

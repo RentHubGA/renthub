@@ -60,43 +60,9 @@
 
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
-                        {{ form.last_name }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar</label>
-                        {{ form.avatar }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
-                        {{ form.address }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.town.id_for_label }}" class="form-label">Town/City</label>
-                        {{ form.town }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.county.id_for_label }}" class="form-label">County</label>
-                        {{ form.county }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.post_code.id_for_label }}" class="form-label">Post Code</label>
-                        {{ form.post_code }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
-                        {{ form.country }}
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    {% load crispy_forms_tags %}
+                    {% crispy form form.helper %}
                 </form>
-                <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-secondary mt-3">Back</a>
-            </div>
         </div>
     </div>
 </div>
