@@ -91,6 +91,7 @@ class Product(models.Model):
     category = models.ManyToManyField(Category, default=True)
     # one to many User
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    
 
     def __str__(self):
         return f'{self.product_name} ({self.id})'
@@ -119,7 +120,7 @@ class Product(models.Model):
 
 # Image Model
 class Image(models.Model):
-    url = models.URLField(max_length=200)
+    url = models.ImageField(max_length=200)
     # one to many Product
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
