@@ -31,6 +31,9 @@ def home(request):
 def about(request):
     return render(request, 'about.html' )
 
+def terms(request):
+    return render(request, 'terms.html')
+
 def reviewform(request):
     review_form = ReviewForm
     return render(request, 'review_form.html', {
