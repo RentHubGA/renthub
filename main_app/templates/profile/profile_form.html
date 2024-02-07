@@ -2,7 +2,7 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} Update {{ user.username }} Profile {% endblock %}
+{% block title %} Update Details | RentHub {% endblock %}
 
 {% block content %}
 
@@ -75,13 +75,9 @@
                 <form method="post" enctype="multipart/form-data">
 
                     {% csrf_token %}
-
-                    {{ form|crispy }}
-
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    {% load crispy_forms_tags %}
+                    {% crispy form form.helper %}
                 </form>
-                <a href="{% url 'profile_detail' username=user.username %}" class="btn btn-secondary mt-3">Back</a>
-            </div>
         </div>
     </div>
 </div>

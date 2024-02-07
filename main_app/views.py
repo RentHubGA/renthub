@@ -3,13 +3,13 @@ from django.db import transaction
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model
-from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet
+from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet, UpdateProfileForm
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image, Renting, Category
+from .models import Product, Image, Renting, Category, CustomUser
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
@@ -63,19 +63,16 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     
 # Profile Edit (LoginRequiredMixin)
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
-    model = User
+    model = CustomUser
     template_name = 'profile/profile_form.html'
-    fields = ['first_name', 'last_name', 'avatar', 'address', 'town', 'county', 'post_code', 'country']
+    form_class = UpdateProfileForm
     success_url = reverse_lazy('profile_detail')
 
-    # Prevent other users from accessing profiles that do not belong to them.
     def get_object(self, queryset=None):
         username = self.kwargs['username']
-        user = get_object_or_404(User, username=username)
-        print('user: ', user)
-        print('username: ', username)
+        user = get_object_or_404(CustomUser, username=username)
         if user != self.request.user:
-            raise PermissionDenied("permission Denied to update profile.")
+            raise PermissionDenied("Permission Denied to update profile.")
         return user
     
     # Redirect to detail page
