@@ -75,8 +75,8 @@
         {% for product in product_list %}
         <div class="col-lg-4">
             <div class="card ">
-            {% if product.image_set.first %}
-                <img src="{{ product.image_set.first.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
+            {% if product.image_set.first.image %}
+                <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
             {% else %}
                 <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
             {% endif %}

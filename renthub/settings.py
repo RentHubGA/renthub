@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'renthub.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(default='postgresql://cassio_user:12345@localhost/renthub')
+    'default': env.db(default='postgresql://localhost/renthub')
 }
 
 
@@ -143,20 +143,20 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = f'{BASE_DIR}/staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# STORAGES = {
-#     'default': {
-#         'BACKEND': 'storages.backends.s3.S3Storage'
-#     },
-#     # 'staticfiles': {
-#     #   'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
-#     # }
-# }
 
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+    },
+    'staticfiles': {
+      'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    }
+}
+
+
+
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # login redirect
 LOGIN_REDIRECT_URL = '/products/'
@@ -173,6 +173,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 AWS_ACCESS_KEY_ID=env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY_ID=env('AWS_SECRET_ACCESS_KEY_ID')
-S3_BUCKET=env('S3_BUCKET')
+AWS_SECRET_ACCESS_KEY=env('AWS_SECRET_ACCESS_KEY_ID')
+AWS_STORAGE_BUCKET_NAME=env('S3_BUCKET')
 S3_BASE_URL=env('S3_BASE_URL')

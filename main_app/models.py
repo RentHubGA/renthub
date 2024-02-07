@@ -120,12 +120,12 @@ class Product(models.Model):
 
 # Image Model
 class Image(models.Model):
-    url = models.URLField(max_length=200)
+    image = models.ImageField(upload_to='product_images')
     # one to many Product
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Image for product_id: {self.product_id} @{self.url}"
+        return f"Image for product_id: {self.product_id} @{self.image}"
 
 
 # Review Model
