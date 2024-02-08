@@ -94,18 +94,6 @@ class Profile(LoginRequiredMixin, TemplateView):
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
         
-        # >>>>>>>>>>>>>>>>>>>>>> Fix this <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        # if user.customuser.avatar:
-        #     avatar_url = user.customuser.avatar.url
-        # else:
-        #     avatar_url = 'https://cdn.vectorstock.com/i/1000x1000/51/05/male-profile-avatar-with-brown-hair-vector-12055105.webp'
-
-        # profile_details = {
-        #     'email': user.email,
-        #     'date_joined': user.date_joined,
-        #     'avatar': avatar_url,
-        # }
-        # print(user)
         for product in products:
             print(product.renting_set.all())
         context = {
