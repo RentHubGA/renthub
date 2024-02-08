@@ -48,15 +48,22 @@ class ReviewCreate(LoginRequiredMixin, View):
             date = form.cleaned_data['date']
             rating = form.cleaned_data['rating']
             description = form.cleaned_data['description']
-            review = Review.objects.create(
-                date=date,
-                rating=rating,
-                description=description,
-                user=request.user,
-                product_id=pk
-            )
-            review.save()
-            messages.success(request, 'Thank you for your review!')
+            product = Product.objects.get(pk=pk)
+            user_reviews = Review.objects.filter(user=request.user, product=product)
+            if user_reviews.exists():
+                messages.error(request, 'You have already left a review for this listing.')
+            elif product.user == request.user:
+                messages.error(request, 'You cannot leave a review for your own listing.')
+            else:
+                review = Review.objects.create(
+                    date=date,
+                    rating=rating,
+                    description=description,
+                    user=request.user,
+                    product_id=pk
+                )
+                review.save()
+                messages.success(request, 'Thank you for your review!')
         else:
             messages.error(request, 'Error. Please try again.')
         context = {'form': form}
