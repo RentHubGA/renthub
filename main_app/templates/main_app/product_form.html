@@ -16,29 +16,38 @@
         <div class="form-row align-top">
         {% csrf_token %}
         
+
     {% for field in form %}
 
             {% if field.name == 'product_name' %}
                 <div class="col-md-5">
                     <h5 class="my-4 my-md-2">Product</h5>
-                    <p> {{ field }} </p>
+
+                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                        placeholder=" Name of your product">
                 </div>
             {% endif %}
-
+            
+            
             {% if field.name == 'description' %}
-                <div class="col-md-5">
+                <div class="col-md-5 row-md-6">
                     <h5 class="my-4 my-md-2">Description</h5>
-                    <p> {{ field }} </p>
+                    
+                        <textarea type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}" 
+                            placeholder=" Brief description of your product" row="5"></textarea>
                 </div>
             {% endif %}
 
             {% if field.name == 'price' %}
                 <div class="col-md-5">
                     <h5 class="my-4 my-md-2">Price</h5>
-                    <p> {{ field }} </p>
+
+                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                        placeholder=" Price / day ">
                 </div>
             {% endif %}
-
+            
+            
             {% if field.name == 'category' %}
             <div class="col-md-5">
                 <h5 class="my-4 my-md-2">Category</h5>
