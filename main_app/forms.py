@@ -1,14 +1,12 @@
-# from django.contrib.auth.models import User  
-# from django.forms.fields import EmailField  
-# from django.forms.forms import Form  
-from django.forms import ModelForm, inlineformset_factory
-from .models import Review, Renting, Image, Review, Product, CustomUser
+from django.forms import ModelForm, inlineformset_factory, HiddenInput
+from .models import Review, Renting, Image, Review, Product, CustomUser, RATINGS
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field, BaseInput, Div
+from crispy_forms.layout import Layout, Submit, Field, BaseInput, Div, Hidden
 from crispy_forms.bootstrap import FormActions
 
 class UpdateProfileForm(forms.ModelForm):
@@ -60,19 +58,32 @@ ImageFormSet = inlineformset_factory(
     extra=1    # Number of formsets to render
 )
 
-# from .models import Review, CustomUser
 
-# from django.contrib.auth import get_user_model
-# User = get_user_model()
+# Using crispy forms
+class ReviewForm(forms.Form):
+        date = forms.DateField(widget=forms.HiddenInput(), initial=timezone.now().date())
+        rating = forms.ChoiceField(choices=RATINGS)
+        description = forms.CharField(
+            label='Let us hear your thoughts',
+            widget = forms.Textarea()
+        )
 
+        helper = FormHelper()
+        helper.form_method = 'POST'
+        helper.form_action = 'review'
+        helper.layout = Layout(
+            Field('rating'),
+            Field(
+                'description',
+                  rows='3'
+                  ),
+            Field('date', type="hidden"),
+            FormActions(
+                Submit('submit', 'Submit', css_class="btn btn-primary rounded-pill"),
+            )
+        )
 
-class ReviewForm(ModelForm):
-    class Meta:
-        model = Review
-        fields = ['date', 'rating', 'description']
-
-
-# Using crispy forms to change styling
+# Using crispy forms
 class RentingForm(forms.Form):
     date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Pickup Date:')
     date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Return Date:')

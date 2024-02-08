@@ -5,11 +5,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model
 from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet, UpdateProfileForm
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View, TemplateView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image, Renting, Category, CustomUser
+from .models import Product, Image, Renting, Category, CustomUser, Review
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
@@ -35,11 +35,32 @@ def about(request):
 def terms(request):
     return render(request, 'terms.html')
 
-def reviewform(request):
-    review_form = ReviewForm
-    return render(request, 'review_form.html', {
-        'review_form': review_form
-    })
+# Leave a review
+class ReviewCreate(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        form = ReviewForm()
+        context = {'form': form}
+        return render(request, 'review_form.html', context)
+
+    def post(self, request, pk):
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            rating = form.cleaned_data['rating']
+            description = form.cleaned_data['description']
+            review = Review.objects.create(
+                date=date,
+                rating=rating,
+                description=description,
+                user=request.user,
+                product_id=pk
+            )
+            review.save()
+            messages.success(request, 'Thank you for your review!')
+        else:
+            messages.error(request, 'Error. Please try again.')
+        context = {'form': form}
+        return render(request, 'review_form.html', context)
 
 # Profile Detail (LoginRequiredMixin)
 class ProfileDetailView(LoginRequiredMixin, DetailView):
