@@ -34,11 +34,15 @@
 				<div class="col-md-5">
 					<h4 class="my-4 my-md-2">{{ product.product_name }}</h4>
 					{% if reviews %}
-					<p class="small my-4 my-md-0"><span class="bold">{{ product.get_average }}/5.0 Rating</span> <span class="grey-text">{{ reviews.count }} User Rating</span></p>
-					{% endif %}  
-					{% if product.user.town %}
-					<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{ product.user.post_code }}</span></p>
+						<p class="small my-4 my-md-2"><span class="bold">{{ product.get_average }}/5.0 Rating </span> <span class="grey-text"> {{ reviews.count }} User Rating{{ reviews.count|pluralize:'s' }}</span></p>
 					{% endif %}
+					<h6 class="mt-4 mt-md-2">Categories: </h6>
+					{% for category in product.category.all %}
+						<p class="small">{{ category.name }} </p>
+					{% endfor %}
+					{% if product.user.town %}
+						<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{ product.user.post_code }}</span></p>
+					{% endif %}  
 					<h4 class="primary-text bold my-4">${{ product.price }} / day</h4>
 					<div class="page-divider-grey my-md-5 my-2"></div>
 				{% if is_owner %}
@@ -70,28 +74,32 @@
 </div>
 
 <div class="container">
-		<h4 class="my-4">Description</h4>
-		<p>{{ product.description }}</p>
-
-		<h4 class="my-4">What People Say</h4>
-		{% if reviews%}
+	<div class="row">
+		<div class="col-md-7">
+			<h4 class="my-4">Description</h4>
+			<p>{{ product.description }}</p>
+		</div>
+		<div class="col-md-5">
+			<h4 class="my-4">What People Say</h4>
+			{% if reviews %}
 			{% for review in reviews %}
-				<div class="container p-0">
-						<h6>{{ review.user }}: {{ review.rating }}</h6>
-						<p class="small">{{ review.description }}</p>
-						
+				<div class="card mb-3">
+					<div class="card-header">
+						<h6>{{ review.user.first_name }} from {{ review.user.town }}</h6>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="small list-group-item">{{ review.description }}</p>
+					</ul>
+					<div class="card-footer">
+						{{ review.rating }}.0/5.0
+					</div>
 				</div>
 			{% endfor %}
-		{% else %}
-			<p class="my-2 my-md-4">No reviews</p>
-		{% endif %}
-
-		<h6 class="mt-5">Categories</h6>
-		<ul>
-		{% for category in product.category.all %}
-			<li class="small">{{ category.name }} </li>
-		{% endfor %}
-		</ul>
+			{% else %}
+				<p class="my-2 my-md-4">No reviews</p>
+			{% endif %}
+		</div>
+	</div>
 </div>
 
 
