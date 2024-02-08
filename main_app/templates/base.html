@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{% static './css/custom.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script defer src="{% static './js/bootstrap.bundle.min.js' %}"></script>
-        <script defer src="{% static './js/main.js' %}"></script>>
+        <script defer src="{% static './js/main.js' %}"></script>
         <script src="https://unpkg.com/feather-icons"></script>
 
     </head>
@@ -68,23 +68,23 @@
                 <div class="col">
                     <h6 class="text-white">Products</h6>
                     <ul class="navbar-nav">
-                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">How it works</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'about' %}">How it works</a></li>
                         <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'product_list' %}">Categories</a></li>
-                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">My products</a></li>
-                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">Terms and conditions</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'profile' username=user.username %}">My products</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'terms' %}">Terms and conditions</a></li>
                     </ul>
                 </div>
                 <div class="col">
                     <h6 class="text-white">Rentals</h6>
                     <ul class="navbar-nav">
-                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">My rentals</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'profile' username=user.username %}">My rentals</a></li>
                         <li class="nav-item x-small"><a class="nav-link text-white" href="#">Invite a friend</a></li>
                     </ul>
                 </div>
                 <div class="col">
                     <h6 class="text-white">About Us</h6>
                     <ul class="navbar-nav">
-                        <li class="nav-item x-small"><a class="nav-link text-white" href="#">Who we are</a></li>
+                        <li class="nav-item x-small"><a class="nav-link text-white" href="{% url 'about' %}">Who we are</a></li>
                     </ul>
                 </div>
             </div>
