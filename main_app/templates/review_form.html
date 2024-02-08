@@ -19,8 +19,12 @@ Review | RentHub
     </div>
     {% endif %}
     {% if messages %}
-    {% for message in messages %}
-        <h4>{{ message }}</h4>
-    {% endfor %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <h5 class="alert alert-success">{{ message }}</h5>
+            {% elif message.tags == 'error' %}
+                <h5 class="alert alert-danger">{{ message }}</h5>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 {% endblock %}
