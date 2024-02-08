@@ -2,12 +2,24 @@
 {% block title %} Log In | RentHub {% endblock %}
 
 {% block content %}
-<h1>Login</h1>
 
-<form method="POST" action="{% url 'login' %}">
-  {% csrf_token %} {{ form.as_p }}
-  <input type="hidden" name="next" value="{{ next }}" />
-  <button type="submit" class="btn btn-primary">Log In</button>
-</form>
+
+  <h2 class="my-4">Welcome Back</h2>
+  <form method="POST" action="/accounts/login/" class="mt-3">
+    {% csrf_token %}
+    <div class="form-group col-6">
+      <label for="id_username">Username:</label>
+      <input type="text" name="username" class="form-control" autofocus autocapitalize="none" autocomplete="username"
+        maxlength="50" required id="id_username">
+    </div>
+    <div class="form-group col-6 mt-2">
+      <label for="id_password">Password:</label>
+      <input type="password" name="password" class="form-control" autocomplete="current-password" required
+        id="id_password">
+    </div>
+    <input type="hidden" name="next" value="" />
+    <button type="submit" class="btn btn-primary rounded-pill mt-3">Log In</button>
+  </form>
+
 
 {% endblock %}

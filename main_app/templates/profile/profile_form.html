@@ -8,7 +8,7 @@
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="row">
@@ -34,13 +34,13 @@
                                         <a href="{% url 'profile_update' username=request.user.username %}" class="nav-link"
                                             aria-current="page">
                                             <i data-feather="users"></i>
-                                            <span class="ml-2">Update Profile</span>
+                                            <span class="ml-2">Update Details</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{% url 'profile_detail' username=request.user.username %}" class="nav-link" aria-current="page">
                                             <i data-feather="zoom-in"></i>
-                                            <span class="ml-2">Profile Detail</span>
+                                            <span class="ml-2">Account Details</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -69,8 +69,8 @@
             </nav>
         </div>
         <div class="col-md-9">
-            <div class="container mt-5">
-                <h1>Update Your Profile</h1>
+            <div class="container mt-4">
+                <h2>Update My Details</h2>
 
                 <form method="post" enctype="multipart/form-data">
 

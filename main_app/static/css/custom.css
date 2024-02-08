@@ -11807,4 +11807,12 @@ a {
 
 .table {
   --bs-table-bg: #ffffff;
+}
+
+.list-group {
+  --bs-list-group-bg: #ffffff;
+}
+
+.form-select {
+  background-color: #ffffff;
 }/*# sourceMappingURL=custom.css.map */

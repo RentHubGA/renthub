@@ -52,8 +52,10 @@ class ReviewCreate(LoginRequiredMixin, View):
             user_reviews = Review.objects.filter(user=request.user, product=product)
             if user_reviews.exists():
                 messages.error(request, 'You have already left a review for this listing.')
+                return redirect('review_create', pk=pk)
             elif product.user == request.user:
                 messages.error(request, 'You cannot leave a review for your own listing.')
+                return redirect('review_create', pk=pk)
             else:
                 review = Review.objects.create(
                     date=date,
@@ -64,6 +66,7 @@ class ReviewCreate(LoginRequiredMixin, View):
                 )
                 review.save()
                 messages.success(request, 'Thank you for your review!')
+                return redirect('review_create', pk=pk)
         else:
             messages.error(request, 'Error. Please try again.')
         context = {'form': form}
@@ -124,6 +127,7 @@ class Profile(LoginRequiredMixin, TemplateView):
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
+        
         for product in products:
             print(product.renting_set.all())
         context = {
@@ -341,14 +345,31 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Check that pickup date is not in the past
+        if date_rent < timezone.now().date():
+            messages.error(request, 'This date has already passed. Please update the pickup date and try again.')
+            return redirect('product_detail', pk=pk)
+
+        # Handle errors if user sets pickup date to be AFTER drop off date
+        if date_return < date_rent:
+            messages.error(request, 'Return date cannot be before pickup date.')
+            return redirect('product_detail', pk=pk)
         # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
         # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
-            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
+            Renting.objects.create(
+                product=product,
+                user=request.user,
+                date_rent=date_rent,
+                date_return=date_return,
+                total_price=total_price
+                )
             messages.success(request, 'Your booking was successful!')
+            return redirect('product_detail', pk=pk)
         else:
             messages.error(request, 'Those dates are unavailable. Please try again.')
+            return redirect('product_detail', pk=pk)
     else:
         messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
