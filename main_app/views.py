@@ -128,8 +128,8 @@ class Profile(LoginRequiredMixin, TemplateView):
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
         
-        for product in products:
-            print(product.renting_set.all())
+        # for product in products:
+        #     print(product.renting_set.all())
         context = {
             'user': user,
             'products': products,
@@ -147,7 +147,7 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
 
     def get(self, request, username):
         
-        print(username)
+        print('User:', username)
         if username != request.user.username:
             raise PermissionDenied("Permission to access this page.")
 
@@ -166,12 +166,6 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         total_income = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))['total_income'] or 0
         total = total_income - total_outcome
 
-        
-        # for product in products:
-        #     print(product.renting_set.all())
-        for product in products:
-            print(product)
-        # print(products)
         context = {
             'user': user,
             'products': products,
