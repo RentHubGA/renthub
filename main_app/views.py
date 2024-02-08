@@ -342,6 +342,11 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Check that pickup date is not in the past
+        if date_rent < timezone.now().date():
+            messages.error(request, 'This date has already passed. Please update the pickup date and try again.')
+            return redirect('product_detail', pk=pk)
+
         # Handle errors if user sets pickup date to be AFTER drop off date
         if date_return < date_rent:
             messages.error(request, 'Return date cannot be before pickup date.')

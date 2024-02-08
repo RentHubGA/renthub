@@ -52,9 +52,9 @@
 					{% if messages %}
 							{% for message in messages %}
 									{% if message.tags == 'success' %}
-											<h5 class="alert alert-success">{{ message }}</h5>
+											<h6 class="alert alert-success">{{ message }}</h6>
 									{% elif message.tags == 'error' %}
-											<h5 class="alert alert-danger">{{ message }}</h5>
+											<h6 class="alert alert-danger">{{ message }}</h6>
 									{% endif %}
 							{% endfor %}
 					{% endif %}
