@@ -98,3 +98,8 @@ footer {
     color: #000000;
     text-decoration: none;
 }
+
+.fa-solid,
+.fa-regular {
+    color: var(--dark);
+}

@@ -228,20 +228,21 @@ def add_image(request, product_id):
 
 
 class ProductList(ListView):
+    paginate_by = 2
     model = Product
+    template_name = 'main_app/product_list.html'
 
     # to display the categories
-    def get(self, request):
-        categories = Category.objects.all()
-        product_list = Product.objects.all()
-        search = request.GET.get('min')
-        categories_filter = request.GET.getlist('categories-filter')
-        min_value = request.GET.get('min')
-        max_value = request.GET.get('max')
-        search = request.GET.get('query')
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('min')
+        categories_filter = self.request.GET.getlist('categories-filter')
+        min_value = self.request.GET.get('min')
+        max_value = self.request.GET.get('max')
+        search = self.request.GET.get('query')
 
 # ------------- FILTER BY -------------------- #
-
+        
         if min_value == '' or min_value is None:
             min_value = 0
         if max_value == '' or max_value is None:
@@ -253,17 +254,18 @@ class ProductList(ListView):
                 product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
         elif min_value != 0 or max_value != 100000:
             product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
-            
-# ------------- SEARCH -------------------- #
-            
-        if search:
-            product_list = product_list.filter(product_name__icontains=search)
 
-        return render(request, 'main_app/product_list.html', 
-                { 'categories': categories,
-                   'product_list': product_list,
-                   }
-                       )
+# ------------- SEARCH -------------------- #
+
+        if search:
+            queryset = queryset.filter(product_name__icontains=search)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
     
 
 class ProductDetail(DetailView):
