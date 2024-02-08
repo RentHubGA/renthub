@@ -7,7 +7,7 @@
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="row">
@@ -68,32 +68,33 @@
             </nav>
         </div>
         <div class="col-md-9">
-            <h1 class="mb-4">{{ user.username }} Products</h1>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
+            <h2 class="my-4">My Listings</h2>
+            <div class="row row-cols-1 row-cols-md-2 g-3">
                 {% user_products user as products %}
                 {% for product in products %}
                 <div class="col">
                     <div class="card">
-                        {% if product.image_set.first %}
-                        <img src="{{ product.image_set.first.url }}" class="img-fluid rounded-start h-100 w-auto object-fit-cover" alt="{{ product.product_name }}">
+                        {% if product.image_set.first.image %}
+                        <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
                         {% else %}
-                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ product.product_name }}">
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
                         {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.product_name }}</h5>
-                            <p class="card-text">Price: <span>${{ product.price }}</span></p>
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a>
+                        <div class="card-img-overlay d-flex align-content-between justify-content-between">
+                            <h5 class="card-title text-white">{{ product.product_name }}</h5>
+                            <div class="d-flex flex-column align-self-end">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill my-2">Details</a>
                             {% if product.id in rented_product_ids %}
                                 {% if now|date:"Y-m-d" < product.renting_set.last.date_return|date:"Y-m-d" and now|date:"Y-m-d" < product.renting_set.last.date_rent|date:"Y-m-d" %} 
-                                    <span class="badge" style="background-color: #3b08c7; color: #ffffff;">Booking</span>
+                                    <span class="badge" style="background-color: #f7b832; color: #ffffff; width: 75.59px;">Booked</span>
                                 {% elif now|date:"Y-m-d" <= product.renting_set.first.date_return|date:"Y-m-d" %} 
-                                    <span class="badge" style="background-color: #FFC107; color: #ffffff;">Renting</span>
+                                    <span class="badge" style="background-color: #f76d32; color: #ffffff; width: 75.59px;">Rented</span>
                                 {% elif now|date:"Y-m-d" > product.renting_set.last.date_return|date:"Y-m-d" %}
-                                    <span class="badge" style="background-color: #15d22e; color: #ffffff;">Available</span>
+                                    <span class="badge" style="background-color: #15d22e; color: #ffffff; width: 75.59px;">Available</span>
                                 {% endif %}
                             {% else %}
-                                <span class="badge bg-success">Available</span>
+                                <span class="badge" style="background-color: #15d22e; color: #ffffff; width: 75.59px;">Available</span>
                             {% endif %}
+                            </div>   
                         </div>
                     </div>
                 </div>
@@ -101,22 +102,46 @@
             </div>
             <div class="card mt-4">
                 <div class="card-body">
-                    <h3>Rent History</h3>
-                    <ul class="list-group">
+                    <h3>Renting History</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Pickup Date</th>
+                                <th scope="col">Return Date</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Booking Status</th>
+                                <th scope="col">Review Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         {% user_rent user as rentings %}
                         {% for renting in rentings %}
-                        <li class="list-group-item">
-                            {{ renting.product.product_name }} - {{ renting.date_rent }} - {{ renting.date_return }}
-                            {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
-                                <span class="badge bg-primary">Reserve</span>
-                            {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
-                                <span class="badge bg-success">Returned</span>
-                            {% else %}
-                                <span class="badge bg-danger">Ongoing</span>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
+                            <tr>
+                                <td><a href="{% url 'product_detail' renting.product.pk %}">{{ renting.product.product_name }}</a></td>
+                                <td>{{ renting.date_rent }}</td>
+                                <td>{{ renting.date_return }}</td>
+                                <td>${{ renting.total_price }}</td>
+                                {% comment %} Booking Status {% endcomment %}
+                                {% if now|date:"Y-m-d" < renting.date_return|date:"Y-m-d" and now|date:"Y-m-d" < renting.date_rent|date:"Y-m-d" %}
+                                    <td><span class="badge" style="background-color: #f7b832; color: #ffffff; width: 75.59px;">Reserved</span></td>
+                                {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+                                    <td><span class="badge" style="background-color: #f76d32; color: #ffffff; width: 75.59px;">Returned</span></td>
+                                {% else %}
+                                    <td><span class="badge" style="background-color: #15d22e; color: #ffffff; width: 75.59px;">Ongoing</span></td>
+                                {% endif %}
+                                {% comment %} Review Status {% endcomment %}
+                                {% if renting.review_set.exists %}
+                                    <td><span class="badge" style="background-color: #15d22e; color: #ffffff;">Review Left</span></td>
+                                {% elif now|date:"Y-m-d" >= renting.date_return|date:"Y-m-d" %}
+                                    <td><a href="#"><span class="badge" style="background-color: #15d22e; color: #ffffff;">Leave Review</span></a></td>
+                                {% else %}
+                                    <td><i data-feather="x" style="height: 20px;"></i></td>
+                                {% endif %}
+                            </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
