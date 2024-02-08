@@ -1,0 +1,30 @@
+{% extends './base.html' %}
+
+{% block title %}
+Review | RentHub
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'profile' username=user.username %}" class="text-decoration-none text-dark m-2"><i data-feather='arrow-left' class=" my-3"></i></a>
+<h2 class="my-2">Share Your Experience</h2>
+    {% load crispy_forms_tags %}
+    {% crispy form %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <h5 class="alert alert-success">{{ message }}</h5>
+            {% elif message.tags == 'error' %}
+                <h5 class="alert alert-danger">{{ message }}</h5>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
