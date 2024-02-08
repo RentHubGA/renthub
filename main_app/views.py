@@ -341,14 +341,26 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Handle errors if user sets pickup date to be AFTER drop off date
+        if date_return < date_rent:
+            messages.error(request, 'Return date cannot be before pickup date.')
+            return redirect('product_detail', pk=pk)
         # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
         # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
-            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
+            Renting.objects.create(
+                product=product,
+                user=request.user,
+                date_rent=date_rent,
+                date_return=date_return,
+                total_price=total_price
+                )
             messages.success(request, 'Your booking was successful!')
+            return redirect('product_detail', pk=pk)
         else:
             messages.error(request, 'Those dates are unavailable. Please try again.')
+            return redirect('product_detail', pk=pk)
     else:
         messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)
