@@ -11799,4 +11799,20 @@ a {
 .form-control,
 .form-control:focus {
   background-color: #ffffff;
+}
+
+.card {
+  --bs-card-bg: #ffffff;
+}
+
+.table {
+  --bs-table-bg: #ffffff;
+}
+
+.list-group {
+  --bs-list-group-bg: #ffffff;
+}
+
+.form-select {
+  background-color: #ffffff;
 }/*# sourceMappingURL=custom.css.map */

@@ -5,14 +5,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model
 from .forms import CustomUserCreationForm, ReviewForm, RentingForm, ImageUploadForm, ImageFormSet, UpdateProfileForm
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View, TemplateView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Image, Renting, Category, CustomUser
+from .models import Product, Image, Renting, Category, CustomUser, Review
 from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
+from django.db.models import Sum
 
 
 import os
@@ -31,11 +32,45 @@ def home(request):
 def about(request):
     return render(request, 'about.html' )
 
-def reviewform(request):
-    review_form = ReviewForm
-    return render(request, 'review_form.html', {
-        'review_form': review_form
-    })
+def terms(request):
+    return render(request, 'terms.html')
+
+# Leave a review
+class ReviewCreate(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        form = ReviewForm()
+        context = {'form': form}
+        return render(request, 'review_form.html', context)
+
+    def post(self, request, pk):
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            rating = form.cleaned_data['rating']
+            description = form.cleaned_data['description']
+            product = Product.objects.get(pk=pk)
+            user_reviews = Review.objects.filter(user=request.user, product=product)
+            if user_reviews.exists():
+                messages.error(request, 'You have already left a review for this listing.')
+                return redirect('review_create', pk=pk)
+            elif product.user == request.user:
+                messages.error(request, 'You cannot leave a review for your own listing.')
+                return redirect('review_create', pk=pk)
+            else:
+                review = Review.objects.create(
+                    date=date,
+                    rating=rating,
+                    description=description,
+                    user=request.user,
+                    product_id=pk
+                )
+                review.save()
+                messages.success(request, 'Thank you for your review!')
+                return redirect('review_create', pk=pk)
+        else:
+            messages.error(request, 'Error. Please try again.')
+        context = {'form': form}
+        return render(request, 'review_form.html', context)
 
 # Profile Detail (LoginRequiredMixin)
 class ProfileDetailView(LoginRequiredMixin, DetailView):
@@ -92,6 +127,7 @@ class Profile(LoginRequiredMixin, TemplateView):
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
+        
         for product in products:
             print(product.renting_set.all())
         context = {
@@ -110,6 +146,11 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'profile/profile_dashboard.html'
 
     def get(self, request, username):
+        
+        print(username)
+        if username != request.user.username:
+            raise PermissionDenied("Permission to access this page.")
+
         user = User.objects.get(username=username)
         products = user_products(user)
         rent = user_rent(user)
@@ -120,6 +161,12 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         # filter Renting by 
         total_rentings = Renting.objects.filter(product__in=products).count()
         latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+
+        total_outcome = sum(product.price for product in products)
+        total_income = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))['total_income'] or 0
+        total = total_income - total_outcome
+
+        
         # for product in products:
         #     print(product.renting_set.all())
         for product in products:
@@ -132,7 +179,10 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
             'now': now,
             'rented_product_ids': rented_product_ids,
             'total_rentings': total_rentings,
-            'latest_renting': latest_renting
+            'latest_renting': latest_renting,
+            'total_income': total_income,
+            'total_outcome': total_outcome,
+            'total': total
             }
         return render(request, self.template_name, context)
 
@@ -295,14 +345,31 @@ def rent_product(request, pk):
         data = form.cleaned_data
         date_rent = data['date_rent']
         date_return = data['date_return']
+        # Check that pickup date is not in the past
+        if date_rent < timezone.now().date():
+            messages.error(request, 'This date has already passed. Please update the pickup date and try again.')
+            return redirect('product_detail', pk=pk)
+
+        # Handle errors if user sets pickup date to be AFTER drop off date
+        if date_return < date_rent:
+            messages.error(request, 'Return date cannot be before pickup date.')
+            return redirect('product_detail', pk=pk)
         # Calculate total price of booking using total_price method
         total_price = product.total_price(date_rent, date_return)
         # Check availability of product using is_available method
         if product.is_available(date_rent, date_return):
-            Renting.objects.create(product=product, user=request.user, date_rent=date_rent, date_return=date_return, total_price=total_price)
+            Renting.objects.create(
+                product=product,
+                user=request.user,
+                date_rent=date_rent,
+                date_return=date_return,
+                total_price=total_price
+                )
             messages.success(request, 'Your booking was successful!')
+            return redirect('product_detail', pk=pk)
         else:
             messages.error(request, 'Those dates are unavailable. Please try again.')
+            return redirect('product_detail', pk=pk)
     else:
         messages.error(request, 'Invalid form data. Please try again.')
     return redirect('product_detail', pk=pk)

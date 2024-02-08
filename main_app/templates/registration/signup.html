@@ -6,7 +6,7 @@ Sign Up | RentHub
 
 {% block content %}
 
-<h2 class="my-4">Sign Up</h2>
+<h2 class="my-4">Welcome to RentHub!</h2>
 
 <p class="red-text">{{ error_message }}</p>
 
@@ -14,6 +14,5 @@ Sign Up | RentHub
     {% csrf_token %}
     {% load crispy_forms_tags %}
 	{% crispy form form.helper %}
-    <button type="submit" class="btn btn-success rounded-pill">Sign Up</button>
 </form>
 {% endblock %}
