@@ -12,7 +12,6 @@ urlpatterns = [
     path('products/<int:pk>/update', views.ProductUpdate.as_view(), name='product_update'),
     path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='product_delete'),
     path('reviewform/', views.reviewform, name='reviewform'),
-    path('products/<int:pk>/add_image', views.add_image, name='add_image'),
     ## accounts Root
     path('accounts/profile/<str:username>/test', views.ProfileDetailView.as_view(), name='profile_detail'),
     path('accounts/profile/<str:username>/', views.Profile.as_view(), name='profile' ),
