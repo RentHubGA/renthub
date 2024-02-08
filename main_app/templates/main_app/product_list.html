@@ -54,28 +54,83 @@
     </div>
 </div>
 
-    <!----------------------  PRODUCT LIST  -------------------------------->
-    
-<div class="container">
-    <div class="row g-3">
-        {% for product in product_list %}
-        <div class="col-lg-4">
-            <div class="card ">
-            {% if product.image_set.first.image %}
-                <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
-            {% else %}
-                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
-            {% endif %}
-                <div class="card-img-overlay">
-                    <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
-                    <div class="container align-items-end justify-content-between h-75 d-flex p-0">
-                        <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
-                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
+<!----------------------  BACKGROUND IMAGES  -------------------------------->
+
+<div class="jumbotron"
+    style="background-image: url('../../static/assets/liquid_shape_1.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 150px; background-position-y: 32.5em; background-position-x: 12.2em;">
+
+    <div class="jumbotron"
+        style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 250px; background-position-y: 25.5em; background-position-x: 10.5em;">
+
+            <div class="jumbotron"
+                style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 400px; background-position-y: 35.5em; background-position-x: 100.2em;">
+
+                    
+                <div class="jumbotron"
+                    style="background-image: url('../../static/assets/doodle-6.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 40px; background-position-y: 58.5em; background-position-x: 109.8em;">
+
+                    <div class="jumbotron"
+                        style="background-image: url('../../static/assets/reading-side.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 150px; background-position-y: 119.05em; background-position-x: 103.5em;">
+
+                        <div class="jumbotron"
+                            style="background-image: url('../../static/assets/shape.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 2.5em; background-position-x: 12em; background-size: 55px;">
+
+                            <div class="jumbotron"
+                                style="background-image: url('../../static/assets/doodle-4.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 3em; background-position-x: 11em; background-size: 40px;">
+
+                                <div class="jumbotron"
+                                    style="background-image: url('../../static/assets/doodle-3.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 1em; background-position-x: 12em; background-size: 40px;">
+
+                                        <div class="jumbotron"
+                                        style="background-image: url('../../static/assets/doodle-2.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 67em; background-position-x: 102em; background-size: 70px;">
+
+                                        <div class="jumbotron"
+                                            style="background-image: url('../../static/assets/dancing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 60em; background-position-x: 105em;">
+                                            
+                                            <div class="jumbotron"
+                                                style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 119em; background-position-x: 6em;">
+
+                                                <div class="jumbotron"
+                                                    style="background-image: url('../../static/assets/hands.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 119em; background-position-x: 5em;">
+
+                                                   
+
+                                                    
+
+            <!----------------------  PRODUCT LIST  -------------------------------->
+
+                                                        <div class="container">
+                                                            <div class="row g-3">
+                                                                {% for product in product_list %}
+                                                                <div class="col-lg-4">
+                                                                    <div class="card ">
+                                                                    {% if product.image_set.first.image %}
+                                                                        <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
+                                                                    {% else %}
+                                                                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
+                                                                    {% endif %}
+                                                                        <div class="card-img-overlay">
+                                                                            <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
+                                                                            <div class="container align-items-end justify-content-between h-75 d-flex p-0">
+                                                                                <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
+                                                                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
+
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}

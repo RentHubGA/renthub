@@ -4,14 +4,20 @@
 
 {% block content %}
 
-<h2 class="my-4">Delete Product</h2>
+<div class="jumbotron" style="background-image: url('../../static/assets/composition.png'); padding-bottom: 20em; margin-bottom: -20em; padding-left: 25em; margin-left:-25em; padding-right: 22.8em; margin-right: -22.8em; background-position-y: -10em; background-position-x: 15em; background-repeat: repeat-x; padding-top: 0.5em; margin-top: -0.5em; background-size: 100%;">
 
-<h6>Are you sure you want to delete {{ product.product_name }}?</h6>
+    <div style="margin-top: 21.5em; margin-right: 15em; align-items: center;">
 
-<form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes" class="btn btn-primary rounded-pill">
-    <a href="{% url 'product_detail' product.id %}" class="btn btn-danger rounded-pill">Cancel</a>
-</form>
+        <h2 class="my-3" style="color: aliceblue; text-shadow: black;">Delete Product?</h2>
 
+            <h6 style="color: aliceblue;"> Are you sure you want to delete {{ product.product_name }}?</h6>
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Yes" class="btn btn-secondary rounded-pill">
+                    <a style="text-decoration: none; color: rgb(233, 61, 61); margin-left: 1em;" href="{% url 'product_detail' product.id %}" class="">Cancel</a>
+                </form>
+
+    </div>
+</div>
 {% endblock %}

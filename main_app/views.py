@@ -245,6 +245,7 @@ class ProductList(ListView):
             product_list = product_list.filter(category__name__in=categories_filter)
             if min_value != 0 or max_value != 100000:
                 product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+                
         elif min_value != 0 or max_value != 100000:
             product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
             
