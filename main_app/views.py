@@ -14,7 +14,8 @@ from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
 from django.db.models import Sum
-
+from django.http import JsonResponse
+from datetime import datetime, timedelta
 
 import os
 import boto3
@@ -222,43 +223,46 @@ def add_image(request, product_id):
 
 
 class ProductList(ListView):
+    paginate_by = 9
     model = Product
+    template_name = 'main_app/product_list.html'
 
     # to display the categories
-    def get(self, request):
-        categories = Category.objects.all()
-        product_list = Product.objects.all()
-        search = request.GET.get('min')
-        categories_filter = request.GET.getlist('categories-filter')
-        min_value = request.GET.get('min')
-        max_value = request.GET.get('max')
-        search = request.GET.get('query')
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        categories_filter = self.request.GET.getlist('categories-filter')
+        min_value = self.request.GET.get('min')
+        max_value = self.request.GET.get('max')
+        search = self.request.GET.get('query')
 
 # ------------- FILTER BY -------------------- #
-
+        
         if min_value == '' or min_value is None:
             min_value = 0
         if max_value == '' or max_value is None:
             max_value = 100000
    
         if len(categories_filter) != 0:
-            product_list = product_list.filter(category__name__in=categories_filter)
+            queryset = queryset.filter(category__name__in=categories_filter)
             if min_value != 0 or max_value != 100000:
-                product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
-                
+                queryset = queryset.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
         elif min_value != 0 or max_value != 100000:
-            product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
-            
-# ------------- SEARCH -------------------- #
-            
-        if search:
-            product_list = product_list.filter(product_name__icontains=search)
+            queryset = queryset.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
 
-        return render(request, 'main_app/product_list.html', 
-                { 'categories': categories,
-                   'product_list': product_list,
-                   }
-                       )
+# ------------- SEARCH -------------------- #
+
+        if search:
+            queryset = queryset.filter(product_name__icontains=search)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        if not context['object_list']:
+            context['no_results'] = "No products match your search."
+        context['categories'] = categories
+        return context
     
 
 class ProductDetail(DetailView):
@@ -342,7 +346,7 @@ def rent_product(request, pk):
         date_return = data['date_return']
         # Check that pickup date is not in the past
         if date_rent < timezone.now().date():
-            messages.error(request, 'This date has already passed. Please update the pickup date and try again.')
+            messages.error(request, 'This date has already passed. Please change the dates and try again.')
             return redirect('product_detail', pk=pk)
 
         # Handle errors if user sets pickup date to be AFTER drop off date
@@ -373,3 +377,24 @@ def items(request):
     items = Product.objects.filter()
 
     return render(request, )
+
+# Fetch unavailable dates
+def get_unavailable_dates(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    check_from = datetime.now().date()
+    check_to = check_from + timedelta(days=365)
+    # Find all bookings between today and 1 year from today
+    all_rentings = Renting.objects.filter(
+        product=product,
+        date_rent__gte=check_from,
+        date_return__lte=check_to
+    )
+    # Iterate through each booking, appending each day it is rented to unavailable_dates
+    unavailable_dates = []
+    for renting in all_rentings:
+        current_date = renting.date_rent
+        while current_date <= renting.date_return:
+            unavailable_dates.append(current_date.strftime('%Y-%m-%d'))
+            current_date += timedelta(days=1)
+
+    return JsonResponse({'unavailable_dates': unavailable_dates})
