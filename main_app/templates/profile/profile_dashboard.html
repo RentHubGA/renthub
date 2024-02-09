@@ -125,13 +125,42 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-12">
+                    <div class="col-12 col-xl-12 mb-4 mb-lg-0">
                         <div class="card">
-                            <h5 class="card-header">Products Review</h5>
+                            <h5 class="card-header">Products Rating</h5>
                             <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="products-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Products</th>
+                                                <th scope="col">category</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Rating</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for product in user.product_set.all %}
+                                            <tr>
+                                                <td scope="row">{{ product.product_name }}</td>
+                                                <th>
+                                                    {% for category in product.category.all %}
+                                                        {{ category.name }}
+                                                        {% if not forloop.last %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </th>
+                                                <td>{{ product.price }}</td>
+                                                <td>{{ product.review_set.all|calculate_average_rating }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+
                     <div class="col-12 col-xl-12 mb-4 mb-lg-0">
                         <div class="card">
                             <h5 class="card-header">Latest transection</h5>
@@ -180,6 +209,21 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
+        aria-expanded="true" aria-controls="collapseCardExample">
+        <h6 class="m-0 font-weight-bold text-primary">Collapsable Card Example</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardExample" style="">
+        <div class="card-body">
+            This is a collapsable card example using Bootstrap's built in collapse
+            functionality. <strong>Click on the card header</strong> to see the card body
+            collapse and expand!
         </div>
     </div>
 </div>
