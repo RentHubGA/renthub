@@ -165,15 +165,17 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         print('user ', user)
         print('current_user ', current_user)
         # Calculate total outcome from the current user's rented products
+        
         total_outcome = 0
-        for renting in Renting.objects.filter(user=current_user):
+        rent_out_filter = Renting.objects.filter(user=current_user)
+        for renting in rent_out_filter:
             total_outcome += renting.total_price
         
-        total_income_filter = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))
-        if total_income_filter['total_income'] is not None:
-            total_income = total_income_filter['total_income']
-        else:
-            total_income = 0
+        total_income = 0
+        rent_in_filter = Renting.objects.filter(product__in=products)
+        for renting in rent_in_filter:
+            total_income += renting.total_price
+
         # Total Balance
         total = total_income - total_outcome
         context = {
