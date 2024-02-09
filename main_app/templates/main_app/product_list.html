@@ -70,7 +70,7 @@
                     style="background-image: url('../../static/assets/doodle-6.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 40px; background-position-y: 58.5em; background-position-x: 109.8em;">
 
                     <div class="jumbotron"
-                        style="background-image: url('../../static/assets/reading-side.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 150px; background-position-y: 119.05em; background-position-x: 103.5em;">
+                        style="background-image: url('../../static/assets/reading-side.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 150px; background-position-y: 150.5em; background-position-x: 103.5em;">
 
                         <div class="jumbotron"
                             style="background-image: url('../../static/assets/shape.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 2.5em; background-position-x: 12em; background-size: 55px;">
@@ -88,10 +88,10 @@
                                             style="background-image: url('../../static/assets/dancing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 60em; background-position-x: 105em;">
                                             
                                             <div class="jumbotron"
-                                                style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 119em; background-position-x: 6em;">
+                                                style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 150em; background-position-x: 6em;">
 
                                                 <div class="jumbotron"
-                                                    style="background-image: url('../../static/assets/hands.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 119em; background-position-x: 5em;">
+                                                    style="background-image: url('../../static/assets/hands.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 151em; background-position-x: 5em;">
 
                                                    
 
@@ -105,9 +105,9 @@
                                                                 <div class="col-lg-4">
                                                                     <div class="card ">
                                                                     {% if product.image_set.first.image %}
-                                                                        <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
+                                                                        <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover img-fluid " alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
                                                                     {% else %}
-                                                                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover" alt="{{ product.product_name }}" style="height: 300px; width: 100%;">
+                                                                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover img-fluid" alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
                                                                     {% endif %}
                                                                         <div class="card-img-overlay">
                                                                             <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
@@ -119,7 +119,6 @@
                                                                     </div>
                                                                 </div>
                                                                 {% endfor %}
-
                                                           </div>
                                                     </div>
                                                 </div>

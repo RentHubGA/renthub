@@ -24,18 +24,11 @@
 										<div class="carousel-inner">
 										{% for image in images %}
 											<div class="carousel-item {% if forloop.first %}active{% endif %}">
-												<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded" style="max-height: 500px;">
+												<img src="{{ image.image.url }}" class="d-bloc carousel-img rounded img-fluid" style="height: auto; width: fit-content; max-height: 550px;">
 											</div>
 										{% endfor %}
 										</div>
-											<button class="carousel-control-prev" type="button" data-bs-target="#product-images" data-bs-slide="prev">
-												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Previous</span>
-											</button>
-											<button class="carousel-control-next" type="button" data-bs-target="#product-images" data-bs-slide="next">
-												<span class="carousel-control-next-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Next</span>
-											</button>
+											
 										</div>
 									{% else %}
 										<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images" class="d-block w-100 object-fit-cover rounded" style="max-height: 500px;">

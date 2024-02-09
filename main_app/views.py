@@ -20,6 +20,7 @@ import os
 import boto3
 import uuid
 
+# retrieves the user model active
 User = get_user_model()
 
 # path('about', views.about, name='about'),
@@ -38,10 +39,11 @@ def terms(request):
 # Leave a review
 class ReviewCreate(LoginRequiredMixin, View):
     def get(self, request, pk):
+# instantiating Review Form Class and passing the form to be rendered
         form = ReviewForm()
         context = {'form': form}
         return render(request, 'review_form.html', context)
-
+# take all the information provided in the form, validates and creates a review in Review model.
     def post(self, request, pk):
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -78,7 +80,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     template_name = 'profile/profile_detail.html'
     context_object_name = 'profile'
 
-    # # Prevent other users from accessing profiles that do not belong to them.
+#  Prevent other users from accessing profiles that do not belong to them.
     def get_object(self, queryset=None):
         # Get the requested profile or raise a 404 error if not found
         profile = get_object_or_404(User, username=self.kwargs['username'])
