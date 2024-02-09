@@ -101,7 +101,11 @@ footer {
 
 .fa-solid,
 .fa-regular {
-    color: var(--dark);
+    color: var(--light-subtle);
+}
+
+.current {
+    color: var(--primary);
 }
 
 .product-list {

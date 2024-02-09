@@ -222,7 +222,7 @@ def add_image(request, product_id):
 
 
 class ProductList(ListView):
-    paginate_by = 2
+    paginate_by = 9
     model = Product
     template_name = 'main_app/product_list.html'
 

@@ -46,10 +46,6 @@
 										{% if reviews %}
 											<p class="small my-4 my-md-2"><span class="bold">{{ product.get_average }}/5.0 Rating </span> <span class="grey-text"> {{ reviews.count }} User Rating{{ reviews.count|pluralize:'s' }}</span></p>
 										{% endif %}
-										<h6 class="mt-4 mt-md-2">Categories: </h6>
-										{% for category in product.category.all %}
-											<p class="small">{{ category.name }} </p>
-										{% endfor %}
 										{% if product.user.town %}
 											<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{ product.user.post_code }}</span></p>
 										{% endif %}  
@@ -58,7 +54,7 @@
 									{% if is_owner %}
 									<div>
 										<a href="{% url 'product_update' product.id %}" class="btn btn-primary rounded-pill">Edit</a>
-										<a href="{% url 'product_delete' product.id %}" class="btn btn-danger rounded-pill">Delete</a>
+										<a href="{% url 'product_delete' product.id %}" class="btn btn-success rounded-pill"><i data-feather="trash-2" class="h-75"></i> Delete</a>
 									</div>
 									{% else %}
 									<div class="my-2">
@@ -87,35 +83,29 @@
 	</div>
 </div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-7">
-				<h4 class="my-4">Description</h4>
-				<p>{{ product.description }}</p>
+
+<div class="container">
+	<h4 class="my-4">Description</h4>
+	<p>{{ product.description }}</p>
+</div>
+<div class="container">
+	<h4 class="my-4">What People Say</h4>
+	{% if reviews %}
+	{% for review in reviews %}
+		<div class="card mb-3 col-6">
+			<div class="card-body">
+				<h5><b>{{ review.rating }}.0/5.0</b></h5>
+				<p>{{ review.description }}</p>
 			</div>
-			<div class="col-md-5">
-				<h4 class="my-4">What People Say</h4>
-				{% if reviews %}
-				{% for review in reviews %}
-					<div class="card mb-3">
-						<div class="card-header">
-							<h6>{{ review.user.first_name }} from {{ review.user.town }}</h6>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="small list-group-item">{{ review.description }}</p>
-						</ul>
-						<div class="card-footer">
-							{{ review.rating }}.0/5.0
-						</div>
-					</div>
-				{% endfor %}
-				{% else %}
-					<p class="my-2 my-md-4">No reviews</p>
-				{% endif %}
+			<div class="card-footer">
+				<div class="small">{{ review.user.first_name }} from {{ review.user.town }}</div>
 			</div>
 		</div>
-	</div>
-
+	{% endfor %}
+	{% else %}
+		<p class="my-2 my-md-4">No reviews</p>
+	{% endif %}
+</div>
 
 
 {% endblock %}
