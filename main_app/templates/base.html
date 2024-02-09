@@ -42,7 +42,7 @@
                                                 <button class="btn btn-link p-0"><i data-feather="search" class="search"></i></button>
                                             </form>
                                         </li>
-                                        <li class="nav-item"><a href="{% url 'profile' username=user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary "><i data-feather="user" class="h-75" style="margin-right: 5px;"></i>Profile</button></a></li>
+                                        <li class="nav-item"><a href="{% url 'profile' username=request.user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary "><i data-feather="user" class="h-75" style="margin-right: 5px;"></i>Profile</button></a></li>
                                         <li class="nav-item">
                                     {% else %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>

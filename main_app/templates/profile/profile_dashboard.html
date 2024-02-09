@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                         <div class="card">
-                            <h5 class="card-header">Rented Out Total</h5>
+                            <h5 class="card-header">Rental Frequency</h5>
                             <div class="card-body">
                                 <h5 class="card-title">{{ total_rentings }}</h5>
                                 <p class="card-text">Lastest Rented: {{ latest_renting.product_name }}</p>
@@ -156,7 +156,7 @@
                                             <tr>
                                                 <td scope="row">{{ renting.date_rent }}</th>
                                                 <th>{{ product.product_name }}</td>
-                                                <th><a href="{% url 'profile' username=user.username %}">{{ renting.user }}</a></td>
+                                                <th><a href="{% url 'profile' username=renting.user.username %}">{{ renting.user }}</a></td>
                                                 <td>${{ renting.total_price }}</td>
                                                 <td>{{ renting.date_return }}</td>
 
