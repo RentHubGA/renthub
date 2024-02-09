@@ -167,7 +167,20 @@
                                                     {% endfor %}
                                                 </th>
                                                 <td>{{ product.price }}</td>
-                                                <td>{{ product.review_set.all|calculate_average_rating }}</td>
+                                                {% if product.review_set.all|calculate_average_rating == 5 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 4 and product.review_set.all|calculate_average_rating < 3.1 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 3 and product.review_set.all|calculate_average_rating < 2.1 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 2 and product.review_set.all|calculate_average_rating < 1.1 %}
+                                                    <td>&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 1 and product.review_set.all|calculate_average_rating < 0.1 %}
+                                                    <td>&#x1F431;</td>
+                                                {% else %}
+                                                    <td><span class="badge" style="background-color: #f7b832; color: #ffffff; width: 75.59px;">No Review</span></td>
+                                                {% endif %}
+
                                             </tr>
                                             {% endfor %}
                                         </tbody>
