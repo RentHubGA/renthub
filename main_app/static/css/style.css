@@ -111,3 +111,31 @@ footer {
 .product-list {
     min-height: 750px;
 }
+
+.r-logo {
+    background-image: url('../assets/R.png');
+    background-repeat: no-repeat;
+    background-size: 340px;
+    background-position: bottom right;
+}
+
+.section-two {
+    background-color: var(--light-subtle);
+}
+
+.section-three {
+    background-color: var(--success);
+}
+
+.full-width {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.bike-bg {
+    background-color: #d7ad87;
+}
