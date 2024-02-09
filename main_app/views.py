@@ -229,7 +229,6 @@ class ProductList(ListView):
     # to display the categories
     def get_queryset(self):
         queryset = super().get_queryset()
-        search = self.request.GET.get('min')
         categories_filter = self.request.GET.getlist('categories-filter')
         min_value = self.request.GET.get('min')
         max_value = self.request.GET.get('max')
@@ -243,11 +242,11 @@ class ProductList(ListView):
             max_value = 100000
    
         if len(categories_filter) != 0:
-            product_list = product_list.filter(category__name__in=categories_filter)
+            queryset = queryset.filter(category__name__in=categories_filter)
             if min_value != 0 or max_value != 100000:
-                product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+                queryset = queryset.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
         elif min_value != 0 or max_value != 100000:
-            product_list = product_list.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
+            queryset = queryset.filter(Q(price__gte=min_value)& Q(price__lte=max_value))
 
 # ------------- SEARCH -------------------- #
 
@@ -258,7 +257,10 @@ class ProductList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        categories = Category.objects.all()
+        if not context['object_list']:
+            context['no_results'] = "No products match your search."
+        context['categories'] = categories
         return context
     
 

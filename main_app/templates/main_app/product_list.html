@@ -98,6 +98,9 @@
                                                         <div class="wrapper">
                                                             <div class="container product-list">
                                                                 <div class="row g-3">
+                                                                    {% if no_results %}
+                                                                        <h6>{{ no_results }}</h6>
+                                                                    {% else %}
                                                                     {% for product in product_list %}
                                                                     <div class="col-lg-4">
                                                                         <div class="card ">
@@ -116,6 +119,7 @@
                                                                         </div>
                                                                     </div>
                                                                     {% endfor %}
+                                                                    {% endif %}
                                                                 </div>
                                                             </div>
                                                             <div class="container d-flex justify-content-center">
