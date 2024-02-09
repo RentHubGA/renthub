@@ -14,7 +14,8 @@ from main_app.templatetags.user_dashboard import user_products, user_rent
 from django.utils import timezone
 from django.db.models import Q
 from django.db.models import Sum
-
+from django.http import JsonResponse
+from datetime import datetime, timedelta
 
 import os
 import boto3
@@ -376,3 +377,24 @@ def items(request):
     items = Product.objects.filter()
 
     return render(request, )
+
+# Fetch unavailable dates
+def get_unavailable_dates(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    check_from = datetime.now().date()
+    check_to = check_from + timedelta(days=365)
+    # Find all bookings between today and 1 year from today
+    all_rentings = Renting.objects.filter(
+        product=product,
+        date_rent__gte=check_from,
+        date_return__lte=check_to
+    )
+    # Iterate through each booking, appending each day it is rented to unavailable_dates
+    unavailable_dates = []
+    for renting in all_rentings:
+        current_date = renting.date_rent
+        while current_date <= renting.date_return:
+            unavailable_dates.append(current_date.strftime('%Y-%m-%d'))
+            current_date += timedelta(days=1)
+
+    return JsonResponse({'unavailable_dates': unavailable_dates})
