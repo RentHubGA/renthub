@@ -1,43 +1,53 @@
 {% extends './base.html' %}
 
+
+
 {% block title %}
 Home | RentHub
 {% endblock %}
 
 {% block content %}
 <!-- FIRST PART -->
+{% load static %}
+<div class="jumbotron"
+    style="background-image: url('./static/assets/R.png'); background-size: 35%; background-repeat: no-repeat; background-position:right; background-position-y: -225%; padding-bottom: 2em; margin-bottom:-2em;">
+    <div class="jumbotron" style="background-image: url('./static/assets/online-romance-1.png'); background-size: 44%; background-repeat: no-repeat; background-position: right; background-position-y: 85%; padding-bottom: 1em; margin-bottom: -1em;">
+        <div class="container px-1 pb-1">
+            <div class="row g-3" style="margin-bottom: 3em;">
+                <div class="float-end" style="margin-top: 7em; ">
+                    <h1>Consume less,<br> experience more.</h1>
+                        <div style="max-width: 400px;opacity: 85%; padding-top: 1em;">
 
-    <div class="container px-1 pb-1">
-        <div class="row gx-5 align-items-start">
-            <div class="col-xxl-6" style="margin-top: 7em;">
-                <h1>Consume less,<br> experience more.</h1>
-                    <div style="max-width: 400px;opacity: 85%; padding-top: 1em;">
-
-                        <p>Say goodbye to unnecessary clutter and hello to a world of possibilities. Our platform allows you to easily rent a wide
-                        range of items – from tools to toys, promoting a sustainable lifestyle by reducing waste and unnecessary consumption.
-                        Join the renter's community, save money, and contribute to a greener future.</p>
-
-                    </div>
-                    <div style="display: flex; align-items: center;">
-
-                        <!-- JOIN THE RENTVOLUTION -->
-
-                        <a class="btn btn-primary rounded-pill" href="{% url 'register' %}" role="button" style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">Join the rent-volution!</a>
-
-                        <!-- BROWSE ITEMS -->
-
-                        <a class='text-dark' href="{% url 'product_list' %}" role="button"
-                            style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; padding-left: 2em; ">Browse items</a>
-                            
-                    </div>
+                            <p>Say goodbye to unnecessary clutter and hello to a world of possibilities. Our platform allows you to easily rent a wide
+                            range of items – from tools to toys, promoting a sustainable lifestyle by reducing waste and unnecessary consumption.
+                            Join the renter's community, save money, and contribute to a greener future.</p>
+                        
+                                <div style="display: flex; align-items: center;">
+                                
+                                    <!-- JOIN THE RENTVOLUTION -->
+                                
+                                    <a class="btn btn-primary rounded-pill" href="{% url 'register' %}" role="button"
+                                        style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">Join the
+                                        rent-volution!</a>
+                                
+                                    <!-- BROWSE ITEMS -->
+                                
+                                    <a class='text-dark' href="{% url 'product_list' %}" role="button"
+                                        style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; padding-left: 2em; ">Browse
+                                        items</a>
+                                
+                                </div>
+                        </div>  
+                </div>
             </div>
         </div>
     </div>
-    
+</div>
 <!-- FIRST PART -->
 <!-- SECOND PART -->
+<div class="jumbotron" style="background-color: #EEEDE8; padding-left: 25em; margin-left:-25em; padding-right: 25em; margin-right:-25em; padding-top: 0.001em; margin-top:-0.001em;  padding-bottom: 15em; margin-bottom:-15em;">
     
-            <div style="margin-top: 12em; margin-bottom: 5em;">
+            <div style="margin-top: 7em; margin-bottom: 5em;">
                 <h1 class="text-center">Most popular categories</h1>
                     <div style="opacity: 85%; padding-top: 1em;">
                         <p class="text-center">From power tools and cleaning machines to event chairs and handcrafted treasures, our top rentals cover all your needs.
@@ -47,59 +57,83 @@ Home | RentHub
      
             <div class="container">
                 <div class="row gy-4">
+
                     <!-- IMAGE 1 -->
-                    <div class="container col-3">
-                        <div class="row gy-4">
-                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="img-fluid rounded-start h-100 object-fit-cover">
-                        </div>
+                        
+                        <div class="container col-3">
+                            <div class="row gy-4">
+                                <a href="{% url 'product_list' %}?categories-filter=Musical+Instruments&min=&max=" style="margin: 15px;">
+                                    <img src="./static/assets/c-1.png" class="img-fluid rounded-start h-100 object-fit-cover">
+                                </a>
+                            </div>
+                       
                     </div>
+
                     <!-- IMAGE 2 -->
-                    <div class="container col-3">
-                        <div class="row gy-4">
-                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-                                class="img-fluid rounded-start h-100 object-fit-cover">
-                        </div>
+                    
+                        <div class="container col-3">
+                            <div class="row gy-4">
+                                <a href="{% url 'product_list' %}?categories-filter=Hobbies&min=&max=" style="margin: 15px;">
+                                    <img src="./static/assets/c-2.png"
+                                        class="img-fluid rounded-start h-100 object-fit-cover">
+                                </a>
+                            </div>
+                   
                     </div>
+                  
                     <!-- IMAGE 3 -->
                     <div class="container col-3">
                         <div class="row gy-4">
-                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                            <a href="{% url 'product_list' %}?categories-filter=Appliances&min=&max=" style="margin: 15px;">
+                                <img src="./static/assets/c-3.png"
                                 class="img-fluid rounded-start h-100 object-fit-cover">
+                            </a>
                         </div>
                     </div>
+
                     <!-- IMAGE 4 -->
                     <div class="container col-3">
                         <div class="row gy-4">
-                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-                                class="img-fluid rounded-start h-100 object-fit-cover">
+                            <a href="{% url 'product_list' %}?categories-filter=Film+and+Photography&min=&max=" style="margin: 15px;">
+                                <img src="./static/assets/c.png"
+                                    class="img-fluid rounded-start h-100 object-fit-cover">
+                            </a>
                         </div>
                     </div>
+                 
             </div>
-
+            </div>
+</div>
 <!-- SECOND PART -->
 
 <!-- THIRD PART -->
+<div class="jumbotron"
+    style="background-image: url('./static/assets/rectangle_blue.png'); padding-left: 25em; margin-left:-25em; padding-right: 25em; margin-right:-25em; padding-bottom: 23em; margin-bottom:-23em; margin-top: 10em;">
 
-<div class="container px-1 pb-1" style="margin-top: 8em;">
-    <div class="row gx-5 align-items-start">
-        <div class="col-xxl-6" style="margin-top: 7em;">
-            <h1 style="letter-spacing: 0.3px;  margin-bottom: 1em;">Turn your unused<br>
-            items into cash <br>
-            effortlessly with 
-            <div style="color: #6d6ffe;">RentHub</div>
-            </h1>
-          
-            <div style="display: flex; align-items: center;">
+    <div class="jumbotron"
+        style="background-image: url('./static/assets/rectangle_orange.png'); padding-left: 25em; margin-left:-25em; padding-right: 25em; margin-right:-25em; padding-bottom: 23em; margin-bottom:-23em; margin-top: 10em; background-repeat: no-repeat; background-position:right; background-position-y: -4.5em;  background-size: 35%;">
+        
+        <div class="container px-1 pb-1">
+            <div class="row gx-5 align-items-start">
+                <div class="col-xxl-6" style="margin-top: 15em; margin-bottom: 5em;">
+                    <h1 style="letter-spacing: 0.3px;  margin-bottom: 1em; color:#EEEDE8;">Turn your unused<br>
+                    items into cash <br>
+                    effortlessly with 
+                    <div style="color: #6d6ffe;">RentHub</div>
+                    </h1>
+                
+                    <div style="display: flex; align-items: center;">
 
-                <!-- JOIN THE RENTVOLUTION -->
+                        <!-- JOIN THE RENTVOLUTION -->
 
-                <a class="btn btn-secondary rounded-pill" href="{% url 'product_create' %}" role="button"
-                    style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">  List an item  </a>
+                        <a class="btn btn-secondary rounded-pill" href="{% url 'product_create' %}" role="button"
+                            style="text-decoration: none; font-size: 15px; letter-spacing: 0.2px; margin-top: 1em; ">  List an item  </a>
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 {% endblock %}
