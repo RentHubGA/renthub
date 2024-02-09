@@ -2,6 +2,21 @@
 {% load user_dashboard %}
 {% block title %} My Dashboard | RentHub {% endblock %}
 {% block content %}
+<style>
+    .border-left-primary {
+        border-left: 0.25rem solid #4e73df !important;
+    }
+    .border-left-danger {
+        border-left: 0.25rem solid #e74a3b !important;
+    }
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+    .border-left-info {
+        border-left: 0.25rem solid #36b9cc !important;
+    }
+
+</style>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-3 mt-4">
@@ -82,7 +97,7 @@
                     <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                         <div class="card">
                             <h5 class="card-header">Products Total</h5>
-                            <div class="card-body">
+                            <div class="card-body border-left-primary">
                                 <h5 class="card-title">{{ user.product_set.all.count }}</h5>
                                 <p class="card-text">New Product Added</p>
                                 <p class="card-text text-success">{{ user.product_set.last.product_name }}</p>
@@ -91,8 +106,8 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                         <div class="card">
-                            <h5 class="card-header">Rented Out Total</h5>
-                            <div class="card-body">
+                            <h5 class="card-header">Rental Frequency</h5>
+                            <div class="card-body border-left-success">
                                 <h5 class="card-title">{{ total_rentings }}</h5>
                                 <p class="card-text">Lastest Rented: {{ latest_renting.product_name }}</p>
                                 <p class="card-text text-success">+{{ total_income }}</p>
@@ -102,7 +117,7 @@
                     <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                         <div class="card">
                             <h5 class="card-header">Total</h5>
-                            <div class="card-body">
+                            <div class="card-body border-left-info">
                                 <h5 class="card-title text-success">+${{ total_income }}</h5>
                                 <p class="card-text text-danger">-${{ total_outcome }}</p>
                                 {% if total > 0 %}
@@ -118,20 +133,63 @@
                     <div class="col-12 col-md-6 col-lg3 mb-4 mb-lg-0">
                         <div class="card">
                             <h5 class="card-header">Rented Products</h5>
-                            <div class="card-body">
+                            <div class="card-body border-left-danger">
                                 <h5 class="card-title">{{ rent.count }}</h5>
                                 <p class="card-text">Lastest Rented: {{ rent.first.date_rent }}</p>
                                 <p class="card-text text-danger">-{{ total_outcome }}</p>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-12">
+
+                    <div class="col-12 col-xl-12 mb-4 mb-lg-0">
                         <div class="card">
-                            <h5 class="card-header">Products Review</h5>
+                            <h5 class="card-header">Products Rating</h5>
                             <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="products-table" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Products</th>
+                                                <th scope="col">category</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Rating</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for product in user.product_set.all %}
+                                            <tr>
+                                                <td scope="row">{{ product.product_name }}</td>
+                                                <th>
+                                                    {% for category in product.category.all %}
+                                                        {{ category.name }}
+                                                        {% if not forloop.last %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </th>
+                                                <td>{{ product.price }}</td>
+                                                {% if product.review_set.all|calculate_average_rating == 5 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 4 and product.review_set.all|calculate_average_rating < 3.1 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 3 and product.review_set.all|calculate_average_rating < 2.1 %}
+                                                    <td>&#x1F431;&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 2 and product.review_set.all|calculate_average_rating < 1.1 %}
+                                                    <td>&#x1F431;&#x1F431;</td>
+                                                {% elif product.review_set.all|calculate_average_rating >= 1 and product.review_set.all|calculate_average_rating < 0.1 %}
+                                                    <td>&#x1F431;</td>
+                                                {% else %}
+                                                    <td><span class="badge" style="background-color: #f7b832; color: #ffffff; width: 75.59px;">No Review</span></td>
+                                                {% endif %}
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
+
                     <div class="col-12 col-xl-12 mb-4 mb-lg-0">
                         <div class="card">
                             <h5 class="card-header">Latest transection</h5>
@@ -156,7 +214,7 @@
                                             <tr>
                                                 <td scope="row">{{ renting.date_rent }}</th>
                                                 <th>{{ product.product_name }}</td>
-                                                <th><a href="{% url 'profile' username=user.username %}">{{ renting.user }}</a></td>
+                                                <th><a href="{% url 'profile' username=renting.user.username %}">{{ renting.user }}</a></td>
                                                 <td>${{ renting.total_price }}</td>
                                                 <td>{{ renting.date_return }}</td>
 
@@ -183,4 +241,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
