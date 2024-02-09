@@ -329,6 +329,21 @@ class ProductUpdate(UpdateView):
             context['image_form'] = ImageFormSet()
 
         return context
+    
+    def form_valid(self, form):
+        # Assign the logged in user (self.request.user)
+        form.instance.user = self.request.user  
+
+        context = self.get_context_data()
+        image_form = context['image_form']
+
+        with transaction.atomic():
+            self.object = form.save()
+            if image_form.is_valid():
+                image_form.instance = self.object
+                image_form.save()
+
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('product_detail', kwargs={'pk': self.object.id})

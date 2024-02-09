@@ -4,118 +4,155 @@
 
 {% block content %}
 
-<div class="jumbotron"
-	style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 25em; margin-bottom:-25em; background-size: 200px; background-position-y: 42em; background-position-x: 1em;">
-
-	<div class="jumbotron"
-		style="background-image: url('../../static/assets/plant.png'); padding-left: 20em; margin-left:-20em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 25em; margin-bottom:-25em; background-size: 200px; background-position-y: 40em;">
-
-		<div class="jumbotron"
-			style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 22.5em; margin-right:-22.5em; background-repeat: no-repeat; background-position-y: 10em; background-position-x: 90em; padding-bottom: 25em; margin-bottom:-25em;">
-
-				
-					<a href="{% url 'product_list' %}" class="text-decoration-none text-dark m-2"><i data-feather='arrow-left' class=" my-3"></i></a>
-					
-					<div class="container">
-						<div class="row">
-							<div class="col-md-7">
-								{% if images %}
-									<div id="product-images" data-bs-interval="false" class="carousel slide">
-										<div class="carousel-inner">
-										{% for image in images %}
-											<div class="carousel-item {% if forloop.first %}active{% endif %}">
-												<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded" style="height: auto; width: fit-content; max-height: 550px;">
-											</div>
-										{% endfor %}
-										</div>
-											<button class="carousel-control-prev" type="button" data-bs-target="#product-images" data-bs-slide="prev">
-												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Previous</span>
-											</button>
-											<button class="carousel-control-next" type="button" data-bs-target="#product-images" data-bs-slide="next">
-												<span class="carousel-control-next-icon" aria-hidden="true"></span>
-												<span class="visually-hidden">Next</span>
-											</button>
-										</div>
-									{% else %}
-										<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images" class="d-block w-100 object-fit-cover rounded" style="max-height: 500px;">
-									{% endif %}
-									</div>
-									<div class="col-md-5">
-										<h4 class="my-4 my-md-2">{{ product.product_name }}</h4>
-										{% if reviews %}
-											<p class="small my-4 my-md-2"><span class="bold">{{ product.get_average }}/5.0 Rating </span> <span class="grey-text"> {{ reviews.count }} User Rating{{ reviews.count|pluralize:'s' }}</span></p>
-										{% endif %}
-										<h6 class="mt-4 mt-md-2">Categories: </h6>
-										{% for category in product.category.all %}
-											<p class="small">{{ category.name }} </p>
-										{% endfor %}
-										{% if product.user.town %}
-											<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{ product.user.post_code }}</span></p>
-										{% endif %}  
-										<h4 class="primary-text bold my-4">${{ product.price }} / day</h4>
-										<div class="page-divider-grey my-md-5 my-2"></div>
-									{% if is_owner %}
-									<div>
-										<a href="{% url 'product_update' product.id %}" class="btn btn-primary rounded-pill">Edit</a>
-										<a href="{% url 'product_delete' product.id %}" class="btn btn-danger rounded-pill">Delete</a>
-									</div>
-									{% else %}
-									<div class="my-2">
-										<h5>Rent</h5>
-										{% if messages %}
-												{% for message in messages %}
-														{% if message.tags == 'success' %}
-																<h6 class="alert alert-success">{{ message }}</h6>
-														{% elif message.tags == 'error' %}
-																<h6 class="alert alert-danger">{{ message }}</h6>
-														{% endif %}
-												{% endfor %}
-										{% endif %}
-										<form method="post" action="{% url 'rent_product' product.id %}">
-											<table>
-												{% load crispy_forms_tags %}
-												{% crispy form form.helper %}
-											</table>
-										</form>
-								</div>
-							{% endif %}
-						</div>
+<a href="{% url 'product_list' %}" class="text-decoration-none text-dark m-2"><i data-feather='arrow-left'
+		class=" my-3"></i></a>
+<div class="container">
+	<div class="row">
+		<div class="col-md-7">
+			{% if images %}
+			<div id="product-images" data-bs-interval="false" class="carousel slide">
+				<div class="carousel-inner">
+					{% for image in images %}
+					<div class="carousel-item {% if forloop.first %}active{% endif %}">
+						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded"
+							style="max-height: 500px; width: fit-content;">
 					</div>
-				
-		  </div>
-	</div>
-</div>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-7">
-				<h4 class="my-4">Description</h4>
-				<p>{{ product.description }}</p>
+					{% endfor %}
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#product-images"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#product-images"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
 			</div>
-			<div class="col-md-5">
-				<h4 class="my-4">What People Say</h4>
-				{% if reviews %}
-				{% for review in reviews %}
-					<div class="card mb-3">
-						<div class="card-header">
-							<h6>{{ review.user.first_name }} from {{ review.user.town }}</h6>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="small list-group-item">{{ review.description }}</p>
-						</ul>
-						<div class="card-footer">
-							{{ review.rating }}.0/5.0
-						</div>
-					</div>
-				{% endfor %}
-				{% else %}
-					<p class="my-2 my-md-4">No reviews</p>
+			{% else %}
+			<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images"
+				class="d-block w-100 object-fit-cover rounded" style="max-height: 500px;">
+			{% endif %}
+		</div>
+		<div class="col-md-5">
+			<h4 class="my-4 my-md-2">{{ product.product_name }}</h4>
+			{% if reviews %}
+			<p class="small my-4 my-md-2"><span class="bold">{{ product.get_average }}/5.0 Rating </span> <span
+					class="grey-text"> {{ reviews.count }} User Rating{{ reviews.count|pluralize:'s' }}</span></p>
+			{% endif %}
+			{% if product.user.town %}
+			<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{
+					product.user.post_code }}</span></p>
+			{% endif %}
+			<h4 class="primary-text bold my-4">${{ product.price }} / day</h4>
+			<div class="page-divider-grey my-md-5 my-2"></div>
+			{% if is_owner %}
+			<div>
+				<a href="{% url 'product_update' product.id %}" class="btn btn-primary rounded-pill">Edit</a>
+				<a href="{% url 'product_delete' product.id %}" class="btn btn-success rounded-pill" style="text-decoration: none;"><i
+						data-feather="trash-2" class="h-75"></i> Delete</a>
+			</div>
+			{% else %}
+			<div class="my-2">
+				<h5>Rent</h5>
+				{% if messages %}
+				{% for message in messages %}
+				{% if message.tags == 'success' %}
+				<h6 class="alert alert-success">{{ message }}</h6>
+				{% elif message.tags == 'error' %}
+				<h6 class="alert alert-danger">{{ message }}</h6>
 				{% endif %}
+				{% endfor %}
+				{% endif %}
+				<form method="post" action="{% url 'rent_product' product.id %}">
+					<table>
+						{% load crispy_forms_tags %}
+						{% crispy form form.helper %}
+					</table>
+				</form>
 			</div>
+			{% endif %}
 		</div>
 	</div>
-
-
-
-{% endblock %}
+	<div class="container">
+		<h4 class="my-4">Description</h4>
+		<p>{{ product.description }}</p>
+	</div>
+	<div class="container">
+		<h4 class="my-4">What People Say</h4>
+		{% if reviews %}
+		{% for review in reviews %}
+		<div class="card mb-3 col-6">
+			<div class="card-body">
+				<h5><b>{{ review.rating }}.0/5.0</b></h5>
+				<p>{{ review.description }}</p>
+			</div>
+			<div class="card-footer">
+				<div class="small">{{ review.user.first_name }} from {{ review.user.town }}</div>
+			</div>
+		</div>
+		{% endfor %}
+		{% else %}
+		<p class="my-2 my-md-4">No reviews</p>
+		{% endif %}
+	</div>
+	{% comment %}
+	Reference for AJAX/jQuery:
+	https://www.brennantymrak.com/articles/fetching-data-with-ajax-and-django
+	https://www.geeksforgeeks.org/jquery-ui-date-picker/
+	{% endcomment %}
+	<script>
+		let isUnavailable = []
+		const dateToday = new Date()
+		$(document).ready(function () {
+			$.ajax({
+				type: 'GET',
+				url: "{% url 'get_unavailable_dates' product_id=product.id %}",
+				success: function (response) {
+					const unavailableDates = response.unavailable_dates;
+					unavailableDates.forEach((date => isUnavailable.push(date)))
+				},
+				error: function (response) {
+					console.log('Error fetching data')
+				}
+			})
+		})
+		$(document).ready(function () {
+			$(function () {
+				$("#date_rent").
+					datepicker({
+						minDate: dateToday,
+						maxDate: 365,
+						beforeShowDay: function (date) {
+							const string = $.datepicker.formatDate("yy-mm-dd", date);
+							return [isUnavailable.indexOf(string) == -1];
+						}
+					});
+			});
+			$(function () {
+				$("#date_return").
+					datepicker({
+						minDate: dateToday,
+						maxDate: 365,
+						beforeShowDay: function (date) {
+							const string = $.datepicker.formatDate("yy-mm-dd", date);
+							return [isUnavailable.indexOf(string) == -1];
+						}
+					});
+			});
+			$('#date_rent').change(function () {
+				startDate = $(this).
+					datepicker('getDate');
+				$("#date_return").
+					datepicker("option", "minDate", startDate);
+			})
+			$('#date_return').change(function () {
+				endDate = $(this).
+					datepicker('getDate');
+				$("#datepicker_date_rent").
+					datepicker("option", "maxDate", endDate);
+			})
+		})
+	</script>
+	{% endblock %}
