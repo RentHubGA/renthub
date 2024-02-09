@@ -147,13 +147,11 @@ class Profile(LoginRequiredMixin, TemplateView):
 # Profile Dashboard (LoginRequiredMixin)
 class ProfileDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'profile/profile_dashboard.html'
-
     def get(self, request, username):
         
         print('User:', username)
         if username != request.user.username:
             raise PermissionDenied("Permission to access this page.")
-
         user = User.objects.get(username=username)
         products = user_products(user)
         rent = user_rent(user)
@@ -163,12 +161,25 @@ class ProfileDashboard(LoginRequiredMixin, TemplateView):
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
         # filter Renting by 
         total_rentings = Renting.objects.filter(product__in=products).count()
-        latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+        latest_renting = Renting.objects.filter(product__in=products).last()
+        # latest_renting = Renting.objects.filter(product__in=products).order_by('-date_rent').first()
+        current_user = request.user
+        print('user ', user)
+        print('current_user ', current_user)
+        # Calculate total outcome from the current user's rented products
+        
+        total_outcome = 0
+        rent_out_filter = Renting.objects.filter(user=current_user)
+        for renting in rent_out_filter:
+            total_outcome += renting.total_price
+        
+        total_income = 0
+        rent_in_filter = Renting.objects.filter(product__in=products)
+        for renting in rent_in_filter:
+            total_income += renting.total_price
 
-        total_outcome = sum(product.price for product in products)
-        total_income = Renting.objects.filter(product__in=products).aggregate(total_income=Sum('total_price'))['total_income'] or 0
+        # Total Balance
         total = total_income - total_outcome
-
         context = {
             'user': user,
             'products': products,
