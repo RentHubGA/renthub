@@ -343,7 +343,7 @@ def rent_product(request, pk):
         date_return = data['date_return']
         # Check that pickup date is not in the past
         if date_rent < timezone.now().date():
-            messages.error(request, 'This date has already passed. Please update the pickup date and try again.')
+            messages.error(request, 'This date has already passed. Please change the dates and try again.')
             return redirect('product_detail', pk=pk)
 
         # Handle errors if user sets pickup date to be AFTER drop off date

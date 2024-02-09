@@ -103,3 +103,7 @@ footer {
 .fa-regular {
     color: var(--dark);
 }
+
+.product-list {
+    min-height: 750px;
+}
