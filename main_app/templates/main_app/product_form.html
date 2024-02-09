@@ -15,9 +15,11 @@
             style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 12em; padding-bottom: 25em; margin-bottom:-25em;">
                        <div class="jumbotron" style="background-image: url('../../static/assets/product-form.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 15em; padding-bottom: 23em; margin-bottom:-23em;">
                             <div>
-
-                                <h1 style="margin-top: 1.5em; margin-bottom: 1em;"> Add Product </h1>
-                                    
+                                {% if product %}
+                                    <h1 style="margin-top: 1.5em; margin-bottom: 1em;"> Edit Product </h1>
+                                {% else %}
+                                    <h1 style="margin-top: 1.5em; margin-bottom: 1em;"> Add Product </h1>
+                                {% endif %} 
                                     <form id="add-product" method="POST" enctype="multipart/form-data">
                             
                                         <div class="form-row align-top">
@@ -28,7 +30,7 @@
                 
     <div class="row">
     {% for field in form %}
-
+        
             {% if field.name == 'product_name' %}
                 <div class="col-md-5">
                     <h5 class="my-4 my-md-2">Product</h5>
@@ -87,9 +89,11 @@
         
         {% endfor %}
 
-
-        <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
-
+        {% if product %}
+            <input type="submit" value="Edit Product" class="btn btn-secondary rounded-pill" />
+        {% else %}
+            <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
+        {% endif %}
     
     </form>
     </div>
