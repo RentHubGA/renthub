@@ -5,40 +5,59 @@
 {% block content %}
 
 {% load widget_tweaks %}
+<div class="jumbotron"
+    style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; background-position-y: 3em; background-position-x: 90em; padding-bottom: 23em; margin-bottom:-23em;">
 
-<div>
-    <h1 style="margin-top: 1.5em;"> Add Product </h1>
+    <div class="jumbotron"
+        style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 10em; padding-bottom: 23em; margin-bottom:-23em;">
 
-    <form id="add-product" method="POST" enctype="multipart/form-data">
-        
-        <div class="form-row align-top">
-        
-        <div class="form-row align-top">
-        {% csrf_token %}
-        
+        <div class="jumbotron"
+            style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 12em; padding-bottom: 25em; margin-bottom:-25em;">
+                       <div class="jumbotron" style="background-image: url('../../static/assets/product-form.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 15em; padding-bottom: 23em; margin-bottom:-23em;">
+                            <div>
+
+                                <h1 style="margin-top: 1.5em; margin-bottom: 1em;"> Add Product </h1>
+                                    
+                                    <form id="add-product" method="POST" enctype="multipart/form-data">
+                            
+                                        <div class="form-row align-top">
+                            
+                                            <div class="form-row align-top">
+
+                                                {% csrf_token %}
+                
+    <div class="row">
     {% for field in form %}
 
             {% if field.name == 'product_name' %}
                 <div class="col-md-5">
                     <h5 class="my-4 my-md-2">Product</h5>
-                    <p> {{ field }} </p>
+
+                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                        placeholder=" Name of your product">
                 </div>
             {% endif %}
-
+            
+            
             {% if field.name == 'description' %}
-                <div class="col-md-5">
-                    <h5 class="my-4 my-md-2">Description</h5>
-                    <p> {{ field }} </p>
+                <div class="col-md-7 row-md-6">
+                    <h5 class="my-6 my-md-2">Description</h5>
+                    
+                        <textarea type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}" 
+                            placeholder=" Brief description of your product" row="5"></textarea>
                 </div>
             {% endif %}
 
             {% if field.name == 'price' %}
                 <div class="col-md-5">
                     <h5 class="my-4 my-md-2">Price</h5>
-                    <p> {{ field }} </p>
+
+                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                        placeholder=" Price / day ">
                 </div>
             {% endif %}
-
+            
+            
             {% if field.name == 'category' %}
             <div class="col-md-5">
                 <h5 class="my-4 my-md-2">Category</h5>
@@ -48,7 +67,7 @@
 
     {% endfor %}
 
-    </div>
+   
 
     </div>
         {{ image_form.management_form }}
@@ -57,7 +76,7 @@
 
         
 
-        <div class="image-formset" style="margin-top: 5em; margin-bottom: 5em;">
+        <div class="image-formset" style="margin-top: 1em; margin-bottom: 5em;">
             <div class="form-row ">
                 <div type="text" class="form-control" placeholder="field" name="field">
                     {{ formset }}
@@ -71,10 +90,11 @@
 
         <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
 
-    </form>
-    </form>
     
-
+    </form>
+    </div>
+</div>
+</div>
 </div>
 <!------------------------------------------------------------------------->
 
