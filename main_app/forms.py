@@ -54,7 +54,7 @@ ImageFormSet = inlineformset_factory(
     Image,
     form=ImageUploadForm,
     can_delete=False,
-    max_num=5, # Max number of formsets allowed
+    max_num=1, # Max number of formsets allowed
     extra=1    # Number of formsets to render
 )
 
