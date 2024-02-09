@@ -35,7 +35,7 @@
                                 <ul class="navbar-nav ms-auto gap-md-3 d-flex align-items-center">
                                     {% if user.is_authenticated %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Learn More</a></li>
                                         <li class="nav-item d-none d-md-block ">
                                             <form method="get" action="{% url 'product_list' %}">
                                                 <input name="query" class="p-2 border rounded-pill" type="text" value="{{ query }}" placeholder="Unicycle, clown costume.... " style="width: 300px">
