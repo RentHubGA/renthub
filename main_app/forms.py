@@ -85,8 +85,8 @@ class ReviewForm(forms.Form):
 
 # Using crispy forms
 class RentingForm(forms.Form):
-    date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Pickup Date:')
-    date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Return Date:')
+    date_rent = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'date_rent'}), label='Pickup Date:')
+    date_return = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'date_return'}), label='Return Date:')
 
     helper = FormHelper()
     helper.form_method = 'POST'
