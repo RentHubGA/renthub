@@ -11,9 +11,11 @@
         </title>
         <link rel="stylesheet" href="{% static './css/style.css' %}">
         <link rel="stylesheet" href="{% static './css/custom.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script defer src="{% static './js/bootstrap.bundle.min.js' %}"></script>
-        <script defer src="{% static './js/main.js' %}"></script>>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
         <script src="https://unpkg.com/feather-icons"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     </head>
@@ -107,58 +109,55 @@
         </footer>
     </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const linkEls = document.querySelectorAll('.nav-link');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const linkEls = document.querySelectorAll('.nav-link');
 
-                linkEls.forEach(linkEl => {
-                    linkEl.addEventListener('click', (e) => {
-                        linkEls.forEach(el => el.classList.remove('active'));
-                    });
-
-                    if (window.location.href === linkEl.href) {
-                        linkEl.classList.add('active');
-                    }
+            linkEls.forEach(linkEl => {
+                linkEl.addEventListener('click', (e) => {
+                    linkEls.forEach(el => el.classList.remove('active'));
                 });
+
+                if (window.location.href === linkEl.href) {
+                    linkEl.classList.add('active');
+                }
             });
-        </script>
-        
-        <script>
-            feather.replace();
-        </script>
+        });
+    </script>
+    
+    <script>
+        feather.replace();
+    </script>
 
 
-        
-        <!-- DataTables JS Add -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-        
-        <!-- script for searching (DataTables) -->
-        <script>
-            $(document).ready(function () {
-                $('#transaction-table').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true
-                });
+    
+    <!-- DataTables JS Add -->
+    <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    
+    <!-- script for searching (DataTables) -->
+    <script>
+        $(document).ready(function () {
+            $('#transaction-table').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            $(document).ready(function () {
-                $('#history-table').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "rowGroup": true
-                });
+    <script>
+        $(document).ready(function () {
+            $('#history-table').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "rowGroup": true
             });
-        </script>
-
-
+        });
+    </script>
 
     </body>
 
