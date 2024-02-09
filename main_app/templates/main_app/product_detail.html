@@ -15,7 +15,7 @@
 					{% for image in images %}
 					<div class="carousel-item {% if forloop.first %}active{% endif %}">
 						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded"
-							style="max-height: 500px; width: fit-content;">
+							style="max-height: 500px; width:fit-content; margin-left: 5em;">
 					</div>
 					{% endfor %}
 				</div>
@@ -42,15 +42,14 @@
 					class="grey-text"> {{ reviews.count }} User Rating{{ reviews.count|pluralize:'s' }}</span></p>
 			{% endif %}
 			{% if product.user.town %}
-			<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{
-					product.user.post_code }}</span></p>
+			<p class="small my-2 my-md-4">Pickup From: <span class="bold">{{ product.user.town }}, {{ product.user.post_code }}</span></p>
 			{% endif %}
 			<h4 class="primary-text bold my-4">${{ product.price }} / day</h4>
 			<div class="page-divider-grey my-md-5 my-2"></div>
 			{% if is_owner %}
 			<div>
-				<a href="{% url 'product_update' product.id %}" class="btn btn-primary rounded-pill">Edit</a>
-				<a href="{% url 'product_delete' product.id %}" class="btn btn-success rounded-pill" style="text-decoration: none;"><i
+				<a href="{% url 'product_update' product.id %}" class="btn btn-primary rounded-pill"><i data-feather="edit" class="h-75" style="margin-right: 0.5em;"></i>Edit</a>
+				<a href="{% url 'product_delete' product.id %}" class="btn btn-success rounded-pill" style="text-decoration: none; margin-right: 0.5em;"><i
 						data-feather="trash-2" class="h-75"></i> Delete</a>
 			</div>
 			{% else %}

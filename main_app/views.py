@@ -318,7 +318,7 @@ class ProductCreate(CreateView):
 
         context = self.get_context_data()
         image_form = context['image_form']
-
+        print(image_form)
         with transaction.atomic():
             self.object = form.save()
             if image_form.is_valid():
@@ -337,7 +337,14 @@ class ProductUpdate(UpdateView):
         if self.request.POST:
             context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES)
         else:
-            context['image_form'] = ImageFormSet()
+            # Get the product instance being updated
+            product_instance = self.get_object()
+            # Get the images associated with the product
+            images_queryset = product_instance.image_set.all()
+            # Pass the queryset of existing images to the formset
+            print(product_instance)
+            
+            context['image_form'] = ImageFormSet(instance=product_instance, queryset=images_queryset)
 
         return context
     
@@ -347,12 +354,14 @@ class ProductUpdate(UpdateView):
 
         context = self.get_context_data()
         image_form = context['image_form']
-
+        print(image_form)
+        print(image_form.is_valid())
         with transaction.atomic():
             self.object = form.save()
             if image_form.is_valid():
                 image_form.instance = self.object
                 image_form.save()
+                print('VALIDO')
 
         return super().form_valid(form)
 
