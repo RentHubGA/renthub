@@ -14,7 +14,7 @@ urlpatterns = [
     path('products/<int:pk>/update', views.ProductUpdate.as_view(), name='product_update'),
     path('products/<int:pk>/delete', views.ProductDelete.as_view(), name='product_delete'),
     path('products/<int:pk>/review', views.ReviewCreate.as_view(), name='review_create'),
-    path('products/<int:pk>/add_image', views.add_image, name='add_image'),
+    # path('products/<int:pk>/add_image', views.add_image, name='add_image'),
     path('get_unavailable_dates/<int:product_id>/', get_unavailable_dates, name='get_unavailable_dates'),
     ## accounts Root
     path('accounts/profile/<str:username>/detail', views.ProfileDetailView.as_view(), name='profile_detail'),
