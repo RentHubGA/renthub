@@ -8,7 +8,7 @@ Renthub is a comprehensive renting application designed to simplify the process 
 
 ### [Link to Trello Board](https://trello.com/b/56HvnC0w/project-3-renthub)
 
-### [Link to GitHub](https://github.com/RentHubGA/renthub)
+### [Link to Pitch Deck](https://docs.google.com/presentation/d/1Szp3CJaEdCbqK3vCJiA3HAiuV0FU_Ad_MIn69hnr4b0/edit?usp=sharing)
 
 # 📄 About
 
