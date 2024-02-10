@@ -30,7 +30,7 @@
                                                         <h5 class="my-4 my-md-2">Product</h5>
 
                                                         <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
-                                                            placeholder=" Name of your product" value="{{ product.product_name }}">
+                                                            placeholder="Name of your product" value="{{ product.product_name }}">
                                                     </div>
                                                 {% endif %}
                                                 
@@ -40,7 +40,7 @@
                                                         <h5 class="my-6 my-md-2">Description</h5>
                                                         
                                                             <textarea type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}" 
-                                                                placeholder=" Brief description of your product" row="5"> {{ product.description }} </textarea>
+                                                                placeholder="Brief description of your product" row="5">{{ product.description }}</textarea>
                                                     </div>
                                                 {% endif %}
 
@@ -49,15 +49,15 @@
                                                         <h5 class="my-4 my-md-2">Price</h5>
 
                                                         <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
-                                                            placeholder=" Price / day " value="{{ product.price }}" >
+                                                            placeholder="Price per day" value="{{ product.price }}" >
                                                     </div>
                                                 {% endif %}
                                                 
                                                 
                                                 {% if field.name == 'category' %}
                                                 <div class="col-md-5">
-                                                    <h5 class="my-4 my-md-2">Category</h5>
-                                                        <p> {{ field }} </p>
+                                                    <h5 class="my-4 my-md-2">Categories</h5>
+                                                        <p>{{ field }}</p>
                                                 </div>
                                                 {% endif %}
 
@@ -82,7 +82,15 @@
                                             </div>
                                             
                                             {% endfor %}
-
+				{% if messages %}
+				{% for message in messages %}
+				{% if message.tags == 'success' %}
+				<h6 class="alert alert-success">{{ message }}</h6>
+				{% elif message.tags == 'error' %}
+				<h6 class="alert alert-danger">{{ message }}</h6>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
                                             {% if product %}
                                                 <input type="submit" value="Edit Product" class="btn btn-secondary rounded-pill" style="margin-bottom: 5em;" />
                                             {% else %}

@@ -76,9 +76,9 @@
                     <div class="rounded-top text-white d-flex flex-row" style="background-color: #6D6FFE; height:200px;">
                         <div class="ms-4 mt-5 d-flex flex-column" style="width: 152px;">
                             {% if user.avatar %}
-                                <img src="{{ user.avatar }}" alt="{{ user.username }} Avatar" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 152px; z-index: 1">
+                                <img src="{{ user.avatar }}" alt="{{ user.username }} Avatar" class="object-fit-cover  img-fluid img-thumbnail mt-4 mb-2" style="height: 152px; z-index: 1;">
                             {% else %}
-                                <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=2000&t=st=1707500967~exp=1707501567~hmac=694b42c585124522d023577f39f2b191b77eb2c44366e75c36d1a52c2e8a0064" alt="support avatar" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 152px; z-index: 1">
+                                <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=2000&t=st=1707500967~exp=1707501567~hmac=694b42c585124522d023577f39f2b191b77eb2c44366e75c36d1a52c2e8a0064" alt="support avatar" class="object-fit-cover  img-fluid img-thumbnail mt-4 mb-2" style="height: 152px; z-index: 1">
                             {% endif %}
                             <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">{{ user.username }}</button>
                         </div>

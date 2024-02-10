@@ -220,24 +220,7 @@ def register(request):
     }  
     return render(request, 'registration/signup.html', context)  
 
-
-# def add_image(request, product_id):
-#     photo_file = request.FILES.get('photo-file', None)
-#     if photo_file:
-#         s3 = boto3.client('s3')
-#         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-#         try:
-#             bucket = os.environ['S3_BUCKET']
-#             s3.upload_fileobj(photo_file, bucket, key)
-#             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-#             Image.objects.create(url=url, product_id=product_id)
-#         except Exception as e:
-#             print('An error occurred uploading file to S3')
-#             print(e)
-#     return redirect('product_detail', product_id=product_id)
-
-
-class ProductList(ListView):
+class ProductList(LoginRequiredMixin, ListView):
     paginate_by = 9
     model = Product
     template_name = 'main_app/product_list.html'
@@ -280,7 +263,7 @@ class ProductList(ListView):
         return context
     
 
-class ProductDetail(DetailView):
+class ProductDetail(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'main_app/product_detail.html'
     context_object_name = 'product'
@@ -299,7 +282,7 @@ class ProductDetail(DetailView):
         return context
 
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
     success_url = '/products'
@@ -333,25 +316,8 @@ class ProductCreate(CreateView):
 
             return super().form_valid(form)
             
-    # def add_image(request, product_id):
-    #     photo_file = request.FILES.get('photo-file', None)
-    #     if photo_file:
-    #         s3 = boto3.client('s3')
-    #         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-    #         try:
-    #             bucket = os.environ['S3_BUCKET']
-    #             s3.upload_fileobj(photo_file, bucket, key)
-    #             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-    #             Image.objects.create(url=url, product_id=product_id)
-    #         except Exception as e:
-    #             print('An error occurred uploading file to S3')
-    #             print(e)
-    #     # return redirect('product_detail', product_id=product_id)
-
-      
-
-    
-class ProductUpdate(UpdateView):
+ 
+class ProductUpdate(LoginRequiredMixin, UpdateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
     # template_name = 'product_form.html'
@@ -391,7 +357,7 @@ class ProductUpdate(UpdateView):
     def get_success_url(self):
         return reverse_lazy('product_detail', kwargs={'pk': self.object.id})
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = '/products'
 

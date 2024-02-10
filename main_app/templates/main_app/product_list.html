@@ -68,19 +68,18 @@
                     <div class="card " style="height:300px; width:auto;">
                         {% if product.image_set.first.image %}
                         <img src="{{ product.image_set.first.image.url }}"
-                            class="w-100 card-img object-fit-cover img-fluid overflow-hidden"
+                            class="w-100 card-img object-fit-cover rounded img-fluid overflow-hidden"
                             alt="{{ product.product_name }}";>
                         {% else %}
                         <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-                            class="w-100 card-img object-fit-fill border rounded img-fluid overflow-hidden"
+                            class="w-100 card-img object-fit-cover rounded img-fluid overflow-hidden"
                             alt="{{ product.product_name }}";>
                         {% endif %}
                         <div class="card-img-overlay">
-                            <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
+                            <h5 class="card-title text-white pb-4" style="text-shadow: 1px 1px 2px #2c2c2c;">{{ product.product_name }}</h5>
                             <div class="container align-items-end justify-content-between h-75 d-flex p-0">
-                                <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
-                                <a href="{% url 'product_detail' product.id %}"
-                                    class="btn btn-primary rounded-pill mx-3">Rent Now</a>
+                                <h6 class="card-text text-white mb-2" style="text-shadow: 1px 1px 2px #2c2c2c;"><span>${{ product.price }}.00/day</span></h6>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
                             </div>
 
                         </div>

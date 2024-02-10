@@ -14,8 +14,8 @@
 				<div class="carousel-inner">
 					{% for image in images %}
 					<div class="carousel-item {% if forloop.first %}active{% endif %} ">
-						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img"
-							style="max-height: 500px; width:fit-content;">
+						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded w-100"
+							style="max-height: 500px;">
 					</div>
 					{% endfor %}
 				</div>
@@ -32,7 +32,7 @@
 			</div>
 			{% else %}
 			<img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="No images"
-				class="d-block w-100 object-fit-cover rounded" style="max-height: 500px;">
+				class="d-block object-fit-cover rounded w-100" style="max-height: 500px;">
 			{% endif %}
 		</div>
 		<div class="col-md-5">
@@ -88,7 +88,11 @@
 				<p>{{ review.description }}</p>
 			</div>
 			<div class="card-footer">
+				{% if review.user.first_name %}
 				<div class="small">{{ review.user.first_name }} from {{ review.user.town }}</div>
+				{% else %}
+				<div class="small">Unspecified User</div>
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}
