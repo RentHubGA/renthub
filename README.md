@@ -1,22 +1,25 @@
 # Renthub
 
-Project 3 of SEI, an  Application for renting products.
+Project 3 of SEI, an Application for renting products.
 
 # 💻 Click here to see my live project!
 
-GitHub:[Asteroids Finder Project](https://github.com/RentHubGA/renthub)
-Render:[Asteroids Finder Render](https://https://renthub.fly.dev)
+### [Link to RentHub](https://renthub.fly.dev/)
+
+### [Link to Trello Board](https://trello.com/b/56HvnC0w/project-3-renthub)
+
+### [Link to GitHub](https://github.com/RentHubGA/renthub)
+
 # 📄 About
 
 How to use Renthub.
 
--   On the main page you have the option to access the list of products.
--   Go to the home page.
--   Go to About us to see a info about the developers.
--   Search for products by name in the nav bar.
--   Go to the sign up page in 'Join the rent-volution'.
--   Browse items.
--   Go in the most popular sections.
+1. Register for your account
+2. Update your details to include your name, location, and avatar
+3. Add product listings, specifying the price per day, product name and description, and upload photos
+4. Find the item you're looking to rent by filtering the categories or using the search bar
+5. Select your desired dates and, ta-da! Your rental is confirmed.
+6. Don't forget to leave a review after you've returned the item!
 
 # Add in-app screenshots.
 
@@ -24,23 +27,27 @@ How to use Renthub.
 
 ![image](./screenshots-wireframe/ERD_renthub.png)
 
-## screenshots
+## 📷 Screenshots
+
+**Landing page:**
 
 ![image](./screenshots-wireframe/screen-renthub-1.png)
+
+**Product Listings:**
+
 ![image](./screenshots-wireframe/screen-renthub-2.png)
-![image](./screenshots-wireframe/screen-renthub-3.png)
 
-# ✏️ Planning & Problem Solving
+**Product Details:**
 
-## Planning
+![image](./screenshots-wireframe/screen-renthub-5.png)
 
--   The idea is to build an application where the user can list and rent all kinds of products. 
--   The user can search for products by name, category and price.
--   The user can add / delete / edit your user.
--   The user can add / delete / edit your product.
--   The user can rent products picking it from a calendar.
--   The user have a dashboard where you can check your products rented, listed, the balance, status of the product and when it's supposed to return.
+**Add a Product:**
 
+![image](./screenshots-wireframe/screen-renthub-4.png)
+
+## Description
+
+-   Renthub is a comprehensive renting application designed to simplify the process of renting and managing properties, vehicles, equipment, and more. Whether you're a property owner, tenant, or rental service provider, RentHub provides a user-friendly platform to streamline the entire rental process.
 
 # 🚀 Cool tech
 
@@ -49,17 +56,19 @@ Javascript, HTML, CSS, Django, PostgreSQL and Bootstrap .
 # 😱 Bugs to fix 💩
 
 -   Some little css problems with smaller formats.
+-   Update image isn't working.
 
-# 😭 Lessons learnt
+## 💾 Technologies Used
 
--   Support your team members to achieve common goals.
--   Solve conflicts in code.
--   Clear and open communication is essential for successful collaboration.
+-   Django
+-   PostgreSQL
+-   Python
+-   jQuery/AJAX
+-   Bootstrap
+-   HTML and CSS for frontend styling
 
-# ✅ Future features
+🚀 Next Steps
 
--   Adding more than 1 image to the product.
--   Google Maps function for location.
--   Add more filters.
--   Animated buttons.
-
+-   Implement Google Maps API to enable users to filter results by location and distance
+-   Allow users to block off dates for their products, to ensure their product is not rented when they are unavailable
+-   # Enable users to delete future bookings

@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 import os
 import boto3
 import uuid
+from pprint import pprint
 
 # retrieves the user model active
 User = get_user_model()
@@ -318,12 +319,17 @@ class ProductCreate(CreateView):
 
         context = self.get_context_data()
         image_form = context['image_form']
-        print(image_form)
+        pprint(form)
+        pprint(image_form)
+        pprint(context)
         with transaction.atomic():
             self.object = form.save()
+            pprint(self.object)
             if image_form.is_valid():
                 image_form.instance = self.object
                 image_form.save()
+                pprint(image_form.instance)
+
             return super().form_valid(form)
             
     # def add_image(request, product_id):
@@ -351,14 +357,14 @@ class ProductUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES)
+            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES, instance=self.get_object())
         else:
             # Get the product instance being updated
             product_instance = self.get_object()
             # Get the images associated with the product
             images_queryset = product_instance.image_set.all()
             # Pass the queryset of existing images to the formset
-            print(product_instance)
+            # print(product_instance)
             
             context['image_form'] = ImageFormSet(instance=product_instance, queryset=images_queryset)
 
@@ -367,17 +373,15 @@ class ProductUpdate(UpdateView):
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user  
-
         context = self.get_context_data()
         image_form = context['image_form']
-        print(image_form)
-        print(image_form.is_valid())
+        
         with transaction.atomic():
             self.object = form.save()
+            
             if image_form.is_valid():
-                image_form.instance = self.object
                 image_form.save()
-                print('VALIDO')
+                
 
         return super().form_valid(form)
 
