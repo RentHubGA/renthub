@@ -385,6 +385,7 @@ class ProductUpdate(UpdateView):
 
         return super().form_valid(form)
 
+
     def get_success_url(self):
         return reverse('product_detail', kwargs={'pk': self.object.id})
 
