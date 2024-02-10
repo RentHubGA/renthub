@@ -45,6 +45,7 @@
                                         <li class="nav-item"><a href="{% url 'profile' username=request.user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary "><i data-feather="user" class="h-75" style="margin-right: 5px;"></i>Profile</button></a></li>
                                         <li class="nav-item">
                                     {% else %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Learn More</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><button class="rounded-pill btn btn-primary">Sign Up</button></a></li>
                                     {% endif %}
