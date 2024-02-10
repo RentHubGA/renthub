@@ -116,6 +116,16 @@ footer {
     background-image: url('../assets/R.png');
     background-repeat: no-repeat;
     background-size: 340px;
+    height: 100%;
+    margin-bottom: -125px;
+    background-position: bottom right;
+}
+
+.r-logo-responsive {
+    background-image: url('../assets/R.png');
+    background-repeat: no-repeat;
+    background-size: 150px;
+    margin-bottom: -52px;
     background-position: bottom right;
 }
 
@@ -138,4 +148,11 @@ footer {
 
 .bike-bg {
     background-color: #d7ad87;
+}
+
+.hands-img {
+    background-image: url('../assets/dancing.png');
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: bottom right;
 }

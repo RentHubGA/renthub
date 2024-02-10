@@ -1,10 +1,10 @@
-# Renthub
+# RentHub
 
-Project 3 of SEI, an Application for renting products.
+### Consume Less, Experience More.
 
-# 💻 Click here to see my live project!
+Renthub is a comprehensive renting application designed to simplify the process of renting and managing properties, vehicles, equipment, and more. Whether you're a property owner, tenant, or rental service provider, RentHub provides a user-friendly platform to streamline the entire rental process.
 
-### [Link to RentHub](https://renthub.fly.dev/)
+## [💻 Click here to see the live project!](https://renthub.fly.dev/)
 
 ### [Link to Trello Board](https://trello.com/b/56HvnC0w/project-3-renthub)
 
@@ -14,16 +14,14 @@ Project 3 of SEI, an Application for renting products.
 
 How to use Renthub.
 
-1. Register for your account
-2. Update your details to include your name, location, and avatar
-3. Add product listings, specifying the price per day, product name and description, and upload photos
-4. Find the item you're looking to rent by filtering the categories or using the search bar
-5. Select your desired dates and, ta-da! Your rental is confirmed.
-6. Don't forget to leave a review after you've returned the item!
+1.  Create an account.
+2.  Update your details to include your name, location, and avatar.
+3.  Add product listings, specifying the price per day, product name and description, and upload photos.
+4.  Find the item you're looking to rent by filtering the categories or using the search bar.
+5.  Select your desired dates and, ta-da! Your rental is confirmed.
+6.  Don't forget to leave a review after you've returned the item! The link will be on your Profile page under below your Rental History.
 
-# Add in-app screenshots.
-
-## wireframe:
+## ERD:
 
 ![image](./screenshots-wireframe/ERD_renthub.png)
 
@@ -45,25 +43,18 @@ How to use Renthub.
 
 ![image](./screenshots-wireframe/screen-renthub-4.png)
 
-## Description
-
--   Renthub is a comprehensive renting application designed to simplify the process of renting and managing properties, vehicles, equipment, and more. Whether you're a property owner, tenant, or rental service provider, RentHub provides a user-friendly platform to streamline the entire rental process.
-
-# 🚀 Cool tech
-
-Javascript, HTML, CSS, Django, PostgreSQL and Bootstrap .
-
 # 😱 Bugs to fix 💩
 
 -   Some little css problems with smaller formats.
 -   Update image isn't working.
 
-## 💾 Technologies Used
+## 🚀 Cool tech
 
 -   Django
 -   PostgreSQL
 -   Python
--   jQuery/AJAX
+-   jQuery
+-   AJAX
 -   Bootstrap
 -   HTML and CSS for frontend styling
 
@@ -71,4 +62,4 @@ Javascript, HTML, CSS, Django, PostgreSQL and Bootstrap .
 
 -   Implement Google Maps API to enable users to filter results by location and distance
 -   Allow users to block off dates for their products, to ensure their product is not rented when they are unavailable
--   # Enable users to delete future bookings
+-   Enable users to delete future bookings
