@@ -4,218 +4,110 @@
 
 {% block content %}
 
- 
+
 
 <h2 class="my-4">Products</h2>
 
-<div class="container mb-3">
 
     <div class="row g-4 d-flex align-items-center ">
-
-    <!----------------------  FILTER BY  -------------------------------->
+        <!----------------------  FILTER BY  -------------------------------->
         <div class="accordion col-md-6" id="filter">
-
             <div class="accordion-item">
-
                 <div class="accordion-header">
-
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-
-                    <h5 class="m-0">Filter By</h5>
-
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <h5 class="m-0">Filter By</h5>
                     </button>
-
                 </div>
-
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#filter">
-
-                    <div class="accordion-body"> 
-    <!----------------------  CATEGORIES  -------------------------------->
-
+                    <div class="accordion-body">
+                        <!----------------------  CATEGORIES  -------------------------------->
                         <form method="get" action="{% url 'product_list' %}">
-
                             <h6 class="mt-3">Categories: </h6>
-
                             {% for category in categories %}
-                            
                             <div class="form-check">
-
-                                <input class="form-check-input border rounded-xl" name= "categories-filter" type="checkbox" value="{{ category }}" id="flexCheckDefault">
-
-                                    <label class="form-check-label" for="flexCheckDefault">    
-
-                                        {{ category }}
-
-                                    </label>
-
-                                </div>
-
+                                <input class="form-check-input border rounded-xl" name="categories-filter"
+                                    type="checkbox" value="{{ category }}" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{ category }}
+                                </label>
+                            </div>
                             {% endfor %}
+                            <h6 class="mt-3">Price:</h6>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" placeholder="Min" name="min">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" placeholder="Max" name="max">
+                            </div>
+                            <input type="submit" value="Apply" class="btn btn-primary my-2 rounded-pill">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!----------------------  SEARCH BAR  -------------------------------->
+        <div class="col-md-6">
+            <form method="get" action="{% url 'product_list' %}">
+                <input name="query" class="w-75 p-2 px-6 border rounded-pill" type="text" value="{{ query }}"
+                    placeholder="Find products">
+                <button class="btn btn-secondary rounded-pill">Search</button>
+            </form>
+        </div>
+    </div>
 
-                                <h6 class="mt-3">Price:</h6>
-
-                                <div class="input-group mb-3">
-
-                                    <span class="input-group-text">$</span>
-
-                                    <input type="text" class="form-control" placeholder="Min" name="min">
-
-                                    <span class="input-group-text">$</span>
-
-                                    <input type="text" class="form-control" placeholder="Max" name="max">
-
-                                </div>
-
-                                <input type="submit" value="Apply" class="btn btn-primary my-2 rounded-pill">
-
-                            </form>
-
+    <!----------------------  PRODUCT LIST  -------------------------------->
+    <div class="wrapper">
+        <div class="container product-list my-4">
+            <div class="row g-3">
+                {% if no_results %}
+                <h6>{{ no_results }}</h6>
+                {% else %}
+                {% for product in product_list %}
+                <div class="col-lg-4">
+                    <div class="card " style="height:300px; width:auto;">
+                        {% if product.image_set.first.image %}
+                        <img src="{{ product.image_set.first.image.url }}"
+                            class="w-100 card-img object-fit-cover img-fluid overflow-hidden"
+                            alt="{{ product.product_name }}";>
+                        {% else %}
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                            class="w-100 card-img object-fit-fill border rounded img-fluid overflow-hidden"
+                            alt="{{ product.product_name }}";>
+                        {% endif %}
+                        <div class="card-img-overlay">
+                            <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
+                            <div class="container align-items-end justify-content-between h-75 d-flex p-0">
+                                <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
+                                <a href="{% url 'product_detail' product.id %}"
+                                    class="btn btn-primary rounded-pill mx-3">Rent Now</a>
                             </div>
 
                         </div>
-
                     </div>
-
                 </div>
-     <!----------------------  SEARCH BAR  -------------------------------->
-
-        <div class="col-md-6">
-
-            <form method="get" action="{% url 'product_list' %}">
-
-                <input name="query" class="w-75 p-2 px-6 border rounded-pill" type="text" value="{{ query }}" placeholder="Find products">
-
-                <button class="btn btn-secondary rounded-pill">Search</button>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!----------------------  BACKGROUND IMAGES  -------------------------------->
-
-<div class="jumbotron"
-    style="background-image: url('../../static/assets/liquid_shape_1.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 150px; background-position-y: 32.5em; background-position-x: 12.2em;">
-
-    <div class="jumbotron"
-        style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 250px; background-position-y: 25.5em; background-position-x: 10.5em;">
-
-            <div class="jumbotron"
-                style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 400px; background-position-y: 35.5em; background-position-x: 100.2em;">
-
-                    <div class="jumbotron"
-                        style="background-image: url('../../static/assets/shape.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 200px; background-position-y: 2.5em; background-position-x: 12em; background-size: 55px;">
-
-                        <div class="jumbotron"
-                            style="background-image: url('../../static/assets/doodle-4.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 200px; background-position-y: 3em; background-position-x: 11em; background-size: 40px;">
-
-                            <div class="jumbotron"
-                                style="background-image: url('../../static/assets/doodle-3.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 200px; background-position-y: 1em; background-position-x: 12em; background-size: 40px;">
-
-                                    <div class="jumbotron"
-                                        style="background-image: url('../../static/assets/doodle-2.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 200px; background-position-y: 67em; background-position-x: 102em; background-size: 70px;">
-
-                                        <div class="jumbotron"
-                                            style="background-image: url('../../static/assets/dancing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 15em; margin-bottom:-15em; background-size: 200px; background-position-y: 60em; background-position-x: 105em;">
-                                            
-                                     
-
-            <!----------------------  PRODUCT LIST  -------------------------------->
-
-                                                    <div class="wrapper">
-
-                                                        <div class="container product-list">
-
-                                                            <div class="row g-3">
-
-                                                                <div class="row g-3">
-
-                                                                    {% if no_results %}
-
-                                                                        <h6>{{ no_results }}</h6>
-
-                                                                    {% else %}
-
-                                                                {% for product in product_list %}
-
-                                                                    <div class="col-lg-4">
-
-                                                                        <div class="card ">
-
-                                                                        {% if product.image_set.first.image %}
-
-                                                                            <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover img-fluid " alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
-
-                                                                        {% else %}
-
-                                                                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover img-fluid" alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
-
-                                                                        {% endif %}
-
-                                                                            <div class="card-img-overlay">
-
-                                                                                <h5 class="card-title text-white pb-4" style="text-shadow: 2px 2px 3px rgba(0,0,0,0.15);">{{ product.product_name }}</h5>
-
-                                                                                <div class="container align-items-end justify-content-between h-75 d-flex p-0">
-
-                                                                                    <h6 class="card-text text-white mb-2" style="text-shadow: 2px 2px 3px rgba(0,0,0,0.15);"><span>${{ product.price }}.00/day</span></h6>
-
-                                                                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
-
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    {% endfor %}
-
-                                                                    {% endif %}
-                                                                </div>
-                                                                
-                                                          </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                                            <div class="container d-flex justify-content-center" style="margin-bottom: 5em; margin-top: 0.5em;">
-
-                                                                <span class="step-links" style="margin-top: 5em;">
-
-                                                                    {% if page_obj.has_previous %}
-
-                                                                        <a href="?page=1"><i class="fa-solid fa-circle-chevron-left fa-2xl"></i></a>
-
-                                                                        <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
-
-                                                                    {% endif %}
-
-                                                                    <span class="current">
-
-                                                                        <i class="fa-solid fa-circle fa-2xl current"></i>
-
-                                                                    </span>
-
-                                                                    {% if page_obj.has_next %}
-
-                                                                        <a href="?page={{ page_obj.next_page_number }}"><i class="fa-regular fa-circle fa-2xl" "></i></a>
-
-                                                                        <a href="?page={{ page_obj.paginator.num_pages }}"><i class="fa-solid fa-circle-chevron-right fa-2xl"></i></a>
-
-                                                                    {% endif %}
-
-                                                                </span>
-
-                            </div>
-                        </div>                                                    
-                    </div>
-                </div>   
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<div class="container d-flex justify-content-center my-5">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1"><i class="fa-solid fa-circle-chevron-left fa-2xl"></i></a>
+        <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
+        {% endif %}
+
+        <span class="current">
+            <i class="fa-solid fa-circle fa-2xl current"></i>
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}"><i class="fa-solid fa-circle-chevron-right fa-2xl"></i></a>
+        {% endif %}
+    </span>
+
 {% endblock %}

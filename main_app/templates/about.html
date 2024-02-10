@@ -8,31 +8,99 @@ About Us | RentHub
 
 <h2 class="my-4">Want to Know More?</h2>
 {% comment %} Creds to chatGPT. We can change all of this - it's just something to fill the page! {% endcomment %}
-<div class="container">
-    <h5>How it Started</h5>
-    <p class="mb-4">Ever wondered who's behind RentHub? Well, it's just us - Cassio, Sierra, and Nics. We're just a trio of pals who got fed up with the whole 'owning stuff' gig. Cassio's the dreamer, always thinking up crazy schemes; Sierra's the one who keeps us from wandering off into the sunset; and Nics? Let's just say they're the tech whiz who makes the magic happen. So, one day, we thought, 'Why not make life easier and let folks rent whatever they fancy?' And ta-da, RentHub was born.</p>
+<div class="container mb-5">
+    <h5 class="mb-3">The Story Behind RentHub</h5>
+    <p>RentHub started with Cassio's vision to connect people with a wide range of products available for short-term rental. United by our shared passion for sustainability and the thrill of innovation, we embarked on a journey to disrupt the status quo of ownership. Why burden ourselves with possessions we seldom use when we can embrace a more sustainable lifestyle and empower others to do the same? With RentHub, we're not just offering a platform; we're igniting a movement towards a more conscious and connected way of living.</p>
+</div>
 
-    <h5>The Faces Behind the Names</h5>
-    <div class="row">
-        <div class="col-md-4 mb-3 mb-md-0">
-            <div class="card">
-                <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="d-block w-100 object-fit-cover" style="max-height: 300px;" class="card-img-top" alt="Cassio">
-                <div class="card-body">
-                    <p class="card-text"> Cassio - Please add a photo and write some info about yourself here :-)</p>
+<div class="container mb-5">
+    <h4 class="mb-3">Frequently Asked Questions</h4>
+    <div class="accordion" id="FAQ-accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h5>Why should I use RentHub?</h5>
+            </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#FAQ-accordion">
+                <div class="accordion-body">
+                    <p>RentHub offers a multitude of benefits that make it the ideal platform for renting and sharing items:</p>
+                        <ul>
+                            <li><strong>Save Money:</strong> Renting items instead of buying them outright can save you a significant amount of money, especially for items that you only need temporarily or infrequently.</li>
+                            <li><strong>Reduce Waste:</strong> By renting items instead of buying new ones, you contribute to reducing waste and environmental impact. Renting promotes a circular economy where items are reused and shared instead of ending up in landfills.</li>
+                            <li><strong>Access to Variety:</strong> RentHub provides access to a diverse range of products that you may not want to own permanently but still need for specific occasions or projects. From outdoor gear to kitchen appliances, you can find what you need without cluttering your home.</li>
+                            <li><strong>Convenience:</strong> Renting through RentHub is convenient and hassle-free. With just a few clicks, you can browse, book, and rent items from the comfort of your home. No need to spend time searching for products or storing them when not in use.</li>
+                            <li><strong>Earn Passive Income:</strong> If you have items that you don't use frequently, renting them out on RentHub can be a great way to earn passive income. It allows you to monetize your belongings and offset their cost while helping others access what they need.</li>
+                        </ul>
+                        <p>Overall, RentHub offers a sustainable, cost-effective, and convenient solution for both renters and item owners, making it the go-to platform for all your rental needs.</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3 mb-md-0">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h5>How do I create an account?</h5>
+            </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#FAQ-accordion">
+                <div class="accordion-body">
+                    <p><a class="d-inline text-primary" href="{% url 'register' %}"><strong>Click here</strong></a> to create an account on RentHub. Follow the prompts to enter your details, create a password, and ta dah! Once registered, you'll be able to start browsing and renting products. You can now sign in and provide additional details by nativating to your Profile.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <h5>How can I search for specific products?</h5>
+            </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#FAQ-accordion">
+                <div class="accordion-body">
+                    <p>You can search for specific products by using the search bar located at the top of the homepage. Simply type in keywords related to the product you're looking for, such as "tent" or "blender," and relevant listings will be displayed. Alternatively, you can navigate to <a class="d-inline text-primary" href="{% url 'product_list' %}"><strong>Product Listings</strong></a>, where you can filter by categories and price.</p>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <h5>How can I rent a product?</h5>
+            </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#FAQ-accordion">
+                <div class="accordion-body">
+                    <p>To rent a product, first, ensure you're logged in to your RentHub account. Then, navigate to the product listing you're interested in and select your desired rental dates, then follow the prompts to confirm your booking. Once confirmed, you'll receive further instructions on how to collect the item.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <h4>The Faces Behind the Names</h4>
+    <div class="row">
+        <div class="col-md-4 col-6 mb-3 mb-md-0">
+            <div class="card">
+                <img src="../static/assets/cassio.jpg" class="d-block w-100 object-fit-cover" style="max-height: 300px;" class="card-img-top" alt="Cassio">
+                <div class="card-body">
+                    <p class="card-text"> Cassio </p>
+                    <p> As a software engineering beginner with a background in Visual Effects (VFX) and game development, I bring a unique
+                    blend of creativity and technical skills to the field. With experience in creating immersive visual experiences for
+                    games and film, I am passionate about leveraging my knowledge in VFX and game development to craft innovative software
+                    solutions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-6 mb-3 mb-md-0">
             <div class="card">
                 <img src="../static/assets/sierra.jpg" class="d-block w-100 object-fit-cover" style="max-height: 300px;" class="card-img-top" alt="Sierra">
                 <div class="card-body">
                     <p class=" h6 card-text">Sierra</p>
-                    <p>Hey there! I'm Sierra, a nature enthusiast, cat lover, and foodie by day, and a geek by night. I approach web development with a user-centric mindset. Responsive web design is a key element in my process, so I ensure that my apps are not only visually appealing but also accessible across devices.
+                    <p>Hey there! I'm Sierra, a nature enthusiast, animal lover, and foodie by day, and a geek by night. I approach web development with a user-centric mindset. Responsive web design is a key element in my process, so I ensure that my apps are not only visually appealing but also accessible across devices.
                     </p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3 mb-md-0">
+        <div class="col-md-4 col-6 mb-3 mb-md-0">
             <div class="card">
                 <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="d-block w-100 object-fit-cover" style="max-height: 300px;" class="card-img-top" alt="Nics">
                 <div class="card-body">
