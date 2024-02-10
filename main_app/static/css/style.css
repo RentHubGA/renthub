@@ -116,7 +116,16 @@ footer {
     background-image: url('../assets/R.png');
     background-repeat: no-repeat;
     background-size: 340px;
-    margin-bottom: -20px;
+    height: 100%;
+    margin-bottom: -125px;
+    background-position: bottom right;
+}
+
+.r-logo-responsive {
+    background-image: url('../assets/R.png');
+    background-repeat: no-repeat;
+    background-size: 150px;
+    margin-bottom: -52px;
     background-position: bottom right;
 }
 
