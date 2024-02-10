@@ -6,15 +6,16 @@
 
 {% load widget_tweaks %}
 <div class="jumbotron"
-    style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; background-position-y: 3em; background-position-x: 90em; padding-bottom: 22.3em; margin-bottom:-22.3em;">
+    style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; background-position-y: 3em; background-position-x: 90em; padding-bottom: 15em; margin-bottom:-15em;">
 
     <div class="jumbotron"
-        style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 10em; padding-bottom: 22.3em; margin-bottom:-22.3em;">
+        style="background-image: url('../../static/assets/R.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 10em; padding-bottom: 15em; margin-bottom:-15em;">
 
         <div class="jumbotron"
-            style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 12em; padding-bottom: 22.3em; margin-bottom:-22.3em;">
+            style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 12em; padding-bottom: 15em; margin-bottom:-15em;">
 
-                       <div class="jumbotron" style="background-image: url('../../static/assets/product-form.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 15em; padding-bottom: 23em; margin-bottom:-23em;">
+                       <div class="jumbotron" style="background-image: url('../../static/assets/product-form.png'); padding-left: 20em; margin-left:-20em; padding-right: 20em; margin-right:-20em; background-repeat: no-repeat; background-position-y: 15em; padding-bottom: 15em; margin-bottom:-15em;">
+                            
                             <div>
                                 {% if product %}
                                     <h1 style="margin-top: 1.5em; margin-bottom: 1em;"> Edit Product </h1>
@@ -28,78 +29,81 @@
                                             <div class="form-row align-top">
 
                                                 {% csrf_token %}
-                
-    <div class="row">
-    {% for field in form %}
-        
-            {% if field.name == 'product_name' %}
-                <div class="col-md-5">
-                    <h5 class="my-4 my-md-2">Product</h5>
+                                                    
+                                        <div class="row">
+                                        {% for field in form %}
+                                            
+                                                {% if field.name == 'product_name' %}
+                                                    <div class="col-md-5">
+                                                        <h5 class="my-4 my-md-2">Product</h5>
 
-                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
-                        placeholder=" Name of your product">
-                </div>
-            {% endif %}
-            
-            
-            {% if field.name == 'description' %}
-                <div class="col-md-7 row-md-6">
-                    <h5 class="my-6 my-md-2">Description</h5>
-                    
-                        <textarea type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}" 
-                            placeholder=" Brief description of your product" row="5"></textarea>
-                </div>
-            {% endif %}
+                                                        <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                                                            placeholder=" Name of your product" value="{{ product.product_name }}">
+                                                    </div>
+                                                {% endif %}
+                                                
+                                                
+                                                {% if field.name == 'description' %}
+                                                    <div class="col-md-7 row-md-6">
+                                                        <h5 class="my-6 my-md-2">Description</h5>
+                                                        
+                                                            <textarea type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}" 
+                                                                placeholder=" Brief description of your product" row="5"> {{ product.description }} </textarea>
+                                                    </div>
+                                                {% endif %}
 
-            {% if field.name == 'price' %}
-                <div class="col-md-5">
-                    <h5 class="my-4 my-md-2">Price</h5>
+                                                {% if field.name == 'price' %}
+                                                    <div class="col-md-5">
+                                                        <h5 class="my-4 my-md-2">Price</h5>
 
-                    <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
-                        placeholder=" Price / day ">
-                </div>
-            {% endif %}
-            
-            
-            {% if field.name == 'category' %}
-            <div class="col-md-5">
-                <h5 class="my-4 my-md-2">Category</h5>
-                    <p> {{ field }} </p>
+                                                        <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.name }}"
+                                                            placeholder=" Price / day " value="{{ product.price }}" >
+                                                    </div>
+                                                {% endif %}
+                                                
+                                                
+                                                {% if field.name == 'category' %}
+                                                <div class="col-md-5">
+                                                    <h5 class="my-4 my-md-2">Category</h5>
+                                                        <p> {{ field }} </p>
+                                                </div>
+                                                {% endif %}
+
+                                        {% endfor %}
+
+                                    
+
+                                        </div>
+                                            {{ image_form.management_form }}
+
+                                            {% for formset in image_form %}
+
+                                            
+
+                                            <div class="image-formset" style="margin-top: 1em; margin-bottom: 5em;">
+                                                <div class="form-row ">
+                                                    <div type="text" class="form-control" placeholder="field" name="field">
+                                                        {{ formset }}
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+                                            {% endfor %}
+
+                                            {% if product %}
+                                                <input type="submit" value="Edit Product" class="btn btn-secondary rounded-pill" style="margin-bottom: 5em;" />
+                                            {% else %}
+                                                <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" style="margin-bottom: 5em;"/>
+                                            {% endif %}
+
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                        
             </div>
-            {% endif %}
-
-    {% endfor %}
-
-   
-
     </div>
-        {{ image_form.management_form }}
-
-        {% for formset in image_form %}
-
-        
-
-        <div class="image-formset" style="margin-top: 1em; margin-bottom: 5em;">
-            <div class="form-row ">
-                <div type="text" class="form-control" placeholder="field" name="field">
-                    {{ formset }}
-                </div>
-                
-            </div>
-        </div>
-        
-        {% endfor %}
-
-        {% if product %}
-            <input type="submit" value="Edit Product" class="btn btn-secondary rounded-pill" />
-        {% else %}
-            <input type="submit" value="Add Product" class="btn btn-secondary rounded-pill" />
-        {% endif %}
-    
-    </form>
-    </div>
-</div>
-</div>
 </div>
 <!------------------------------------------------------------------------->
 
