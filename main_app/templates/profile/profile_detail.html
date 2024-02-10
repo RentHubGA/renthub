@@ -30,14 +30,15 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{% url 'profile_update' username=request.user.username %}" class="nav-link"
-                                            aria-current="page">
+                                        <a href="{% url 'profile_update' username=request.user.username %}"
+                                            class="nav-link" aria-current="page">
                                             <i data-feather="users"></i>
                                             <span class="ml-2">Update Details</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{% url 'profile_detail' username=request.user.username %}" class="nav-link" aria-current="page">
+                                        <a href="{% url 'profile_detail' username=request.user.username %}"
+                                            class="nav-link" aria-current="page">
                                             <i data-feather="zoom-in"></i>
                                             <span class="ml-2">Account Details</span>
                                         </a>
@@ -57,7 +58,10 @@
                                     <li class="nav-item">
                                         <form method="post" action="{% url 'logout' %}">
                                             {% csrf_token %}
-                                            <button class="btn btn-link p-0 nav-link"><div class="" style="padding: 8px 16px;"><i data-feather="log-out" class="logout"></i> Log Out</div></button>
+                                            <button class="btn btn-link p-0 nav-link">
+                                                <div class="" style="padding: 8px 16px;"><i data-feather="log-out"
+                                                        class="logout"></i> Log Out</div>
+                                            </button>
                                         </form>
                                     </li>
                                 </ul>
@@ -69,20 +73,27 @@
         </div>
         <div class="col-md-9 my-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <h2 class="mb-4">My Details</h2>
                 </div>
                 <div class="card-body">
-                    <img src="{{ profile.avatar }}" alt="{{ profile.username }} Avatar" class="img-fluid mb-3">
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Username:</strong> {{ profile.username }}</li>
-                        <li class="list-group-item"><strong>Email:</strong> {{ profile.email }}</li>
-                        <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
-                        <li class="list-group-item"><strong>Town/City:</strong> {{ profile.town }}</li>
-                        <li class="list-group-item"><strong>County:</strong> {{ profile.county }}</li>
-                        <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
-                        <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
-                    </ul>
+                    <div class="row">
+                        <div class="col-md-4 d-flex justify-content-center align-items-center">
+                            <img src="{{ profile.avatar }}" alt="{{ profile.username }} Avatar"
+                                class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                        </div>
+                        <div class="col-md-8">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Username:</strong> {{ profile.username }}</li>
+                                <li class="list-group-item"><strong>Email:</strong> {{ profile.email }}</li>
+                                <li class="list-group-item"><strong>Address:</strong> {{ profile.address }}</li>
+                                <li class="list-group-item"><strong>Town/City:</strong> {{ profile.town }}</li>
+                                <li class="list-group-item"><strong>County:</strong> {{ profile.county }}</li>
+                                <li class="list-group-item"><strong>Post Code:</strong> {{ profile.post_code }}</li>
+                                <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

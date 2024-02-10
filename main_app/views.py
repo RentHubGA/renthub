@@ -131,16 +131,17 @@ class Profile(LoginRequiredMixin, TemplateView):
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
-        
-        # for product in products:
-        #     print(product.renting_set.all())
+
+        total_products = Product.objects.filter(user=user).count()
+        total_rentings = Renting.objects.filter(product__in=products).count()
         context = {
             'user': user,
             'products': products,
             'rent': rent,
             'now': now,
             'rented_product_ids': rented_product_ids,
-
+            'total_products': total_products,
+            'total_rentings': total_rentings
             }
         return render(request, self.template_name, context)
 
