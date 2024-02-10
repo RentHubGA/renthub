@@ -354,7 +354,8 @@ class ProductCreate(CreateView):
 class ProductUpdate(UpdateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
-    
+    # template_name = 'product_form.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
@@ -388,7 +389,7 @@ class ProductUpdate(UpdateView):
 
 
     def get_success_url(self):
-        return reverse('product_detail', kwargs={'pk': self.object.id})
+        return reverse_lazy('product_detail', kwargs={'pk': self.object.id})
 
 class ProductDelete(DeleteView):
     model = Product
