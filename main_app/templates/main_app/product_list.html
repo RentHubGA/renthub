@@ -8,7 +8,7 @@
 
 <h2 class="my-4">Products</h2>
 
-<div class="container mb-3">
+<div class="container hands-img mb-3">
     <div class="row g-4 d-flex align-items-center ">
     <!----------------------  FILTER BY  -------------------------------->
         <div class="accordion col-md-6" id="filter">
@@ -52,115 +52,54 @@
             </form>
         </div>
     </div>
-</div>
 
-<!----------------------  BACKGROUND IMAGES  -------------------------------->
-
-<div class="jumbotron"
-    style="background-image: url('../../static/assets/liquid_shape_1.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 150px; background-position-y: 32.5em; background-position-x: 12.2em;">
-
-    <div class="jumbotron"
-        style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 250px; background-position-y: 25.5em; background-position-x: 10.5em;">
-
-            <div class="jumbotron"
-                style="background-image: url('../../static/assets/R.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 400px; background-position-y: 35.5em; background-position-x: 100.2em;">
-
-                    
-                <div class="jumbotron"
-                    style="background-image: url('../../static/assets/doodle-6.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 40px; background-position-y: 58.5em; background-position-x: 109.8em;">
-
-                    
-
-                        <div class="jumbotron"
-                            style="background-image: url('../../static/assets/shape.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 2.5em; background-position-x: 12em; background-size: 55px;">
-
-                            <div class="jumbotron"
-                                style="background-image: url('../../static/assets/doodle-4.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 3em; background-position-x: 11em; background-size: 40px;">
-
-                                <div class="jumbotron"
-                                    style="background-image: url('../../static/assets/doodle-3.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 1em; background-position-x: 12em; background-size: 40px;">
-
-                                        <div class="jumbotron"
-                                        style="background-image: url('../../static/assets/doodle-2.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 67em; background-position-x: 102em; background-size: 70px;">
-
-                                        <div class="jumbotron"
-                                            style="background-image: url('../../static/assets/dancing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 60em; background-position-x: 105em;">
-                                            
-                                            <div class="jumbotron"
-                                                style="background-image: url('../../static/assets/yellow-thing.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 82em; background-position-x: 6em;">
-
-                                                <div class="jumbotron"
-                                                    style="background-image: url('../../static/assets/hands.png'); padding-left: 25em; margin-left:-25em; padding-right: 22em; margin-right:-22em; background-repeat: no-repeat; padding-bottom: 22em; margin-bottom:-22em; background-size: 200px; background-position-y: 83em; background-position-x: 5em;">
-                                              
-
-                                                   
-
-                                                    
-
-            <!----------------------  PRODUCT LIST  -------------------------------->
-
-                                                    <div class="wrapper">
-                                                        <div class="container product-list">
-                                                            <div class="row g-3">
-                                                                <div class="row g-3">
-                                                                    {% if no_results %}
-                                                                        <h6>{{ no_results }}</h6>
-                                                                    {% else %}
-                                                                {% for product in product_list %}
-                                                                    <div class="col-lg-4">
-                                                                        <div class="card ">
-                                                                        {% if product.image_set.first.image %}
-                                                                            <img src="{{ product.image_set.first.image.url }}" class="card-img object-fit-cover img-fluid " alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
-                                                                        {% else %}
-                                                                            <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img object-fit-cover img-fluid" alt="{{ product.product_name }}" style="height: 20vw; width: 100%; object-fit: cover;">
-                                                                        {% endif %}
-                                                                            <div class="card-img-overlay">
-                                                                                <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
-                                                                                <div class="container align-items-end justify-content-between h-75 d-flex p-0">
-                                                                                    <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
-                                                                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    {% endfor %}
-                                                                    {% endif %}
-                                                                </div>
-
-                                                                
-                                                          </div>
-                                                    </div>
-                                                </div>
-
-                                                            </div>
-                                                            <div class="container d-flex justify-content-center">
-                                                                <span class="step-links" style="margin-top: 5em;">
-                                                                    {% if page_obj.has_previous %}
-                                                                        <a href="?page=1"><i class="fa-solid fa-circle-chevron-left fa-2xl"></i></a>
-                                                                        <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
-                                                                    {% endif %}
-
-                                                                    <span class="current">
-                                                                        <i class="fa-solid fa-circle fa-2xl current"></i>
-                                                                    </span>
-
-                                                                    {% if page_obj.has_next %}
-                                                                        <a href="?page={{ page_obj.next_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
-                                                                        <a href="?page={{ page_obj.paginator.num_pages }}"><i class="fa-solid fa-circle-chevron-right fa-2xl"></i></a>
-                                                                    {% endif %}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-
-                                            </div>
-                                    </div>
+<!----------------------  PRODUCT LIST  -------------------------------->
+    <div class="wrapper">
+        <div class="container product-list my-4">
+            <div class="row g-3">
+                {% if no_results %}
+                    <h6>{{ no_results }}</h6>
+                {% else %}
+            {% for product in product_list %}
+                <div class="col-lg-4">
+                    <div class="card" style="max-height:300px">
+                    {% if product.image_set.first.image %}
+                        <img src="{{ product.image_set.first.image.url }}" class="w-100 card-img object-fit-cover img-fluid overflow-hidden" alt="{{ product.product_name }}";>
+                    {% else %}
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="w-100 card-img object-fit-cover img-fluid overflow-hidden" alt="{{ product.product_name }}">
+                    {% endif %}
+                        <div class="card-img-overlay">
+                            <h5 class="card-title text-white pb-4">{{ product.product_name }}</h5>
+                            <div class="container align-items-end justify-content-between h-75 d-flex p-0">
+                                <h6 class="card-text text-white mb-2"><span>${{ product.price }}.00/day</span></h6>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary rounded-pill mx-3">Rent Now</a>
                             </div>
+
                         </div>
-                  
+                    </div>
                 </div>
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
+</div>
+
+<div class="container d-flex justify-content-center my-5">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1"><i class="fa-solid fa-circle-chevron-left fa-2xl"></i></a>
+            <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
+        {% endif %}
+
+        <span class="current">
+            <i class="fa-solid fa-circle fa-2xl current"></i>
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><i class="fa-regular fa-circle fa-2xl"></i></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><i class="fa-solid fa-circle-chevron-right fa-2xl"></i></a>
+        {% endif %}
+    </span>
 </div>
 {% endblock %}

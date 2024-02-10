@@ -35,16 +35,17 @@
                                 <ul class="navbar-nav ms-auto gap-md-3 d-flex align-items-center">
                                     {% if user.is_authenticated %}
                                         <li class="nav-item"><a class="nav-link" href="{% url 'product_list' %}">Products</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Learn More</a></li>
                                         <li class="nav-item d-none d-md-block ">
                                             <form method="get" action="{% url 'product_list' %}">
                                                 <input name="query" class="p-2 border rounded-pill" type="text" value="{{ query }}" placeholder="Unicycle, clown costume.... " style="width: 300px">
                                                 <button class="btn btn-link p-0"><i data-feather="search" class="search"></i></button>
                                             </form>
                                         </li>
-                                        <li class="nav-item"><a href="{% url 'profile' username=user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary "><i data-feather="user" class="h-75" style="margin-right: 5px;"></i>Profile</button></a></li>
+                                        <li class="nav-item"><a href="{% url 'profile' username=request.user.username %}" class="nav-link"><button class="rounded-pill btn btn-primary "><i data-feather="user" class="h-75" style="margin-right: 5px;"></i>Profile</button></a></li>
                                         <li class="nav-item">
                                     {% else %}
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Learn More</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><button class="rounded-pill btn btn-primary">Sign Up</button></a></li>
                                     {% endif %}
@@ -155,6 +156,18 @@
                 "ordering": true,
                 "info": true,
                 "rowGroup": true
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#products-table').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "pageLength": 5 
             });
         });
     </script>

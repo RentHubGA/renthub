@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 import os
 import boto3
 import uuid
+from pprint import pprint
 
 # retrieves the user model active
 User = get_user_model()
@@ -130,16 +131,17 @@ class Profile(LoginRequiredMixin, TemplateView):
         product_ids = products.values_list('id', flat=True)
         # rented_product_ids = Renting.objects.filter(product_id=product_ids)
         rented_product_ids = Renting.objects.filter(product__id__in=product_ids).values_list('product__id', flat=True)
-        
-        # for product in products:
-        #     print(product.renting_set.all())
+
+        total_products = Product.objects.filter(user=user).count()
+        total_rentings = Renting.objects.filter(product__in=products).count()
         context = {
             'user': user,
             'products': products,
             'rent': rent,
             'now': now,
             'rented_product_ids': rented_product_ids,
-
+            'total_products': total_products,
+            'total_rentings': total_rentings
             }
         return render(request, self.template_name, context)
 
@@ -219,20 +221,20 @@ def register(request):
     return render(request, 'registration/signup.html', context)  
 
 
-def add_image(request, product_id):
-    photo_file = request.FILES.get('photo-file', None)
-    if photo_file:
-        s3 = boto3.client('s3')
-        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        try:
-            bucket = os.environ['S3_BUCKET']
-            s3.upload_fileobj(photo_file, bucket, key)
-            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            Image.objects.create(url=url, product_id=product_id)
-        except Exception as e:
-            print('An error occurred uploading file to S3')
-            print(e)
-    return redirect('product_detail', product_id=product_id)
+# def add_image(request, product_id):
+#     photo_file = request.FILES.get('photo-file', None)
+#     if photo_file:
+#         s3 = boto3.client('s3')
+#         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+#         try:
+#             bucket = os.environ['S3_BUCKET']
+#             s3.upload_fileobj(photo_file, bucket, key)
+#             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+#             Image.objects.create(url=url, product_id=product_id)
+#         except Exception as e:
+#             print('An error occurred uploading file to S3')
+#             print(e)
+#     return redirect('product_detail', product_id=product_id)
 
 
 class ProductList(ListView):
@@ -318,31 +320,53 @@ class ProductCreate(CreateView):
 
         context = self.get_context_data()
         image_form = context['image_form']
-        print(image_form)
+        pprint(form)
+        pprint(image_form)
+        pprint(context)
         with transaction.atomic():
             self.object = form.save()
+            pprint(self.object)
             if image_form.is_valid():
                 image_form.instance = self.object
                 image_form.save()
+                pprint(image_form.instance)
 
-        return super().form_valid(form)
+            return super().form_valid(form)
+            
+    # def add_image(request, product_id):
+    #     photo_file = request.FILES.get('photo-file', None)
+    #     if photo_file:
+    #         s3 = boto3.client('s3')
+    #         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    #         try:
+    #             bucket = os.environ['S3_BUCKET']
+    #             s3.upload_fileobj(photo_file, bucket, key)
+    #             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+    #             Image.objects.create(url=url, product_id=product_id)
+    #         except Exception as e:
+    #             print('An error occurred uploading file to S3')
+    #             print(e)
+    #     # return redirect('product_detail', product_id=product_id)
+
+      
 
     
 class ProductUpdate(UpdateView):
     model = Product
     fields = ['product_name', 'description', 'price', 'category']
-    
+    # template_name = 'product_form.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES)
+            context['image_form'] = ImageFormSet(self.request.POST, self.request.FILES, instance=self.get_object())
         else:
             # Get the product instance being updated
             product_instance = self.get_object()
             # Get the images associated with the product
             images_queryset = product_instance.image_set.all()
             # Pass the queryset of existing images to the formset
-            print(product_instance)
+            # print(product_instance)
             
             context['image_form'] = ImageFormSet(instance=product_instance, queryset=images_queryset)
 
@@ -351,22 +375,21 @@ class ProductUpdate(UpdateView):
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
         form.instance.user = self.request.user  
-
         context = self.get_context_data()
         image_form = context['image_form']
-        print(image_form)
-        print(image_form.is_valid())
+        
         with transaction.atomic():
             self.object = form.save()
+            
             if image_form.is_valid():
-                image_form.instance = self.object
                 image_form.save()
-                print('VALIDO')
+                
 
         return super().form_valid(form)
 
+
     def get_success_url(self):
-        return reverse('product_detail', kwargs={'pk': self.object.id})
+        return reverse_lazy('product_detail', kwargs={'pk': self.object.id})
 
 class ProductDelete(DeleteView):
     model = Product

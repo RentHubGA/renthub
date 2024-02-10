@@ -13,9 +13,9 @@
 			<div id="product-images" data-bs-interval="false" class="carousel slide">
 				<div class="carousel-inner">
 					{% for image in images %}
-					<div class="carousel-item {% if forloop.first %}active{% endif %}">
-						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded"
-							style="max-height: 500px; width:fit-content; margin-left: 5em;">
+					<div class="carousel-item {% if forloop.first %}active{% endif %} ">
+						<img src="{{ image.image.url }}" class="d-block object-fit-cover carousel-img rounded "
+							style="max-height: 500px; width:fit-content;">
 					</div>
 					{% endfor %}
 				</div>
@@ -82,7 +82,7 @@
 		<h4 class="my-4">What People Say</h4>
 		{% if reviews %}
 		{% for review in reviews %}
-		<div class="card mb-3 col-6">
+		<div class="card mb-3 col-md-6">
 			<div class="card-body">
 				<h5><b>{{ review.rating }}.0/5.0</b></h5>
 				<p>{{ review.description }}</p>

@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-3 mt-4">
@@ -67,8 +68,52 @@
                 </div>
             </nav>
         </div>
+        <!-- examples Profile -->
+        <!-- https://mdbootstrap.com/docs/standard/extended/profiles/ -->
         <div class="col-md-9">
-            <h2 class="my-4">My Listings</h2>
+            <div class="col-md-12 my-4">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="rounded-top text-white d-flex flex-row" style="background-color: #6D6FFE; height:200px;">
+                        <div class="ms-4 mt-5 d-flex flex-column" style="width: 152px;">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar }}" alt="{{ user.username }} Avatar" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 152px; z-index: 1">
+                            {% else %}
+                                <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=2000&t=st=1707500967~exp=1707501567~hmac=694b42c585124522d023577f39f2b191b77eb2c44366e75c36d1a52c2e8a0064" alt="support avatar" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 152px; z-index: 1">
+                            {% endif %}
+                            <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">{{ user.username }}</button>
+                        </div>
+                        <div class="ms-3" style="margin-top: 133px;">
+                            {% if user.first_name %}
+                                <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+                            {% else %}
+                                <h5>Alfa Jupiter</h5>
+                            {% endif %}
+                            {% if user.country %}
+                                <p>{{ user.country }}</p>
+                            {% else %}
+                                <p>Interstellar Space</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="p-4 text-black" style="background-color: #ffffff;">
+                        <div class="d-flex justify-content-end text-center py-1">
+                            <div>
+                                <p class="mb-1 h5">{{ total_products }}</p>
+                                <p class="small text-muted mb-0">Products</p>
+                            </div>
+                            <div class="px-3">
+                                <p class="mb-1 h5">{{ total_rentings }}</p>
+                                <p class="small text-muted mb-0">Rental Frequency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex pt-1">
+                <button type="button" class="btn btn-primary flex-grow-1">My Listings</button>
+                <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Message</button>
+            </div>
+            <h3 class="my-4">My Listings</h2>
             <div class="row row-cols-1 row-cols-md-2 g-3">
                 {% user_products user as products %}
                 {% for product in products %}

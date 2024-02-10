@@ -4,9 +4,9 @@
 
 {% block content %}
 
-<div class="jumbotron" style="background-image: url('../../static/assets/composition.png'); padding-bottom: 20em; margin-bottom: -20em; padding-left: 25em; margin-left:-25em; padding-right: 22.8em; margin-right: -22.8em; background-position-y: -10em; background-position-x: 15em; background-repeat: repeat-x; padding-top: 0.5em; margin-top: -0.5em; background-size: 100%;">
+<div class="jumbotron" style="background-image: url('../../static/assets/composition.png'); padding-bottom: 20em; margin-bottom: -20em; padding-left: 25em; margin-left:-25em; padding-right: 23.2em; margin-right: -23.2em; background-position-y: -10em; background-position-x: 15em; background-repeat: repeat-x; padding-top: 0.5em; margin-top: -0.5em; background-size: 100%;">
 
-    <div style="margin-top: 21.5em; margin-right: 15em; align-items: center;">
+    <div style="margin-top: 14.5em; margin-right: 15em; align-items: center;">
 
         <h2 class="my-3" style="color: aliceblue; text-shadow: black;">Delete Product?</h2>
 
@@ -15,7 +15,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="submit" value="Yes" class="btn btn-secondary rounded-pill">
-                    <a style="text-decoration: none; color: rgb(233, 61, 61); margin-left: 1em;" href="{% url 'product_detail' product.id %}" class="">Cancel</a>
+                    <a style="text-decoration: none; color: rgb(255, 255, 255); margin-left: 1em;" href="{% url 'product_detail' product.id %}" class="">Cancel</a>
                 </form>
 
     </div>
