@@ -109,7 +109,8 @@
                             <h5 class="card-header">Rental Frequency</h5>
                             <div class="card-body border-left-success">
                                 <h5 class="card-title">{{ total_rentings }}</h5>
-                                <p class="card-text">Lastest Rented: {{ latest_renting.product_name }}</p>
+                                <!-- <p class="card-text">Lastest Rented: {{ latest_renting.product_name }}</p> -->
+                                <p class="card-text">Jan 2024 - Dec 2024</p>
                                 <p class="card-text text-success">+{{ total_income }}</p>
                             </div>
                         </div>
@@ -135,7 +136,9 @@
                             <h5 class="card-header">Rented Products</h5>
                             <div class="card-body border-left-danger">
                                 <h5 class="card-title">{{ rent.count }}</h5>
-                                <p class="card-text">Lastest Rented: {{ rent.first.date_rent }}</p>
+                                
+                                <p class="card-text">Jan 2024 - Dec 2024</p>
+                                <!-- <p class="card-text">Lastest Rented: {{ rent.first.date_rent }}</p> -->
                                 <p class="card-text text-danger">-{{ total_outcome }}</p>
                             </div>
                         </div>
@@ -178,7 +181,7 @@
                                                 {% elif product.review_set.all|calculate_average_rating <= 1 and product.review_set.all|calculate_average_rating >= 0.1 %}
                                                     <td>&#x1F431;</td>
                                                 {% else %}
-                                                    <td><span class="badge" style="background-color: #f7b832; color: #ffffff; width: 75.59px;">No Review</span></td>
+                                                    <td><span class="badge" style="background-color: #d032a6c7; color: #ffffff; width: 75.59px;">No Review</span></td>
                                                 {% endif %}
 
                                             </tr>
