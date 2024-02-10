@@ -149,3 +149,10 @@ footer {
 .bike-bg {
     background-color: #d7ad87;
 }
+
+.hands-img {
+    background-image: url('../assets/dancing.png');
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: bottom right;
+}
