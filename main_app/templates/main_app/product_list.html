@@ -68,11 +68,11 @@
                     <div class="card " style="height:300px; width:auto;">
                         {% if product.image_set.first.image %}
                         <img src="{{ product.image_set.first.image.url }}"
-                            class="w-100 card-img object-fit-cover img-fluid overflow-hidden"
+                            class="w-100 card-img object-fit-cover rounded img-fluid overflow-hidden"
                             alt="{{ product.product_name }}";>
                         {% else %}
                         <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
-                            class="w-100 card-img object-fit-fill border rounded img-fluid overflow-hidden"
+                            class="w-100 card-img object-fit-cover rounded img-fluid overflow-hidden"
                             alt="{{ product.product_name }}";>
                         {% endif %}
                         <div class="card-img-overlay">
