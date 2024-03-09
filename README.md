@@ -2,13 +2,11 @@
 
 ### Consume Less, Experience More.
 
-Renthub is a comprehensive renting application designed to simplify the process of renting and managing properties, vehicles, equipment, and more. Whether you're a property owner, tenant, or rental service provider, RentHub provides a user-friendly platform to streamline the entire rental process.
+Renthub is a comprehensive renting application designed to simplify the process of renting and managing household appliances, sporting equipment, and anything you may have around the house!
 
 ## [💻 Click here to see the live project!](https://renthub.fly.dev/)
 
 ### [Link to Trello Board](https://trello.com/b/56HvnC0w/project-3-renthub)
-
-### [Link to Pitch Deck](https://docs.google.com/presentation/d/1Szp3CJaEdCbqK3vCJiA3HAiuV0FU_Ad_MIn69hnr4b0/edit?usp=sharing)
 
 # 📄 About
 
@@ -58,7 +56,7 @@ How to use Renthub.
 -   Bootstrap
 -   HTML and CSS for frontend styling
 
-🚀 Next Steps
+## 🚀 Next Steps
 
 -   Implement Google Maps API to enable users to filter results by location and distance
 -   Allow users to block off dates for their products, to ensure their product is not rented when they are unavailable
